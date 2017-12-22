@@ -1,0 +1,114 @@
+Journal of Geriatric Psychiatryand Neurology Volume 21 Number 2June 2008  104-110© 2008 Sage Publications10.1177/0891988708316855http://jgpn.sagepub.comhosted athttp://online.sagepub.comBrief Screening for Mild CognitiveImpairment in Elderly OutpatientClinic: Validation of the KoreanVersion of the Montreal CognitiveAssessmentJun-Young Lee, Dong Woo Lee, Seong-Jin Cho, Duk L. Na,Hong Jin Jeon, Shin-Kyum Kim, You Ra Lee, Jung-Hae Youn,Miseon Kwon, Jae-Hong Lee, and Maeng Je Cho The Montreal Cognitive Assessment (MoCA) is a briefcognitive  screening  tool  with  high  sensitivity  forscreening  patients  with  mild  cognitive  impairment(MCI).	:0
+The MoCA-K, a Korean version ofthe Mini-Mental State Examination (MMSE), ClinicalDementia Rating (CDR) scale, and neuropsychologicalbatteries  were  administered  to  196  elderly  persons(mild Alzheimer’s disease [AD] = 44, MCI = 37, normalcontrols  [NC]  = 115).	:2
+Using  acutoff  score  of  22/23,  the  MoCA-K  had  an  excellentsensitivity  of  89%  and  a  good  specificity  of  84%  forscreening  MCI.	:4
+Keywords: MoCA-K;  mild  cognitive Alzheimer’s; cognitive assessment; dementiaimpairment;M ild Cognitive Impairment (MCI) refers to atransitional state between the cognition ofnormal  aging  and  mild  dementia.1 Manystudies have been conducted on the definition, clas-sification,  and  conceptualization  of  this  cognitivecontinuum  during  the  past  decade.2-5 Moreover,active  discussions  continue  as  to  whether  it  is  theReceived October 14, 2006.	:7
+Received revised January 14, 2007.Accepted for publication January 17, 2007.From  the  Department  of  Psychiatry  and  Behavioral  Science,Seoul  National  University  College  of  Medicine,  BoramaeHospital  (J-YL,  HJJ,  S-KK,  YRL,  J-HY,  MJC);  Department  ofPsychiatry,  College  of  Medicine,  Inje  University  (DWL),  Seoul,Korea; Department of Psychiatry, Gachon Medical School (S-JC),Incheon,  Korea;  Department  of  Neurology,  SungkyunkwanUniversity School of Medicine, Samsung Medical Center (DLN),Department  of  Neurology,  Asan  Medical  Center,  University  ofUlsan College of Medicine (MK, J-HL), Seoul, Korea.Address  correspondence  to:  Jun-Young  Lee,  395  Sindaebang-dong, Dongjak-gu, Seoul, 156-707, South Korea; e-mail: benji@snu.ac.kr.earliest stage of dementia or whether it is a benignform of this cognitive continuum.	:8
+Nevertheless, as aresult  of  the  many  studies  conducted,  MCI  is  nowrecognized  as  a  high-risk  state  or  prodrome  ofAlzheimer’s disease (AD).6,7In  the  future,  there  will  hopefully  be  effectivedrugs  to  modulate  progression  from  MCI  to AD.8,9Therefore,  in  primary  care  and  elderly  outpatientclinics,  there  is  a  need  to  develop  valid  screeningtests  that  can  differentiate  MCI  and  dementedpatients from normal elderly subjects.	:9
+The Mini-Mental State Examination (MMSE)10 ismost widely used for screening cognitive impairment,including dementia.	:11
+However, since it was originallydeveloped to detect moderate and severely dementedpatients  rather  than  MCI  and  mildly  dementedpatients, it has been criticized for its lack of sensitiv-ity and specificity for the detection of MCI and milddementia.11,12 Moreover,  although  the  Cognitive104Korean Version of the Montreal Cognitive Assessment / Lee et al 105Capacity  Screening  Examination13 and  DemTect14were developed to screen MCI, they are too lengthyand insensitive, and therefore are not widely used.	:12
+To screen patients who present with mild cogni-tive complaints, who usually perform in the normalrange  on  the  MMSE,  the  Montreal  CognitiveAssessment (MoCA)15 was developed.	:13
+The MoCA isa 30-point test that takes 10 minutes or so to admin-ister and includes more complicated items than theMMSE to screen MCI.	:14
+Subsequently,  this  Korean  version  was  back-translated  by  a  bilingual  psychologist  who  wasunfamiliar with the original version, and the result-ing revision was reviewed and amended by a transla-tion  committee,  which  consisted  of  3  Koreanpsychiatrists and 2 psychologists.	:19
+The resulting draftversion was thus a linguistic equivalent to the origi-nal and was again revised by a translation committeeafter being administered to 20 elderly pilot persons.	:20
+When  we  selected  Koreanwords, we considered the equivalent frequencies inuse of words to those of the original words.The  phonemic  fluency  task  requiring  the  pro-duction of as many words beginning with the letterF as possible in 60 seconds was changed to a seman-tic fluency task requiring the production of as manyobjects which could be bought in a market as possi-ble  in  60  seconds.	:23
+Participants All  participants  were  aged  65  and  over  and  wererecruited from among elderly outpatients registered atSeoul  National  University  Boramae  Hospital  andcommunity residents.	:28
+Eligibility  criteriawere  as  follows:  age  65  years  or  over;  fluent  inKorean;  and  no  known  history  of  neurological  dis-ease, head trauma, stroke or any other physical illnessaffecting  cognitive  function.	:30
+All  participants  wereallocated to 1 of 3 groups (ie, 115 to a normal control[NC] group, 37 to the MCI group, and 44 to the mildAD group).NC group members had no or only mild memorycomplaints, were in the normal range for standard-ized neuropsychological tests, and had no neurolog-ical abnormality.	:31
+The MCI group was defined in accordance withthe  criteria  of  Petersen  et  al1:  (1)  a  memory  com-plaint, preferably corroborated by an informant; (2)memory impairment relative to age- and education-matched  healthy  individuals  (below  1.0  SD);  (3)intact  general  cognitive  function;  (4)  largely  intactactivities of daily living; (5) without dementia; and(6) without other obvious medical, neurological, orpsychiatric  explanations  for  the  memory  loss  (withthe exception of mild depression).	:32
+AD group members had been diagnosed as havingprobable AD and met the Diagnostic and StatisticalManual of Mental Disorders, Fourth Edition (DSM-IV)  criteria.16 These  subjects  were  mildly  demented(scores of 0.5 or 1 on the Clinical Dementia Rating(CDR)  scale).17 MoCA-K  was  not  used  to  diagnoseMCI  or  AD.	:33
+106 Journal of Geriatric Psychiatry and Neurology / Vol.	:35
+21, No.	:36
+2, June 2008ProceduresThe  study  subjects  were  administered  MoCA-K,MMSE, CDR, and Consortium to Establish a Registryfor Alzheimer’s Disease (CERAD) neuropsychologi-cal tests18 by 2 trained psychologists.	:37
+MoCA-K wasadministered to all 3 groups independently from thepsychologists and the clinicians who make the diag-nosis of MCI and AD.A  trained  psychiatrist  and  a  neurologist  per-formed the clinical diagnoses, with the support of aconsensus diagnosis conference in which the clini-cal  and  neuropsychological  data  were  reviewed.Test−retest reliability tests were performed using 29of the study subjects at 4-week intervals.	:38
+The original MoCA is a neurocognitive testdesigned to screen for MCI.15 It scores from 0 to 30,where  higher  scores  indicate  better  cognition  and  ascore below 26 indicates cognitive impairment corre-sponding to MCI and AD.	:40
+It can be administered in10 minutes.	:41
+To correct for education effects, 1 pointwas added for participants with 12 years of educationor less.	:42
+The MoCA is composed of12 items.	:44
+Memory is tested by a short-term memoryrecall  task  (5  points).	:45
+Visuospatial  ability  is  testedusing  a  clock-drawing  task  (3  points)  and  a  three-dimensional cube copy (1 point).	:46
+Executive functionis  tested  using  a  trail-making  B  task  (1  point),  aphonemic fluency task (1 point), and a 2-item verbalabstraction task (2 points).	:47
+Attention, concentration,and  working  memory  is  tested  using  a  sustainedattention  task  (1  point),  a  serial  subtraction  task(3  points),  and  digits  forward  and  backward  tasks(1 point each).	:48
+Language is tested using a 3-item con-frontation  naming  task  with  low-familiarity  animals(lion, camel, rhinoceros; 3 points) and repetition of 2syntactically complex sentences (2 points).	:49
+Orientationto time and place is also tested (6 points).In the MoCA-K, the words used in the short-termmemory recall task and the letters used in the trail-mak-ing B task were changed, and the phonemic fluency taskwas replaced with a semantic fluency task.	:50
+One pointwas added for participants with 6 years of education orless instead of 12 years of education or less.MMSE.	:51
+The  MMSE is  a  neurocognitive  testdesigned to screen cognitive impairment.10 It scoresfrom  0  to  30  where  higher  scores  indicate  bettercognition and scores of <25 cognitive impairment.	:52
+Itcan be administered in 5 to 10 minutes.	:53
+The Koreanversion  of  MMSE  is  composed  of  orientation  (10points), short-term memory registration and recall (6points), attention (5 points), naming (2 points), fol-lowing verbal commands (4 points), judgment (2 points),and  copying  a  double  pentagon  (1  point).	:54
+TheMMSE was validated in Korean elderly by Lee et al.19CDR.	:55
+The CDR is an observer rating scale designedto rate severity in dementia patients.17 It contains 6performance areas: memory, orientation, judgment,problem-solving, community affairs, home and hob-bies,  and  personal  care.	:56
+It  rates  each  area  in  a  5point  scale  where  0  represents  the  absence  ofdementia, 0.5 questionable, 1 mild, 2 moderate, and3 severe dementia.	:57
+The sum CDR scores in these 6areas  were  used  in  this  study.	:58
+It  was  validated  inKorean elderly by Choi et al.20CERAD neuropsychological test.	:59
+This is a neuropsy-chological test used to detect dementia by CERAD.18It  contains  the  following  elements:  verbal  fluency,the Boston naming test, word list memory, construc-tional  praxis,  word  list  recall,  word  list  recognition,and recall of constructional praxis.	:60
+Itwas validated in Korean elderly by Lee et al.21Statistical MethodsSPSS  for  Windows  (release  13.0;  SPSS,  Inc,Chicago, Ill) was used for the data analyses.	:62
+Sex dis-tributions in the 3 groups were compared using thechi-square  test.	:63
+Mean  age,  education  years,  andMoCA-K and MMSE scores for each of the 3 groupswere compared by ANOVA (with Bonferroni adjust-ment for multiple testing).	:64
+Larger  area  under  curvesKorean Version of the Montreal Cognitive Assessment / Lee et al 107(AUCs) indicated improved diagnostic performance.Sensitivities, specificities, positive predictive values,and  negative  predictive  values  were  measured  atthreshold  scores.	:69
+P values  below  0.05  were  consid-ered statistically significant throughout the analysis.Results Demographic Findingsand Group DifferencesThe  study  participants  comprised  196  elderly  per-sons:  44  with  AD,  37  with  MCI,  and  115  normalcontrol  subjects  (NC).	:70
+Subject  characteristics  aredisplayed in Table 1.	:71
+Mean ages, sex ratios, and num-ber of education years were similar in the 3 groups.Of the participants, 104 (53.1%) had received 6 yearsof education or less, 73 (37.2%) had 6 to 12 years ofeducation, and 19 (9.7%) had over 12 years.	:72
+Table  1  shows  descriptive  statistics  for  theMMSE  and  MoCA-K.  MMSE  scores  were  signifi-= 41.3,  P <cantly  different  in  the  3  groups  (F2,194 .001),  and  by  post  hoc  analysis  with  Bonferroniadjustment, MMSE scores differed for the AD andMCI  groups  (P < .001)  and  for  the  AD  and  NCgroups  (P < .001),  but  not  for  the  NC  and  MCIgroups (P = .117).	:73
+MoCA-K scores were also signif-= 204.5, P <icantly different in the 3 groups (F2,194 .001), and by post hoc analysis, MoCA-K differenti-ated effectively between AD and MCI (P < .001), ADand NC (P < .001), and NC and MCI (P < .001).In the NC group, three-dimensional cube copy,semantic  fluency,  2-item  verbal  abstraction,  serialsubtraction,  and  naming  with  low-familiarity  ani-mals  were  significantly  correlated  with  educationyears (P < .05) among 12 items of the MoCA-K.Internal Consistency andTest−−Retest Reliability Cronbach’s  alpha  for  the  MoCA-K  was  0.86.	:74
+Thisresult indicates a high level of internal consistencyof  the  MoCA-K.  A  similar  high  consistency  wasfound  for  all  the  12  items  of  the  MoCA-K  withCronbach’s alpha values ranging from 0.81 to 0.84.	:75
+Test−retest  reliability  data  were  collected  from29 participants at 4 week intervals.	:76
+Mean change inMoCA-K total scores from the first to second evalu-ation was −0.54 to 1.23 points (P = .43), and ICCsbetween the baseline MoCA-K scores and follow-upwere high (ICCs = 0.75, P < .001).	:77
+Table 1.	:78
+Demographic Data and Mean Scores(Standard Deviation) of Mini-Mental State Examinationand the Korean Version of the Montreal CognitiveAssessment Among Subjects With Alzheimer’s Disease,Mild Cognitive Impairment, and Normal ControlsAD (n = 44) MCI (n = 37) NC (n = 115)70.4 (8.6)23 (52.3)7.9 (3.7)71.3 (5.9)23 (62.2)8.3 (3.8)69.1 (6.1)81 (70.4)8.0 (3.5)Age, years (SD)Female, N (%)Education years(SD)MMSE scores19.3 (4.7)24.0 (2.9)25.5 (3.8)(SD)MoCA-K scores12.9 (5.0)18.5 (3.7)25.0 (2.6)(SD)NOTE: MMSE = Mini-Mental State Examination; MoCA-K =the Korean Version of the Montreal Cognitive Assessment; AD =Alzheimer’s Disease; MCI = Mild Cognitive Impairment; NC =Normal Controls.Figure  1.	:79
+108 Journal of Geriatric Psychiatry and Neurology / Vol.	:81
+21, No.	:82
+2, June 2008Sensitivity and SpecificityROC curves were drawn for the MCI group versusthe NC group, as well as the AD group versus theNC group, to determine the discriminatory validityof  MoCA-K  (Figures  1  and  2).	:83
+Areas  under  theROC curve for the MCI and AD groups by MoCA-K  were  0.94  (0.90−0.98)  and  0.98  (0.96−1.00),respectively.	:84
+These results show that the MoCA-Kdifferentiates these groups well, the correspondingvalues  for  the  MMSE  were  0.66  (0.57−0.76)  and0.87 (0.81−0.93).Table 2 presents  the  sensitivities,  specificities,positive predictive values, and negative predictive val-ues  of  the  MoCA-K  at  different  cut-off  values.	:85
+Thecut-off value determined by the developers of the orig-inal  MoCA  was  25/26,  which  suggested  a  probablecase of MCI or AD, but the optimal cut-off value forthe MoCA-K as determined by this study appears to be22/23  (ie,  3  points  lower  than  the  original  MoCAvalue).	:86
+At this cut-off, the sensitivity of the MoCA-K interms of screening MCI and AD were excellent (89%and 98%, respectively).	:87
+The specificity of the MoCA-Kwas good (84%).	:88
+At 25/26 cut-off points, the sensitivi-ties  of  the  MMSE  for  screening  MCI  and AD  were59% and 86%, respectively, and the specificity of theMMSE to screen MCI and AD was 70%.DiscussionThe  demented  population  is  rapidly  increasing,  butmost patients do not receive appropriate early diagno-sis and treatment in time because of poor recognitionFigure  2.	:89
+ROC  curve  analysis  of  the  Mini-Mental  StateExamination  (MMSE)  and  the  Korean  version  of  the  MontrealCognitive Assessment (MoCA-K) to detect Alzheimer’s disease (AD).MoCA-K  scores  were  found  to  be  highly  andpositively  correlated  with  MMSE  scores  (r  = 0.65,P < .001) and negatively correlated with the sum ofCDR scores (r = −0.62, P < .001).	:90
+Table 2.	:91
+Sensitivity, Specificity, Positive Predictive Value, and Negative Predictive Valueof the Korean Version of the Montreal Cognitive Assessment for Detection ofMild Cognitive Impairment and Alzheimer’s DiseaseFor MCICut-off18/1919/2020/2121/2222/2323/2424/2525/2626/27Se0.49 0.51 0.65 0.84 0.89 0.95 1.00 1.00 1.00 Sp0.97 0.97 0.94 0.90 0.84 0.76 0.61 0.50 0.34 PPV0.82 0.83 0.77 0.72 0.65 0.56 0.45 0.39 0.33 For ADCut-off18/1919/2020/2121/2222/2323/2424/2525/2626/27NPV0.85 0.86 0.89 0.94 0.96 0.98 1.00 1.00 1.00 Se0.86 0.93 0.93 0.98 0.98 0.98 0.98 1.00 1.00 Sp0.97 0.97 0.94 0.90 0.84 0.76 0.61 0.50 0.34 PPV0.90 0.91 0.85 0.78 0.70 0.61 0.49 0.44 0.37 NPV0.95 0.97 0.97 0.99 0.99 0.99 0.99 1.00 1.00NOTE: SE = Sensitivity; SP = Specificity; PPV = Positive Predictive Value; NPV = Negative Predictive Value; MoCA-K =  the KoreanVersion of the Montreal Cognitive Assessment; MCI = Mild Cognitive Impairment; AD = Alzheimer’s Disease.	:92
+Korean Version of the Montreal Cognitive Assessment / Lee et al 109by primary care physicians and the poor sensitivity ofthe MMSE.22,23 Thus, more accurate tests for screen-ing MCI and AD in primary care and elderly outpa-tient clinics are required.	:93
+The results obtained show that MoCA-K, whichcan be administered in 10 minutes, is valid, reliable,and reproducible in an elderly outpatient clinic.	:96
+TheKorean version of MoCA, as described above, was welltranslated and revised, and all 12 items showed goodinternal  consistency.	:98
+Previous  studies  have  reportedthat the semantic fluency task is more sensitive thanthe phonemic fluency task at detecting dementia,24-26and that phonemic fluency is more influenced by edu-cation than semantic fluency.27 This study shows thatphonemic fluency was an appropriate change.The  high  correlations  observed  between  MMSEand MoCA-K individual total scores proved good con-current validity.	:99
+In  this  study,  the  optimal  cut-off  point  of  theMoCA-K was found to be 3 points lower than the orig-inal MoCA, which may be due to a low number of yearsin  full-time  education.	:102
+Mean  education  years  in  thisstudy (8.3 ± 3.7 years in the NC group) was 5 yearslower than that in the original MoCA study (13.3 ± 3.4years).	:103
+Thesecognitive functions are related to frontal functions28-30and a low education level may be related to low frontalsynaptic density and low frontal cognitive functions.31This cut-off difference may also be due to cultural dif-ferences;  Korean  elderly  were  not  familiar  with  thewesternized cognitive items used in the MoCA-K.	:106
+In conclusion, our results showed that the MoCA-K could be reliably used in primary care and geriatricoutpatient clinics to detect cognitive impairment cor-responding to MCI and AD in just 10 minutes.	:113
+AcknowledgmentsThis  work  was  supported  by  the  SNUH  ResearchFund, a grant of the Korea Health 21 and D Project,Ministry of Health and Welfare (A050079).	:114
+This studywas presented at the American Psychiatric AssociationAnnual Meeting, Toronto, Canada, 2006.	:115
+References1.	:117
+2001;58:1985-1992.2.	:121
+2006;18:393-414.3.	:124
+Int J Geriatr Psychiatry.2004;19:313-319.4.	:126
+2004;256:183-194.5.	:130
+1999;56:303-308.6.	:134
+2004;16:129-140.7.	:138
+2004;3:246-248.	:142
+110 Journal of Geriatric Psychiatry and Neurology / Vol.	:143
+21, No.	:144
+2, June 20088.	:145
+2005;352:2379-2388.9.	:149
+2006;21:550-555.10.	:152
+1975;12: 189-198.11.	:157
+Psychol  Med.1982;12:397-408.12.	:160
+1990;47:49-52.13.	:164
+2002;17:1027-1033.14.	:168
+2004;19:136-143.15.	:172
+2005;53:695-699.16.	:176
+Diagnostic  andStatistical Manual of Mental Disorders, 4th ed.	:178
+Washington,DC: American Psychiatric Association Press; 1994.17.	:179
+1993;43: 2412-2414.18.	:183
+1994;44:609-614.19.	:187
+2002;41:508-525.20.	:190
+2001;19:585-591.21.	:194
+2002;57:P47-53.22.	:197
+BMJ.1988;297:1107-1110.23.	:200
+1997;12:101-108.24.	:203
+2004;42:1212-1222.25.	:207
+2002;16:35-42.26.	:211
+1999;6:147-178.27.	:215
+1998;61:115-122.28.	:218
+Cortex.2003;39:871-895.29.	:220
+2002;13:101-111.30.	:224
+2000;21:169-183.31.	:228
+2001;22:347-348.	:231
