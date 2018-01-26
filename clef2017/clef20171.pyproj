@@ -78,9 +78,13 @@
     <Compile Include="stopping_methods\fit_gp_example.py" />
     <Compile Include="stopping_methods\fit_gp_scikitlearn.py" />
     <Compile Include="stopping_methods\fit_gp_test.py" />
+    <Compile Include="stopping_methods\gpTest.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stopping_methods\intergrated_recall_rates.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="stopping_methods\plot_gpr_co2.py" />
     <Compile Include="stopping_methods\prob_method.py" />
     <Compile Include="stopping_methods\target_method.py" />
     <Compile Include="test1.py">

@@ -71,6 +71,42 @@ def calcDistirubtion(window, testFiles, records):
                 QueiresToDist[record][records[record].docsReturned[index]] = (QueiresToDist[record][records[record].docsReturned[index]]) / ((window * 2) + 1 - deceptor)
 
     return QueiresToDist
+
+
+def calcDistirubtionTop1(testFiles, records):
+    found = False
+    header = True
+    qId = ""
+    lastId = "Start"
+    queryIdToRelvDocs = {}
+
+    with open(testFiles, encoding='utf-8') as content:
+        for line in content:
+            tabbed = re.split('\s+', line)
+
+            if tabbed[0] not in queryIdToRelvDocs:
+                queryIdToRelvDocs[tabbed[0]] = []
+
+
+            if '1' in tabbed[3].rstrip().strip():
+                queryIdToRelvDocs[tabbed[0]].append(tabbed[2].rstrip().strip())
+
+
+
+        QueiresToDist = {}
+
+
+        for record in records:
+            QueiresToDist[record] = [0] * len(records[record].docsReturned)
+            for i, x in enumerate(records[record].docsReturned):
+                if x in queryIdToRelvDocs[record]:
+                    QueiresToDist[record][i] = 1
+            
+
+            #QueiresToDist[record] =[float(x) / len(records[record].docsReturned) for x in QueiresToDist[record]]
+
+
+        return QueiresToDist
                     
 
 
@@ -126,18 +162,20 @@ def calcRecallForTopN(N, testFiles, records):
 
             i += 1
 
-    recallScores =  [recallScores[x] / N for x in recallScores]
+    #recallScores =  [recallScores[x] / N for x in recallScores]
     return recallScores
 
 
-records = loadTestResults("Output/Test_Data_Sheffield-run-5-Pstopwords")
-scores = calcDistirubtion(50, 'qrel/qrel_abs_test', records)
+records = loadTestResults("Output/Test_Data_Sheffield-run-2")
+
+scores = calcDistirubtionTop1('qrel/qrel_abs_test', records)
 
 
 for score in scores:
 
-    f= open("intgrates/" + score + ".txt","w+")
-    vals = list(scores['CD009579'].values())
+    f= open("intergrates_bin/" + score + ".txt","w+")
+    #vals = list(scores[score].values())
+    vals = list(scores[score])
     
     # ----------------------------------------------------------------------
     #  First the noiseless case
@@ -153,7 +191,9 @@ for score in scores:
     for val in y:
        sum+=val
        intrgrated.append(sum)
-       #f.write(str(sum) + "\n")
+       f.write(str(sum) + "\n")
+
+    continue
     
     
     #intrgrated = softmax(np.array([intrgrated]))[0]
