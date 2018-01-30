@@ -41,6 +41,8 @@ def process(file, name):
     scores2 = scores[::sampleRate]
     scores2 = np.array(scores2).reshape(len(scores2), 1)
         #scores2 = list(itertools.chain.from_iterable(itertools.repeat(q, x) for q in scores2))
+
+
     
 
        # for i in range(len(scores2), len(scores)):
@@ -61,6 +63,8 @@ def process(file, name):
     gp.create(x, scores2)
     y_pred, sigma = gp.predict(X)
     _X = np.atleast_2d([x for x in range(0, len(scores))]).T
+
+    x_val_ = int(round(len(scores / 100) * 70))
 
 
     #plt.plot(scores, markersize=10)
