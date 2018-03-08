@@ -30,6 +30,9 @@ def f(x):
     return x * np.sin(x)
 
 
+
+
+
 def calcDistirubtion(window, testFiles, records):
     found = False
     header = True
@@ -73,7 +76,7 @@ def calcDistirubtion(window, testFiles, records):
     return QueiresToDist
 
 
-def calcDistirubtionTop1(testFiles, records):
+def calcDistirubtionTop1(testFiles, records, sample = 1):
     found = False
     header = True
     qId = ""
@@ -97,10 +100,12 @@ def calcDistirubtionTop1(testFiles, records):
 
 
         for record in records:
-            QueiresToDist[record] = [0] * len(records[record].docsReturned)
-            for i, x in enumerate(records[record].docsReturned):
-                if x in queryIdToRelvDocs[record]:
-                    QueiresToDist[record][i] = 1
+            QueiresToDist[record] = []
+            for z in range(0, sample):
+                QueiresToDist[record].append([0] * int((len(records[record].docsReturned) / sample)))
+                for i, x in enumerate(records[record].docsReturned[z::sample]):
+                    if x in queryIdToRelvDocs[record]:
+                        QueiresToDist[record][z][i] = 1
             
 
             #QueiresToDist[record] =[float(x) / len(records[record].docsReturned) for x in QueiresToDist[record]]
@@ -165,15 +170,15 @@ def calcRecallForTopN(N, testFiles, records):
     #recallScores =  [recallScores[x] / N for x in recallScores]
     return recallScores
 
-
+sample = 3
 records = loadTestResults("Output/Test_Data_Sheffield-run-2")
 
-scores = calcDistirubtionTop1('qrel/qrel_abs_test', records)
+scores = calcDistirubtionTop1('qrel/qrel_abs_test', records, sample=sample)
 
 
 for score in scores:
 
-    f= open("intergrates_bin/" + score + ".txt","w+")
+    f= open("intgrates_s_3/" + score + ".txt","w+")
     #vals = list(scores[score].values())
     vals = list(scores[score])
     
@@ -181,17 +186,25 @@ for score in scores:
     #  First the noiseless case
     X = np.atleast_2d([x for x in range(0, len(vals))]).T
 
-    y = np.array(vals)
-
     intrgrated = []
 
 
     sum = 0
 
-    for val in y:
-       sum+=val
-       intrgrated.append(sum)
-       f.write(str(sum) + "\n")
+    vals = np.array(vals)
+    vals = np.rot90(vals, 3)
+
+    sums = [0] * sample
+
+    for row in vals:
+        for x, val in enumerate(row):
+            sums[x]+=val
+
+        for sum in sums:
+           # intrgrated.append(sum)
+            f.write(str(sum) + "\t")
+
+        f.write("\n")
 
     continue
     

@@ -5,13 +5,15 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{e7ae998e-ace8-4132-80d6-144dd2c763d1}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>stopping_methods\intergrated_recall_rates.py</StartupFile>
+    <StartupFile>stopping_methods\gp_method.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
+    <CommandLineArguments>-k 10 -o Output/Test_Data_Sheffield-run-2 -q qrel/qrel_abs_test</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -74,11 +76,18 @@
     <Compile Include="other files\plot_runs.py" />
     <Compile Include="other files\run_4_LL.py" />
     <Compile Include="retrieve_data.py" />
+    <Compile Include="stopping_methods\date.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stopping_methods\fit_curves.py" />
+    <Compile Include="stopping_methods\fit_curves_2.py" />
     <Compile Include="stopping_methods\fit_gp_example.py" />
     <Compile Include="stopping_methods\fit_gp_scikitlearn.py" />
     <Compile Include="stopping_methods\fit_gp_test.py" />
     <Compile Include="stopping_methods\gpTest.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\gp_method.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="stopping_methods\intergrated_recall_rates.py">
