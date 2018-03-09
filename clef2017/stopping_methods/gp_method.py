@@ -111,25 +111,37 @@ def process(file, name, trueFile, file5, recallFile):
     scores_5 = np.array(scores_5)
     X_samps_5 = np.array(X_samps_5)
     plt.plot(x, trueScores)
-
-    
+    plt.scatter([x_val_true], [int(round(max(trueScores) * (rate / 100)))], s=60, c='r')
+    plt.annotate(str(rate) + "%" + "recall", xy=(x_val_true, int(round(max(trueScores) * (rate / 100)))), xytext=(20,20), bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
+        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
+            
+            
 
 
     for i, scoreSet in enumerate(scores):
 
-
+        fileWithOutPath = os.path.basename(file.name).split('.')[0]
         opt, pcov = curve_fit(other_func, X_samps, scoreSet, maxfev=1000)
         a, k, n = opt
         y2 = other_func(X_samps, a, k, n)
+        y2Scores = open('curve_scores/' + fileWithOutPath + '.txt', 'w')
+        for item in y2:
+            y2Scores.write("%s\n" % item)
         
         x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
         #recallFile.write(str(x_sam_val) + ",")
         score = ((len(trueScores) - x_sam_val) / sampleRate) / x_val_true
 
 
-        recallFile.write(str(x_sam_val >= x_val_true) + ",")
-        recallFile.write(str(1 - (x_sam_val / len(y2))) + ",")
-        recallFile.write(str(score))
+
+
+
+
+
+        recall = (trueScores[x_sam_val] / max(trueScores))
+        recallFile.write(str(recall >= rate) + ",")
+        recallFile.write(str(recall) + ",")
+        #recallFile.write(str(score))
 
 
         alpha = 0.05 # 95% confidence interval = 100*(1-alpha)
@@ -199,8 +211,24 @@ def process(file, name, trueFile, file5, recallFile):
 
 
     plt.legend(loc='lower right')
-    plt.show()
+    #plt.show()
     return score
+
+
+
+queryIdToRelvDocs = {}
+with open('qrel/qrel_abs_test', encoding='utf-8') as content:
+    for line in content:
+        tabbed = re.split('\s+', line)
+
+        if tabbed[0] not in queryIdToRelvDocs:
+            queryIdToRelvDocs[tabbed[0]] = []
+
+        if '1' in tabbed[3].rstrip().strip():
+            queryIdToRelvDocs[tabbed[0]].append(1)
+
+        else:
+            queryIdToRelvDocs[tabbed[0]].append(0)
 
 rate = 70
 
@@ -233,3 +261,20 @@ recallFile.close()
 print(sum / sucess)
 
     
+
+
+
+
+
+      #  fileWithOutPath = os.path.basename(file.name).split('.')[0]
+
+      #  count = 0
+       # for in_score in X_samps - 1:
+            
+       #     if in_score > x_val_true:
+        #        break
+#
+        #    if queryIdToRelvDocs[fileWithOutPath][int(in_score)] == 1:
+        #        count = count + 1
+
+                ###

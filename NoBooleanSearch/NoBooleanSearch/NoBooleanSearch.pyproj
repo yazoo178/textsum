@@ -2,15 +2,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>a24ca61f-afb9-4a68-826a-1fd0ae1246ee</ProjectGuid>
+    <ProjectGuid>4a3c2e21-ef26-41bb-98b6-181d53823132</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>marks.py</StartupFile>
+    <StartupFile>NoBooleanSearch.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>TextSum</Name>
-    <RootNamespace>TextSum</RootNamespace>
+    <Name>NoBooleanSearch</Name>
+    <RootNamespace>NoBooleanSearch</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <CommandLineArguments>maybe_protcol.txt</CommandLineArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,13 +24,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="embeddingMed.py">
+    <Compile Include="NoBooleanSearch.py" />
+    <Compile Include="rake.py" />
+    <Compile Include="rake_tutorial.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="stops.txt" />
+    <Content Include="stops_med.txt">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="marks.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TextSum.py" />
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

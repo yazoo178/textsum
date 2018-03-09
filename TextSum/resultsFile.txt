@@ -1,0 +1,41 @@
+Overall: 
+Number Marked: 71
+Mean: 16.816901408450704
+Highest Mark: 23
+Lowest Mark: 5
+Fails: 5
+Code Style Mean: 10.408450704225352
+Report Mean: 6.408450704225352
+Report Highest: 10
+Report Lowest: 0
+Code Mean: 10.408450704225352
+Code Highest: 14
+Code Lowest: 4
+
+William: 
+Number Marked: 48
+Mean: 16.729166666666668
+Highest Mark: 21
+Lowest Mark: 6
+Fails: 2
+Code Style Mean: 10.25
+Report Mean: 6.479166666666667
+Report Highest: 8
+Report Lowest: 2
+Code Mean: 10.25
+Code Highest: 13
+Code Lowest: 4
+
+James:
+Number Marked:  23
+Mean: 17.0
+Highest Mark: 23
+Lowest Mark: 5
+Fails: 3
+Code Style Mean: 10.73913043478261
+Report Mean: 6.260869565217392
+Report Highest: 10
+Report Lowest: 0
+Code Mean: 10.73913043478261
+Code Highest: 14
+Code Lowest: 5

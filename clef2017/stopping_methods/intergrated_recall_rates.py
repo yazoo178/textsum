@@ -10,9 +10,13 @@ import itertools
 from scipy.optimize import curve_fit
 
 
-# Define form of function going to try to fit to curve
-def model_func(x, a, k):
+# Define form of function going to try to fit to curve
+
+def model_func(x, a, k):
+
     return a * np.exp(-k*x)
+
+
 
 
 class GP:
@@ -116,7 +120,8 @@ def process(file, name, trueFile):
     
     """
 
-    p0 = (0.3,5) # starting search coefs 
+    p0 = (0.3,5) # starting search coefs 
+
     opt, pcov = curve_fit(model_func, X_samps, scores2, p0)
     #a, k = opt
     #y2 = model_func(x, a, k)
