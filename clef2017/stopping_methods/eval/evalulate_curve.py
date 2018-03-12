@@ -71,7 +71,7 @@ for opt, arg in opts:
 
 print("Recalls:")
 curve_scores = []
-for filename in os.listdir('./curve_scores/'):
+for filename in os.listdir('curve_scores/'):
     curve_scores.append(filename)
 
 for i,filename in enumerate(os.listdir('intergrates_bin')):

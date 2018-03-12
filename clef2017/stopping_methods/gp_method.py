@@ -64,7 +64,8 @@ def process(file, name, trueFile, file5, recallFile):
 
     
     
-
+    # Read through file containing cumulative totals for rel docs
+    # and create x axis vales (3, 6, 9, ...) 
     for line in file:
         c = c + sampleRate
         tmp = []
@@ -75,8 +76,8 @@ def process(file, name, trueFile, file5, recallFile):
         #if float(line) not in scores:
             tmp.append(float(val) * sampleRate)
 
-        scores.append(np.array(tmp))
-        X_samps.append(float(c))
+        scores.append(np.array(tmp)) # y-axis
+        X_samps.append(float(c))     # x-axis
 
 
     c = 0
@@ -87,7 +88,7 @@ def process(file, name, trueFile, file5, recallFile):
         scores_5.append(float(line))
         X_samps_5.append(float(c))
 
-
+    # Read in cumulative total for true scores
     for line in trueFile:
         trueScores.append(float(line))
 
@@ -121,9 +122,13 @@ def process(file, name, trueFile, file5, recallFile):
     for i, scoreSet in enumerate(scores):
 
         fileWithOutPath = os.path.basename(file.name).split('.')[0]
+        # Fit curve using sampled data
         opt, pcov = curve_fit(other_func, X_samps, scoreSet, maxfev=1000)
         a, k, n = opt
-        y2 = other_func(X_samps, a, k, n)
+        # Fit estimated curve onto compete range and save to file
+        # y2 = other_func(X_samps, a, k, n)
+        X_vals = np.array(range(0, len(trueScores)))
+        y2 = other_func(X_vals, a, k, n)
         y2Scores = open('curve_scores/' + fileWithOutPath + '.txt', 'w')
         for item in y2:
             y2Scores.write("%s\n" % item)
@@ -163,15 +168,15 @@ def process(file, name, trueFile, file5, recallFile):
             lower.append(p - sigma*tval)
             upper.append(p + sigma*tval)
 
-        yfit = other_func(X_samps, *lower)
-        plt.plot(X_samps,yfit,'--', color=c)
-        yfit = other_func(X_samps, *upper)
-        plt.plot(X_samps,yfit,'--', label='CI 95%', color=c)
+        yfit = other_func(X_vals, *lower)
+        plt.plot(X_vals,yfit,'--', color=c)
+        yfit = other_func(X_vals, *upper)
+        plt.plot(X_vals,yfit,'--', label='CI 95%', color=c)
 
-        plt.plot(X_samps, y2, label=u'Sample 3 - ' + str(i))
+        plt.plot(X_vals, y2, label=u'Sample 3 - ' + str(i))
 
 
-        plt.fill(np.concatenate([X_samps, X_samps[::-1]]),
+        plt.fill(np.concatenate([X_vals, X_vals[::-1]]),
              np.concatenate([y2 - 1.9500 * sigma,
                             (y2 + 1.9500 * sigma)[::-1]]),
             alpha=.1, fc='g', ec='None', label='95% confidence interval')
