@@ -25,12 +25,13 @@ def find_nearest(array,value):
     idx = (np.abs(array-value)).argmin()
     return idx
 
-def eval(true_scores_file, curve_scores):
+def eval(true_scores_file, curve_scores, filename):
 
     y_p = []
     scores = []
     X_samps = []
 
+    
     c = 0
     for line in true_scores_file:
         c = c + sample_rate
@@ -43,7 +44,7 @@ def eval(true_scores_file, curve_scores):
         X_samps.append(float(c))
 
 
-    for curveScore in open('C:/Users/william/Documents/TextSum/clef2017/curve_scores/'+ curve_scores, 'r+'):
+    for curveScore in open('./curve_scores/'+ curve_scores, 'r+'):
         y_p.append(float(curveScore))
 
     y_p = np.array(y_p)
@@ -52,7 +53,9 @@ def eval(true_scores_file, curve_scores):
     x_sam_val = find_nearest(y_p, max(y_p) * (rate / 100))
 
     recall = (scores[x_sam_val] / max(scores))
-    print(recall)
+    print(filename + ":" + str(recall))
+
+
 
 
 
@@ -66,14 +69,14 @@ for opt, arg in opts:
         sample_rate = int(arg)
 
 
-
+print("Recalls:")
 curve_scores = []
-for filename in os.listdir('C:/Users/william/Documents/TextSum/clef2017/curve_scores'):
+for filename in os.listdir('./curve_scores/'):
     curve_scores.append(filename)
 
 for i,filename in enumerate(os.listdir('intergrates_bin')):
     true_scores_file = open('intergrates_bin/' + filename , "r+")
-    eval(true_scores_file, curve_scores[i])
+    eval(true_scores_file, curve_scores[i], filename)
 
 
 
