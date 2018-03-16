@@ -3,6 +3,7 @@ import nltk
 import rake
 import re
 from Bio import Entrez
+import os
 
 STOPS = "stops.txt"
 refs = r'\([\&\.\,\-\'\s\dA-Ȣ]*?\s[0-9]{4}|([A-Z,ÖÄÅ][\.\,\-\'\dA-Ȣ]+[\s\&|et al.|m.fl.|och|and]*){1,7}\([0-9]{4}'
@@ -22,9 +23,12 @@ def RemoveRefs(content):
     return re.sub(refs, '', content)
 
 
+def CleanQuery(query):
+    query = query.replace('/', '')
+    return query
 
 
-def ProtocolToQuery(protocol):
+def ProtocolToQuery(file, protocol):
     protocol = RemoveRefs(protocol.lower())
 
     query = ""
@@ -34,12 +38,19 @@ def ProtocolToQuery(protocol):
 
     for keyword in keywords[0:int(len(keywords) / 20)]:
 
-        query += keyword[0] + " OR "
+        query += keyword[0] + " "
 
-    query = query[:-4]    
+    query = query[:-1]  
 
-    results = search(query)
-    print(results['IdList'])
+    query = CleanQuery(query)
+    
+    resultQuery = open(os.path.splitext(file)[0] + ".kwq", "w")
+    resultQuery.write(query)
+    resultQuery.close()
+
+
+    #results = search(query)
+    #print(results['IdList'])
     #print(keywords)
 
 
@@ -53,7 +64,7 @@ pFile = ""
 pFile = sys.argv[1:][0]
 
 content = open(pFile, 'r')
-ProtocolToQuery(content.read().replace('\n', ''))
+ProtocolToQuery(pFile,content.read().replace('\n', ''))
 
 
 
