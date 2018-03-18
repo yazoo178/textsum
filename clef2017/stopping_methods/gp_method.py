@@ -1,4 +1,4 @@
-import numpy as np
+﻿import numpy as np
 from matplotlib import pyplot as plt
 import re
 import os
@@ -9,11 +9,17 @@ import itertools
 from scipy.optimize import curve_fit
 from scipy.special import expit
 from scipy.stats.distributions import  t
+from sklearn.gaussian_process.kernels import WhiteKernel, ExpSineSquared
+
 
 class GP:
     def create(self, x, y):
         dy = 0.5 + 1.0 * np.random.random(np.array(y).shape)
         kernel = C(1.0, (1e-3, 1e3)) * RBF(10, (1e-2, 1e2))
+
+
+        gp_kernel = ExpSineSquared(1.0, 5.0, periodicity_bounds=(1e-2, 1e1)) \
+        + C(1.0, (1e-3, 1e3))
 
         ##C(1.0, (1e-3, 1e3)) 
         self.gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=9)
@@ -121,17 +127,58 @@ def process(file, name, trueFile, file5, recallFile):
 
     for i, scoreSet in enumerate(scores):
 
-        fileWithOutPath = os.path.basename(file.name).split('.')[0]
-        # Fit curve using sampled data
-        opt, pcov = curve_fit(other_func, X_samps, scoreSet, maxfev=1000)
-        a, k, n = opt
-        # Fit estimated curve onto compete range and save to file
-        # y2 = other_func(X_samps, a, k, n)
+
+        alpha = 0.05 # 95% confidence interval = 100*(1-alpha)
+
+        fileWithOutPath = os.path.basename(file.name).split('.')[0] + "_" + method
         X_vals = np.array(range(0, len(trueScores)))
-        y2 = other_func(X_vals, a, k, n)
-        y2Scores = open('curve_scores/' + fileWithOutPath + '.txt', 'w')
-        for item in y2:
-            y2Scores.write("%s\n" % item)
+
+        if method is "gp":
+            gp = GP()
+            gp.create(np.array([X_samps]).reshape(len(X_samps), 1), np.array(scoreSet))
+            y2, sigma = gp.predict(X_vals.reshape(len(X_vals), 1))
+            #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
+
+
+            y2Scores = open('curve_scores/gp/' + fileWithOutPath + '.txt', 'w')
+
+            for item in y2:
+                y2Scores.write("%s\n" % item)
+
+            y2Scores.close()
+
+           # plt.plot(X_vals, y2, label=u'True')
+            #plt.show()
+            return 0
+
+        else:
+
+            # Fit curve using sampled data
+            opt, pcov = curve_fit(other_func, X_samps, scoreSet, maxfev=1000)
+            a, k, n = opt
+            # Fit estimated curve onto compete range and save to file
+            # y2 = other_func(X_samps, a, k, n)
+            
+
+
+            y2 = other_func(X_vals, a, k, n)
+
+            n = len(y2)    # number of data points
+            p = len(opt) # number of parameters
+
+            dof = max(0, n - p) # number of degrees of freedom
+
+            # student-t value for the dof and confidence level
+
+            tval = t.ppf(1.0-alpha/2., dof) 
+            c = 'g'
+
+
+
+            y2Scores = open('curve_scores/lin/' + fileWithOutPath + '.txt', 'w')
+
+            for item in y2:
+                y2Scores.write("%s\n" % item)
         
         x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
         #recallFile.write(str(x_sam_val) + ",")
@@ -143,23 +190,15 @@ def process(file, name, trueFile, file5, recallFile):
 
 
 
-        recall = (trueScores[x_sam_val] / max(trueScores))
-        recallFile.write(str(recall >= rate) + ",")
-        recallFile.write(str(recall) + ",")
+        #recall = (trueScores[x_sam_val] / max(trueScores))
+       # re#callFile.write(str(recall >= rate) + ",")
+       # recallFile.write(str(recall) + ",")
         #recallFile.write(str(score))
 
 
-        alpha = 0.05 # 95% confidence interval = 100*(1-alpha)
+        
 
-        n = len(y2)    # number of data points
-        p = len(opt) # number of parameters
 
-        dof = max(0, n - p) # number of degrees of freedom
-
-        # student-t value for the dof and confidence level
-
-        tval = t.ppf(1.0-alpha/2., dof) 
-        c = 'g'
 
         lower = []
         upper = []
@@ -186,10 +225,7 @@ def process(file, name, trueFile, file5, recallFile):
     
 
 
-  #  gp = GP()
-    #gp.create(x, scores)
-   # y_pred, sigma = gp.predict(X)
-   # _X = np.atleast_2d([x for x in range(0, len(scores))]).T
+
 
     opt, pcov = curve_fit(other_func, x, trueScores)
     a, k, n = opt
@@ -236,7 +272,7 @@ with open('qrel/qrel_abs_test', encoding='utf-8') as content:
             queryIdToRelvDocs[tabbed[0]].append(0)
 
 rate = 70
-
+method = "lin"
 recallFile = open("recall_file_" + str(rate) + ".csv" , "w")
 #recallFile.write("Topic Name,Total Number of Documents, Number of Releavent Documents, Observations for " + str(rate) + "% Recall, Observations for " + str(rate) + "% Recall Sample_1 1/3, Observations for " + str(rate) + " Recall Sample_2 2/3, Observations for " + str(rate) + "% Recall Sample_3 3/3 \n")
 recallFile.write("Topic Name, 70% Recall, Recall, Effort \n")

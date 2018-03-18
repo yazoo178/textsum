@@ -1,4 +1,4 @@
-import operator
+﻿import operator
 import matplotlib.pyplot as plt
 import math
 import numpy as np
@@ -49,7 +49,7 @@ def eval(true_scores_file, curve_scores, filename):
         X_samps.append(float(c))
 
 
-    for curveScore in open('./curve_scores/'+ curve_scores, 'r+'):
+    for curveScore in open('./curve_scores/' + mode + "/" + curve_scores, 'r+'):
         y_p.append(float(curveScore))
 
     y_p = np.array(y_p)
@@ -68,7 +68,9 @@ def eval(true_scores_file, curve_scores, filename):
 
 
 opts, args = getopt.getopt(sys.argv[1:],"hc:o:q:")
-results = []
+dictResults = []
+mode = "lin"
+
 for opt, arg in opts:
     if opt == '-h':
         usage()
@@ -80,7 +82,7 @@ for opt, arg in opts:
 
 print("Recalls:")
 curve_scores = []
-for filename in os.listdir('curve_scores/'):
+for filename in os.listdir('curve_scores/' + mode + "/"):
     curve_scores.append(filename)
 
 for i,filename in enumerate(os.listdir('intergrates_bin')):
@@ -90,12 +92,21 @@ for i,filename in enumerate(os.listdir('intergrates_bin')):
     results = eval(true_scores_file, curve_scores[i], filename)
 
     rSet['recall'] = results[0]
-    rSet['above ' + str(rate)] = float(rSet['recall']) < float(rate)
+    rSet['above ' + str(rate)] = float(rSet['recall']) > (float(rate) / 100)
     rSet['effort'] = results[1]
+
+
     print(rSet)
 
 
-    results.append(rSet)
+    dictResults.append(rSet)
+
+f = open(mode + '_results_' + str(rate) +".csv", "w")
+f.write("recall" + "," + "above " + str(rate) + "," + "effort" + "\n")
+
+for element in dictResults:
+    f.write(str(element['recall']) + "," + str(element['above ' + str(rate)]) + "," + str(element['effort']))
+    f.write('\n')
 
 
 
