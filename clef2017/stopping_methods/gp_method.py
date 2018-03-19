@@ -10,7 +10,7 @@ from scipy.optimize import curve_fit
 from scipy.special import expit
 from scipy.stats.distributions import  t
 from sklearn.gaussian_process.kernels import WhiteKernel, ExpSineSquared
-
+import sys, getopt
 
 class GP:
     def create(self, x, y):
@@ -57,11 +57,10 @@ def find_nearest(array,value):
 
 
 
-def process(file, name, trueFile, file5, recallFile):
+def process(file, name, trueFile):
 
     scores = []
     trueScores = []
-    sampleRate = 3
     c = 0
     X_samps = []
 
@@ -85,14 +84,6 @@ def process(file, name, trueFile, file5, recallFile):
         scores.append(np.array(tmp)) # y-axis
         X_samps.append(float(c))     # x-axis
 
-
-    c = 0
-    for line in file5:
-        c = c + 5
-
-        #if float(line) not in scores:
-        scores_5.append(float(line))
-        X_samps_5.append(float(c))
 
     # Read in cumulative total for true scores
     for line in trueFile:
@@ -179,6 +170,10 @@ def process(file, name, trueFile, file5, recallFile):
 
             for item in y2:
                 y2Scores.write("%s\n" % item)
+
+            y2Scores.close()
+
+            return 0
         
         x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
         #recallFile.write(str(x_sam_val) + ",")
@@ -257,8 +252,28 @@ def process(file, name, trueFile, file5, recallFile):
 
 
 
+
+
+opts, args = getopt.getopt(sys.argv[1:],"hc:o:q:")
+method = "lin"
+sampleRate = 2
+qrel = 'qrel/qrel_abs_test'
+int_scores_folder = 'intgrates_s_2/'
+true_int_scores_folder = 'intergrates_bin/' 
+rate = 70
+
+for opt, arg in opts:
+    if opt == '-h':
+        print ("-m mode gp/lin -s sample rate [DEFAULT 2]")
+    elif opt in ("-m"):
+        mode = int(arg)
+    elif opt in ("-s"):
+        sampleRate = int(arg)
+
+
+
 queryIdToRelvDocs = {}
-with open('qrel/qrel_abs_test', encoding='utf-8') as content:
+with open(qrel, encoding='utf-8') as content:
     for line in content:
         tabbed = re.split('\s+', line)
 
@@ -271,34 +286,20 @@ with open('qrel/qrel_abs_test', encoding='utf-8') as content:
         else:
             queryIdToRelvDocs[tabbed[0]].append(0)
 
-rate = 70
-method = "lin"
-recallFile = open("recall_file_" + str(rate) + ".csv" , "w")
-#recallFile.write("Topic Name,Total Number of Documents, Number of Releavent Documents, Observations for " + str(rate) + "% Recall, Observations for " + str(rate) + "% Recall Sample_1 1/3, Observations for " + str(rate) + " Recall Sample_2 2/3, Observations for " + str(rate) + "% Recall Sample_3 3/3 \n")
-recallFile.write("Topic Name, 70% Recall, Recall, Effort \n")
 
 sum = 0
 sucess = 0
-for filename in os.listdir('intgrates_s_10'):
+for filename in os.listdir(int_scores_folder):
     #filename = 'CD008803.txt'
-    recallFile.write(filename + ",")
-
-    file = open('intgrates_s_3/' + filename , "r+")
-    file5 = open('intgrates_s_5/' + filename , "r+")
-    fileTrue = open('intergrates_bin/' + filename , "r+")
-    
-    
+    file = open(int_scores_folder + filename , "r+")
+    fileTrue = open(true_int_scores_folder + filename , "r+")
     
     try:
-        sum += process(file, filename, fileTrue, file5, recallFile)
+        sum += process(file, filename, fileTrue)
         sucess += 1
     except RuntimeError:
         pass
-
-    recallFile.write("\n")
    
-  
-recallFile.close()
 print(sum / sucess)
 
     
