@@ -13,7 +13,7 @@
     <RootNamespace>NoBooleanSearch</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>maybe_protcol.txt</CommandLineArguments>
+    <CommandLineArguments>CD010438.txt</CommandLineArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
