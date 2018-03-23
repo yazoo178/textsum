@@ -1,0 +1,1204 @@
+\chapter{Results} \label{results}
+
+This section will discuss the results of our implementations. The aim here is to improve the performance of \#happysheffield gradually. We will use the same evaluation metrics as described in the analysis of existing system
+
+\section{Cycle One} \label{cycle_1}
+
+For the first cycle, we created a simple Naive Bayes classifier to categorise each tweet by emotion. We used a unigram language model and words as features. We used a tokenizer designed for usage with twitter data \cite{OConnor2010}. No external libraries were used, we simply used the data types and storage classes provided by the Python programming language. No additional pre-processing or smoothing methods were applied.
+
+We can evaluate the results by training on 75\% of the data set and using the remaining 25\% to test our system. In future, we will use cross-validation.
+
+Using this technique we were able to achieve an overall system accuracy of \textbf{0.536}.
+
+We can look further into the system performance by looking at the precision, recall and f-measure for each emotion.
+
+
+\begin{table}[H]
+\center
+ \begin{tabular}{|c|c|c|c|c|c|c|} 
+ \hline
+ \ Evaluation & \textbf{anger} & \textbf{joy} & \textbf{fear} & \textbf{disgust} & \textbf{sadness} & \textbf{surprise} \\ [0.5ex] 
+ \hline
+ \ \textbf{Base Naive Bayes Classifier} & & & & & &  \\ [0.5ex] 
+ \hline
+ Precision & 0.468 & 0.497 & 0.803 & 1.0 & 0.552 & 0.628 \\ 
+ \hline
+ Recall & 0.102 & 0.928 & 0.434 & 0.0117 & 0.362 & 0.267 \\
+ \hline
+ F-Measure & 0.167 & 0.647 & 0.564 & 0.023 & 0.437 & 0.375 \\
+ \hline
+\end{tabular}
+\caption{Scores for basic classifier}
+\end{table}
+
+
+\iffalse
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+    ymin = 0,
+    ymax = 1,
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.style={/pgf/number format/fixed, font=\tiny},
+]
+\addplot [ybar, fill=blue]
+    coordinates {
+        (anger,0.468) (joy,0.497)
+         (fear,0.803) (disgust,1.0) (sadness, 0.552) (surprise, 0.628)
+         
+         };
+\legend{Emotion}
+\title{Precision Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{The precision rates for each emotion class[Naive Bayes][C1]}
+\end{figure}
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+    ymin = 0,
+    ymax = 1,
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.style={/pgf/number format/fixed, font=\tiny},
+]
+\addplot [ybar, fill=red]
+    coordinates {
+        (anger,0.102) (joy,0.928)
+         (fear,0.434) (disgust,0.0117) (sadness, 0.362) (surprise, 0.267)
+         
+         };
+\legend{Emotion}
+\title{Recall Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{The recall rates for each emotion class[Naive Bayes][C1]}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+    ymin = 0,
+    ymax = 1,
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.style={/pgf/number format/fixed, font=\tiny},
+]
+\addplot [ybar, fill=green]
+    coordinates {
+        (anger,0.167) (joy,0.647)
+         (fear,0.564) (disgust,0.023) (sadness, 0.437) (surprise, 0.375)
+         
+         };
+\legend{Emotion}
+\title{F-Measure Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{The F-Measure rates for each emotion class[Naive Bayes][C1]}
+\end{figure}
+
+\fi
+
+We can see that our results are highly varied between different emotions. Disgust achieved a 1.0 rate for precision, but this was because our classifier only gave 1 of the 85 disgust tweets this emotion and resulted in a very small recall.
+
+Joy is the most commonly assigned emotion; we managed to assign 738 of the 795 joy tweets. But our system over-classifies this emotion too, as it gave 1484 tweets a joy assignment, despite there only being 795 joy tweets in our test set. 
+
+Overall our machine-learning based implementation performs better than the lexicon based approach, but the quality of results for each emotion type is more varied.
+
+
+\subsection{Cycle One Conclusion}
+
+We were able to improve the overall system accuracy from \textbf{0.313} to \textbf{0.536}. This is a good start, but we can see our system is over-classifying tweets of the joy emotion and severely under-classifying tweets of the disgust emotion. We are also not doing any pre-processing or handling more sophisticated language, such as negation. This will be the focus on subsequent sections. 
+
+\section{Cycle Two} \label{cy2}
+
+The decision was taken to use a more optimized toolkit for implementing our classifier. scikit-learn \cite{scikit} provides an optimized a series of optimized methods for implementing machine learning algorithms.
+
+Our next implementation uses Multinomial Naive Bayes provided by scikit-learn along with a stop-list and +1 smoothing. We used unigram features along with the same tokenizer described in the cycle one. We are also representing words as simple count vectors, e.g.,
+
+\begin{center}
+\textit {\@william "I am happy happy happy today"}
+\end{center}
+
+\begin{equation} \label{count_vector}
+S = {1,1,3,1}
+\end{equation}
+
+We applied 10-folds of cross validation to evaluate the performance.
+
+Using this technique we were able to achieve an overall average system accuracy of \textbf{0.558}. We calculated this as the sum of the accuracy for each fold, normalized by the number of folds and can be described formally as follows:
+
+\begin{equation}
+A = \frac{\sum_{f_i}^{F}}{F}
+\end{equation}
+
+Where $F$ is the number of folds and $A$ is the average accuracy.
+
+We can calculate the average precision, recall, and f-measure by applying the same formula. We can then compare our new system to our legacy Naive Bayes implementation.
+
+
+
+\begin{table}[H]
+\center
+ \begin{tabular}{|c|c|c|c|c|c|c|} 
+ \hline
+ \ Evaluation & \textbf{anger} & \textbf{joy} & \textbf{fear} & \textbf{disgust} & \textbf{sadness} & \textbf{surprise} \\ [0.5ex] 
+ \hline
+ \ \textbf{Base Naive Bayes Classifier} & & & & & &  \\ [0.5ex] 
+ \hline
+ Precision & 0.468 & 0.497 & 0.803 & 1.0 & 0.552 & 0.628 \\ 
+ \hline
+ Recall & 0.102 & 0.928 & 0.434 & 0.0117 & 0.362 & 0.267 \\
+ \hline
+ F-Measure & 0.167 & 0.647 & 0.564 & 0.023 & 0.437 & 0.375 \\
+ \hline
+ \ \textbf{NB,Scikit,Stoplist,Smoothing} & & & & & &  \\ [0.5ex] 
+ \hline
+  Precision & 0.654 & 0.534 & 0.718 & 0.886 & 0.487 & 0.675 \\ 
+ \hline
+ Recall & 0.172 & 0.91 & 0.487 & 0.047 & 0.362 & 0.311 \\
+ \hline
+ F-Measure & 0.273 & 0.647 & 0.564 & 0.087 & 0.415 & 0.425 \\
+ \hline
+\end{tabular}
+\caption{Scores for basic classifier}
+\end{table}
+
+\iffalse
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+    ymin = 0,
+    ymax = 1,
+    legend style={at={(0.5,-0.1)},
+    anchor=north,legend columns=1},
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.append style={/pgf/number format/fixed, font=\fontsize{1}{1}\selectfont},
+]
+\addplot [ybar, fill=blue]
+    coordinates {
+        (anger,0.654) (joy,0.534)
+         (fear,0.718) (disgust,0.886) (sadness, 0.487) (surprise, 0.675)
+         
+         };
+         
+\addplot [ybar, fill=yellow]
+    coordinates {
+        (anger,0.468) (joy,0.497)
+         (fear,0.803) (disgust,1.0) (sadness, 0.552) (surprise, 0.628)
+         
+         };
+\addlegendentry{Naive Bayes + Scikit + Stoplist + Laplace Smoothing}
+\addlegendentry{Naive Bayes}
+\title{Precision Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparison of precision rates for each emotion class[Naive Bayes][C2] and scikit learn}
+\end{figure}
+
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+        ymin = 0,
+    ymax = 1,
+    legend style={at={(0.5,-0.1)},
+    anchor=north,legend columns=1},
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.append style={/pgf/number format/fixed, font=\fontsize{1}{1}\selectfont},
+]
+\addplot [ybar, fill=red]
+    coordinates {
+        (anger,0.172) (joy,0.91)
+         (fear,0.487) (disgust,0.047) (sadness,0.362) (surprise, 0.311)
+         
+         };
+\addplot [ybar, fill=yellow]
+    coordinates {
+        (anger,0.102) (joy,0.928)
+         (fear,0.434) (disgust,0.0117) (sadness, 0.362) (surprise, 0.267)
+         
+         };
+\addlegendentry{Naive Bayes + Scikit + Stoplist + Laplace Smoothing}
+\addlegendentry{Naive Bayes}
+\title{Recall Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparison of recall rates for each emotion class[Naive Bayes][C2] and scikit learn}
+\end{figure}
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+        ymin = 0,
+    ymax = 1,
+    legend style={at={(0.5,-0.1)},
+    anchor=north,legend columns=1},
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.append style={/pgf/number format/fixed, font=\fontsize{1}{1}\selectfont},
+]
+\addplot [ybar, fill=green]
+    coordinates {
+        (anger,0.273) (joy,0.647)
+         (fear,0.564) (disgust,0.087) (sadness, 0.415) (surprise, 0.425)
+         
+         };
+         
+\addplot [ybar, fill=yellow]
+    coordinates {
+        (anger,0.167) (joy,0.647)
+         (fear,0.564) (disgust,0.023) (sadness, 0.437) (surprise, 0.375)
+         
+         };
+\addlegendentry{Naive Bayes + Scikit + Stoplist + Laplace Smoothing}
+\addlegendentry{Naive Bayes}
+\title{F-Measure Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparison of F-Measure rates for each emotion class[Naive Bayes][C2] and scikit learn}
+\end{figure}
+
+\fi
+
+We can see that we have improved the overall performance of the majority of emotions. Sadness slightly suffered, but all the other emotions saw increased performance.
+
+The precision rate has dropped for fear, disgust, sadness, and surprise this is not necessarily a bad thing as it means our system is now putting in more effort in classifying for these emotions.
+
+Anger, surprise, disgust, and fear have all had good recall rate increases, but joy has lost some recall rate.(this was to be expected as the value was too high sustain while improving the other emotions)
+
+We still have the same problem in that joy is receiving over-classification and disgust is not receiving under-classification.
+
+\subsection{Vector Representation} \label{vec_rep}
+
+We discussed earlier how we are representing tweets as simple count vectors \ref{count_vector}. There are alternative approaches to representing tweets. 
+
+One approach we can take is to use the tf-idf weighting scheme, commonly used in information retrieval. The idea behind tf-idf is that we combine both the term frequency and inverse document frequency to get a value. tf is simply the number of times the term appears in the tweet. idf is a value for scoring the importance of a term in a tweet; more common words receive a lower value, more information-bearing terms receive a higher value.
+
+sci-kit learn provides an easy way to represent our training data in tf-idf format. We replaced our count vectorizer with the tf-idf equivalent and took the average accuracy. The average accuracy dropped to \textbf{0.483}. Further investigation discovered that this weighting scheme in not suitable for our task. This is because terms like 'happy' and 'sad' are given low values by the idf weighting, despite being of importance to the classification of the tweet. It was also put the recall down to $<$ 0.24 for all emotions (apart from joyful).
+
+\subsection{Naive Bayes Variations}
+
+So far we have been using a multinomial naive bayes classifier. This works well in our situation as we are using word counts to classify text.
+
+The Bernoulli variant assumes binary vectors; rather than counts. This means if a word is contained within a tweet it gets a 1 value; else it gets a 0 value. This variant makes little impact on the system as tweets are small messages and are unlikely to the same content-bearing word more than once.
+
+Due to the nature of social media data, the vocabulary range is large for our twitter dataset. Research suggests that the multinomial variant of naive bayes performances better than the Bernoulli varient, when the vocabulary range is large \cite{mccallum1998comparison}. For this reason, the decision was taken to stick to the multinomial variant.
+
+\subsection{Over-classification Problem}
+
+One problem with our training data is that it is not evenly distributed, we have much more joyful tweets than any others. This is resulting in an over-classification towards the joyful emotion. The Naive Bayes classifier has two parts; the likelihood and the prior. The prior will give a higher weighting to more common classes, emitting the prior will mean all classes of equal initial likelihood.
+
+With this in mind, we can run another evaluation without the prior. This increase our average accuracy from \textbf{0.558} to \textbf{0.575}. 
+
+We can also see how they affect the F-Score
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+    ymin = 0,
+    ymax = 1,
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ylabel=Rate(0-1),
+    compat=newest, %Better label placement,
+    ybar = 2.2,
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.append style={/pgf/number format/fixed, font=\fontsize{1}{1}\selectfont},
+]
+
+
+\addplot [ybar, fill=red]
+    coordinates {
+        (anger,0.273) (joy,0.647)
+         (fear,0.564) (disgust,0.087) (sadness, 0.415) (surprise, 0.425)
+         
+         };
+         
+\addplot [ybar, fill=green]
+    coordinates {
+        (anger,0.358) (joy,0.697)
+         (fear,0.595) (disgust,0.183) (sadness, 0.447) (surprise, 0.460)
+         };
+         
+                     
+\addlegendentry{With Prior}
+\addlegendentry{Without Prior}
+\title{F-Measure Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparison of F-Measure rates for each emotion class[Naive Bayes][C2] with and without prior}
+\end{figure}
+
+We can see our system improves for each emotion when emitting the prior. The disgust emotion doubles in performance; meaning our system is now doing a better job at assigning this emotion.
+
+Our average recall rate for the joy emotion has also dropped down to 0.85. Which again is not a bad thing as it means our system is being less bias towards this emotion.
+
+\subsection{Cycle Two Conclusion}
+
+We were able to improve the performance of the system by using scikit learn along with a stoplist and basic Laplace smoothing. We then began to look at how we can solve the problem of bias towards certain classes. We established that we could emit the prior from our naive bayes system to get a better overall system performance. Next, we looked at how we can represent tweets as both count vectors and tf-idf values, but established count vectors work best.
+
+The next cycle will look at more techniques we can apply to improve the performance.
+
+\section{Cycle Three} \label{cy3}
+
+When pre-processing our tweets, there are numerous things we can do to improve the performance. Some things we can include are:
+\begin{itemize}
+    \item Resolve excessive characters e.g 'hiiiiiii' = 'hi'
+    \item Stemming terms
+    \item Spelling correction
+    \item Adjusting ngram size
+    \item Applying a minimum document frequency (i.e a word token must appear five times across all of our training data)
+\end{itemize}
+\bigskip
+
+We applied the following pre-processing techniques and then took the results:
+
+\subsection{Elongation} \label{Elong}
+
+Without pre-processing, tweets contain a vast vocabulary. We end up with many unique terms. It's very common to see tweets that contain excessive characters that we could resolve to just one. Consider this tweet:
+
+\begin{center}
+\textit {141003101900509186:    went out shopping for gina's birthday things loool     :: surprise}
+\end{center}
+
+We can resolve the excessive `o' in `loool` using a simple regular expression. 
+
+\subsection{Stemming} \label{stemming_pre}
+
+Phrases and terms can often take different forms but can be used to denote the same sentiment. We want to be able to resolve these terms to a standard form. There are many good stemmers and lemmatizers we can use for resolving the tokens of a tweet.  After comparing 3 stemmers and a lemmatizer, we found that the nltk wordnet porter stemmer yielded the best results for twitter data. \ref{comp_stem}
+
+\subsection{ngram size} \label{ngram_size_proc}
+
+Previously we tokenized our tweet content on single tokens (unigrams). We can adjust our processing to tokenize on larger ngrams such as bigrams and trigrams. This increases the amount tokens in our training data exponentially to our ngram size, but has the potential to handle common phrases better. Consider the following phrase:
+
+\begin{center}
+\textit {I am not happy today}
+\end{center}
+
+Our unigram implementation would leave us five tokens, one for each word.
+
+A bigram would leave us with 5-7 tokens (depending if we wanted to handle sentence start and sentence end tokens). Importantly the phrase `not happy' would be processed as a single token.
+
+We established that the best range of ngrams to use was an unigram-bigram combination; meaning we use both unigrams and bigrams when processing a tweet \ref{ngram}.
+
+\subsection{Minimum df} \label{min_df_pro}
+
+Despite us resolving excessive characters, there are still many unique terms in twitter data. These unique terms that occur only once or twice across the entire document collection often do not provide any useful knowledge of sentiment towards new information. For this reason, we can filter out tokens that occur less than a certain threshold. We found that applying a minimum document frequency of 2 yielded the best result when using multinomial naive bayes, but when using Stochastic gradient descent a minimum frequency of 1 (all terms) produced the best results. \ref{df}
+
+\subsection{Classifier} \label{classifier_pro}
+
+So far all of our results have been based on the fact we are using a naive bayes classifier. We can also apply other other machine learning algorithms. We will present these results in the form of confusion matrices for readability. All previously mentioned pre processing techniques \ref{min_df_pro} \ref{ngram_size_proc} \ref{stemming_pre} \ref{Elong} should be assumed to be in use, unless otherwise stated
+
+\subsubsection{Random Forest}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=10cm]{images/random_forest_matrix.png}
+\caption{Confusion Matrix for Random Forest Classifier}
+\end{figure}
+
+The random forest classifier achieves good precision in it's predictions. But as a consequence, the recall is much lower than other classifiers. The overage system accuracy over 3 folded evaluation using random forest was \textbf{0.5759}.
+
+\subsubsection{Decision Tree}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=10cm]{images/d_tree_matrix.png}
+\caption{Confusion Matrix for Decision Tree Classifier}
+\end{figure}
+
+We adjusted the decision tree classifier to apply an even balance class weight. This is because the classifier favours more common emotions and results in 0 recall scores for surprise, disgust and anger. The overage system accuracy over 3 folded evaluation using decision trees was \textbf{0.4868}.
+
+\subsubsection{Stochastic Gradient Descent}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=10cm]{images/SGD_matrix.png}
+\caption{Confusion Matrix for SGD Classifier}
+\end{figure}
+
+We adjusted the minimum document frequency to 1 (all terms), as it was found to improve the performance \ref{df}. Overall system accuracy \textbf{0.5891}.
+
+\subsubsection{Multinomial Naive Bayes}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=10cm]{images/MNB_matrix.png}
+\caption{Confusion Matrix for Multinomial Naive Bayes Classifier}
+\end{figure}
+
+We can see that overall we have improved the performance significantly when applying additional pre-processing techniques to the naive bayes classifier. Disgust-which was our lowest performing emotion- has gone from a 0.09 F-Measure to 0.257. This has come at some cost, however, as we can see the precision has gone down for four of the six emotions. Over 3 folds the accuracy is \textbf{0.5837}.
+
+
+\iffalse
+\begin{table}[H]
+\center
+ \begin{tabular}{|c|c|c|c|c|c|c|} 
+ \hline
+ \ Evaluation & \textbf{anger} & \textbf{joy} & \textbf{fear} & \textbf{disgust} & \textbf{sadness} & \textbf{surprise} \\ [0.5ex] 
+ \hline
+ \ \textbf{NB,Scikit,Stoplist,Smoothing} & & & & & &  \\ [0.5ex] 
+ \hline
+  Precision & 0.654 & 0.534 & 0.718 & 0.886 & 0.487 & 0.675 \\ 
+ \hline
+ Recall & 0.172 & 0.91 & 0.487 & 0.047 & 0.362 & 0.311 \\
+ \hline
+ F-Measure & 0.273 & 0.647 & 0.564 & 0.087 & 0.415 & 0.425 \\
+ \hline
+ \ \textbf{SGD,Scikit,Stoplist,Smoothing,} & & & & & &  \\ [0.5ex] 
+  \hline
+  \ \textbf{Stemming,DF Restriction} & & & & & & \\ [0.5ex] 
+  \hline
+  Precision & 0.509 & 0.642 & 0.666 & 0.393 & 0.532 & 0.557 \\ 
+ \hline
+ Recall & 0.301 & 0.804 & 0.537 & 0.197 & 0.486 & 0.512 \\
+ \hline
+ F-Measure & 0.376 & 0.713 & 0.594 & 0.281 & 0.415 & 0.425 \\
+ \hline
+ \ \textbf{NB,Scikit,Stoplist,Smoothing,} & & & & & &  \\ [0.5ex] 
+  \hline
+  \ \textbf{Stemming,DF Restriction} & & & & & & \\ [0.5ex] 
+  \hline
+ F-Measure & 0.36 & 0.718 & 0.575 & 0.205 & 0.514 & 0.524 \\
+ \hline
+ 
+\end{tabular}
+\caption{Scores for basic classifier}
+\end{table}
+\fi
+
+\iffalse
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+    ymin = 0,
+    ymax = 1,
+    legend style={at={(0.5,-0.1)},
+    anchor=north,legend columns=1},
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.append style={/pgf/number format/fixed, font=\fontsize{1}{1}\selectfont},
+]
+
+\addplot [ybar, fill=blue]
+    coordinates {
+        (anger,0.509) (joy,0.642)
+         (fear,0.666) (disgust,0.393) (sadness, 0.532) (surprise, 0.557)
+         
+         };
+                  
+\addplot [ybar, fill=yellow]
+    coordinates {
+        (anger,0.654) (joy,0.534)
+         (fear,0.718) (disgust,0.886) (sadness, 0.487) (surprise, 0.675)
+         
+         };
+         
+\addlegendentry[align=left]{SGD + Scikit + Stoplist + Laplace Smoothing + Stemming \\ + ngram modelling + df restrictions + char trimming}
+\addlegendentry[align=left]{Naive Bayes + Scikit + Stoplist + Laplace Smoothing [Cycle 2]}
+\title{Precision Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparison of precision rates for each emotion class using SGD along with stemming, ngram modelling, df restrictions and excessive character trimming}
+\end{figure}
+
+
+
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+        ymin = 0,
+    ymax = 1,
+    legend style={at={(0.5,-0.1)},
+    anchor=north,legend columns=1},
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.append style={/pgf/number format/fixed, font=\fontsize{1}{1}\selectfont},
+]
+
+
+\addplot [ybar, fill=red]
+    coordinates {
+        (anger,0.301) (joy,0.804)
+         (fear,0.537) (disgust,0.197) (sadness,0.486) (surprise, 0.512)
+         
+         };
+         
+\addplot [ybar, fill=yellow]
+    coordinates {
+        (anger,0.172) (joy,0.91)
+         (fear,0.487) (disgust,0.047) (sadness,0.362) (surprise, 0.311)
+         
+         };
+\addlegendentry[align=left]{SGD + Scikit + Stoplist + Laplace Smoothing + Stemming \\ + ngram modelling + df restrictions + char trimming}
+\addlegendentry[align=left]{Naive Bayes + Scikit + Stoplist + Laplace Smoothing [Cycle 2]}
+\title{Recall Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparison of recall rates for each emotion class using SGD along with stemming, ngram modelling, df restrictions and excessive character trimming}
+\end{figure}
+
+
+\begin{figure}[H]
+\center
+\begin{tikzpicture}
+\begin{axis}[
+        ymin = 0,
+    ymax = 1,
+    width = 300,
+    legend style={at={(0.5,-0.1)},
+    anchor=north,legend columns=1},
+    symbolic x coords={anger,joy,fear,disgust,sadness,surprise},
+    xtick=data,
+    ybar = 2.2,
+    ylabel=Rate(0-1),
+    nodes near coords,
+    scaled x ticks = false,
+    tick label style={font=\tiny} ,
+    every node near coord/.append style={/pgf/number format/fixed, font=\fontsize{1}{1}\selectfont},
+]
+
+\addplot [ybar, fill=green]
+    coordinates {
+        (anger,0.376) (joy,0.713)
+         (fear,0.594) (disgust,0.281) (sadness, 0.505) (surprise, 0.532)
+         
+         };
+         
+\addplot [ybar, fill=pink]
+    coordinates {
+        (anger,0.36) (joy,0.718)
+         (fear,0.575) (disgust,0.205) (sadness, 0.514) (surprise, 0.524)
+         
+         };
+
+\addplot [ybar, fill=yellow]
+    coordinates {
+        (anger,0.273) (joy,0.647)
+         (fear,0.564) (disgust,0.087) (sadness, 0.415) (surprise, 0.425)
+         
+         };
+         
+
+\addlegendentry[align=left]{SGD + Scikit + Stoplist + Laplace Smoothing + Stemming \\ + ngram modelling + df restrictions + char trimming}
+
+\addlegendentry[align=left]{Naive Bayes + Scikit + Stoplist + Laplace Smoothing + Stemming \\ + ngram modelling + df restrictions + char trimming}
+
+\addlegendentry[align=left]{Naive Bayes + Scikit + Stoplist + Laplace Smoothing[Cycle 2]}
+\title{F-Measure Rates}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparison of F-measure rates for each emotion class using SGD along with stemming, ngram modelling, df restrictions and excessive character trimming}
+\end{figure}
+\fi
+
+
+\subsubsection{Classifier Conclusion}
+
+The gradient decent classifier performs the best overall, but the results are negligible. We have decided to stay with our naive bayes classifier as the model made it easier for us to append additional factors as we will see later. \ref{log_model}
+
+\section{Cycle 4}
+
+We can now look at some more features to improve the overall performance of our system.
+
+\subsection{Subjectivity}
+
+As it stands, our system will attempt to classify every tweet that it receives. Some tweets, however, are not necessarily portraying any emotion. For this reason, we can introduce a subjectivity analyser against the tweet. The goal here is to classify the tweet as either subjective or objective. Subjective tweets continue down our processing channel and receive an emotion classification, while objective tweets are discarded.
+
+There are many different ways we can go about subjectivity analysis. A supervised machine learning approach would require training data of subjective and objective tweets. A dataset provided here \cite{baccianella2010sentiwordnet} contains a list of tweets along with 0-1 positive-negative scores, scores with a value of 0 can be assumed to be objective.
+
+A convenient NLP library called TextBlob \cite{textblob} provides an easy way of classifying documents as subjective or as objective. The library provides a method for generating the subjectivity; it returns a value between 0.0 and 1.0 where 0.0 is certainly objective, and 1.0 is certainly subjective.
+
+We can evaluate the performance by running the wordnet tweet dataset through an evaluation. We can then look at what is the best cut-off point for determining if a tweet is subjective or objective.
+
+A cut-off point is what determines when we decide if we should count the tweet as subjective. For instance, a 0.9 cut-off point would mean only tweets with a subjectivity score greater than 0.9 are considered subjective.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=13cm]{figures/subjectiveTest.png}
+\caption{Accuracy score of TextBlob\cite{textblob} compared between cut-off points}
+\end{figure}
+
+Fig 6.8 shows how varying the cut-off point effects the accuracy of the classification for the subjectivity of tweets using TextBlob\cite{textblob}. 
+
+Using this method we achieve a subjectivity classifier accuracy for tweets of \textbf{0.609} at \textbf{0.47} cut-off point.
+
+It should be noted that in practice we should try to classify as many tweets as possible, as we're trying to calculate the overall emotion of Sheffield. Deliberately filtering out tweets could restrict the overall activity of the platform. For this reason, the decision has been taken to run the subjectivity classifier, but not filter out any tweets.
+
+\section{Cycle 5} \label{c5}
+
+A major limitation of our training data is that it is old. Twitter data has a broad domain and users can be discussing a huge range of topics. Some topics invoke different emotions at certain points in time; making it difficult to determine the emotion of a new tweet. Consider a political figure who may be very popular when elected, but peoples' emotions could change as time progresses.
+
+There is another problem with our training data in that it does not contain emojis. Emojis can be of use when trying to learn the emotion of a tweet. A study here \cite{novak2015sentiment} looked at how accurate an emoji can be in reflecting the polarity of the tweet (negative,neutral and positive)
+
+\begin{figure}[H]
+\center
+\includegraphics[width=15cm]{images/emojj_table.JPG}
+\caption{Emojjs relation to tweet polarity. Table reproduced from \cite{novak2015sentiment}}
+\end{figure}
+
+$(p−, p0, p+).$ form a probability distribution for positive, neutral and negative emotions respectively. We can see that the `heavy black heart' emoji often occurs in positive tweets (0.79 rate)
+
+With this in mind, this cycle will look at how we can obtain and use more up-to-date training data
+
+\subsection{Obtaining New Training Data} \label{obtweets}
+
+We could stream new tweets and hand label each tweet with emotion as it arrives. Or we store them in a file and hand label them. Both are laborious tasks requiring many human subjects to process a suitable volume of tweets.
+
+An interesting feature of Twitter data is the hash tags used in a tweet. A hashtag could be used to generalise the content of a tweet. For instance, a tweet with the hashtag \#feelinghappy is highly likely to be conveying the joy emotion. A study undertaken here \cite{qadir2014learning} used this technique along with a traditional supervised classifier to improve the performance across five emotion classes.
+
+By using the Twitter streaming api \cite{Twitter_Streaming_Api} we can search for new tweets with a particular emotion hashtags and label them with an emotion. We do some additional filtering on the tweets to avoid duplicates and re-tweets with the same id.
+
+\subsubsection{Filtering twitter data} \label{filter_twitter_data}
+
+To ensure the twitter data we are gathering is of a suitable quality we decided to apply some additional filtering to the tweet content before it is stored in the database. 
+
+We found that businesses and sometimes people often use the same hashtags throughout all of their tweets. This often results in duplicate tweets where the only difference is the tweet id. Before inserting tweets into the database, we do a relatively expensive check against the tweet text to ensure it doesn't already exist in some form. 
+
+Similarly, users often post the same tweet 100s of times, but with a different URL in the tweet text. As this URL has no benefit to us, we can parse it out and do the same tweet text check as before.
+
+Twitter is a diverse platform used throughout the world. Consequently, this results in content in many different forms of language. As our goal is to classify tweets in Sheffield, it is not too useful to store tweets that are not in the English language.
+
+\subsection{Dynamic Model for Emotion Analysis} \label{dynamic_model_emotion_analysis}
+
+With the technique described above \ref{filter_twitter_data}, we can generate some more up-to-date training data. We could also keep updating this training data to allow for better emotion detection of the latest tweets.
+
+We initially developed queue-based storage system using a relational database as the basis for our dynamic classifier. This service tracks Twitter for emotionally precise tweets to insert into the database. The database has a threshold limit; for every new tweet inserted an old one is deleted. This keeps the training data relevant for a given time. However, the decision was taken to remove the limit and only keep tweets as they arrive.
+
+This dynamic classifier reads new data from the database every few hours. The classifier can then be retrained with the new data and subsequent tweets an emotion based upon the most up-to-date training data. Our new classifier can use our new data in the same way as the old data; the only difference being it comes from the database rather than a flat file. This technique can be described as a domain adaptation method, as we keep learning new data for our classifier on the fly.
+
+
+\subsection{Log Linear Model for Emotion Analysis} \label{log_model}
+
+While it is useful to now have dynamic training data, relying solely on tweets that were derived from hashtags could be naive. In response to this we propose a new model that combines both the original static training data with the dynamic training data. We can summarise this new model as follows:
+
+\begin{equation}
+\begin{split}
+\hat{w} = \argmax_{e \in E} \\ \lambda_1 SM \sum_{t}^{T} \log P(t \mid e)  + \\ \lambda_2 DM \sum_{t}^{T} \log P(t \mid e)
+\end{split}
+\end{equation}
+
+E is a set of emotions. $SM$ an $DM$ denote static and dynamic model respectively. We weight each model by the value indicated as $\lambda$. $T$ is the given tweet, and $t$ is each feature in the tweet. We take the emotion that maximizes the sum of both these models.
+
+\subsection{Emoji Distribution} \label{em_dist}
+
+As the newly gathered data contains emojis, it is useful for us to look at their occurrences within labeled tweets.
+
+We can look at what emojis are typically associated with tweets of a particular emotion. This can be done by observing at the occurrences of emojis in the newly gathered training data, and what emotion label it was assigned. This analysis was done over around 70,000 collected tweets. 
+
+\begin{table}[H]
+\scalebox{0.95}{
+\begin{tabular}{cc|c|c|c|c|c|c|}
+\cline{3-8}
+& & \multicolumn{6}{c|}{Emotions} \\ \cline{3-8}
+& & anger & joy & fear & disgust & sadness & surprise \\ \cline{1-8}
+\multicolumn{2}{|c|}{Emoji} \\ \cline{1-8}
+\multicolumn{1}{ |c  }{\multirow{2}{*}{{\DejaSans ❤}}} &
+\multicolumn{1}{ |c| }{Count} & 221 & 1658 & 121 & 280 & 161 & 119     \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 4.7835 & 1.69946 & 2.36790 & 3.62225 & 1.37606 & \colorbox{yellow}{5.02109}   \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{{\DejaSans 😍}}} &
+\multicolumn{1}{ |c| }{Count} & 2 & 90 & 7 & 5 & 9 & 14 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0.0432 & \colorbox{yellow}{0.9532} & 0.1369 & 0.0646 & 0.07692 & 0.5907 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{\DejaSans 😭}} &
+\multicolumn{1}{ |c| }{Count} & 5 & 280 & 16 & 11 & 96 & 3 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0.10822 & 0.28700 & 0.31311 & 0.14230 & \colorbox{yellow}{0.82051} & 0.12658 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{{\DejaSans 😱}}} &
+\multicolumn{1}{ |c| }{Count} & 3 & 52 & 13 & 6 & 14 & 4 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0.06493 & 0.05330 & \colorbox{yellow}{0.25440} & 0.07761 & 0.11965 & 0.168776 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{\includegraphics[scale=0.5]{images/disgust.JPG}}} &
+\multicolumn{1}{ |c| }{Count} & 2 & 5 & 2 & 12 & 21 & 0 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0.043290 & 0.005125 & 0.039138 & 0.155239 & \colorbox{yellow}{0.17948} & 0 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{\includegraphics[scale=0.5]{images/thumb_down.JPG}}} &
+\multicolumn{1}{ |c| }{Count} & 0 & 1 & 5 & 9 & 27 & 0 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0 & 0.00102 & 0.09784 & 0.11642 & \colorbox{yellow}{0.23076} & 0 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{\includegraphics[scale=0.5]{images/sick.JPG}}} &
+\multicolumn{1}{ |c| }{Count} & 1 & 1 & 2 & 36 & 11 & 1 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0.001025 & 0.021645 & 0.039138 & \colorbox{yellow}{0.46571} & 0.094017 & 0.042194 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{{\DejaSans 😈}}} &
+\multicolumn{1}{ |c| }{Count} & 7 & 40 &23 & 5 & 3 & 0 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & \colorbox{yellow}{0.15151} & 0.041000 & 0.039138 & 0.06468 & 0.02564 & 0 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{{\DejaSans 😊}}} &
+\multicolumn{1}{ |c| }{Count} & 0 & 570 &7 & 1 & 6 & 4 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0 & \colorbox{yellow}{0.584255} & 0.136986 & 0.012936 & 0.051282 & 0.168776 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{\includegraphics[scale=0.5]{images/anger.JPG}}} &
+\multicolumn{1}{ |c| }{Count} & 14 & 11 &2 & 6 & 4 & 0 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & \colorbox{yellow}{0.303030} & 0.011275 & 0.039138 & 0.077619 & 0.034188 & 0 \\ \cline{1-8}
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{{\DejaSans 😰}}} &
+\multicolumn{1}{ |c| }{Count} & 0 & 6 &9 & 2 & 6 & 0 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0 & 0.00615 & \colorbox{yellow}{0.17612} & 0.02587 & 0.05128 & 0 \\ \cline{1-8}
+
+
+\multicolumn{1}{ |c  }{\multirow{2}{*}{{\DejaSans 😷}}} &
+\multicolumn{1}{ |c| }{Count} & 0 & 3 &1 & 64 & 2 & 1 \\ \cline{2-8}
+\multicolumn{1}{ |c|  }{}                        &
+\multicolumn{1}{ c| }{Normalised} & 0 & 0.003075 & 0.019569 & \colorbox{yellow}{0.82794} & 0.017094 & 0.042194 \\ \cline{1-8}
+
+\end{tabular}}
+\caption{Emoji distribution for different emotions}
+\end{table}
+
+
+Table 6.4 shows how some of the more popular emojis are distributed across labeled tweets. We include two results; the count and the normalised value.
+
+The count is simply a binary sum (an emoji is only counted once per tweet) of tweets that contain the particular emoji for a given emotion.
+
+The normalised value deals with the highly skewered training set, we have much joy tweets and thus the count is often deceivingly high in most cases for the joy emotion. We calculate the normalised value by dividing the count by the total number tweets with any emoji for a given emotion. \textbf{This value is mathematically equivalent to the likelihood weighting provided by the naive bayes classifier}. All scores were multiplied by a constant value to avoid potential numerical underflow issues, for this reason, they should not be assumed to be probabilities, but rather score weightings. We can formally define this as follows:
+
+\begin{equation}
+Normalised = K \frac{Count (\includegraphics[scale=0.5]{images/anger.JPG},E_i)}{Count(E_i)}
+\end{equation}
+
+Where $E$ is a tweet with a given emotion label $E_i$ that contains \textbf{any} emoji and $K$ is a scaling constant to deal with numerical underflow.
+
+This brings up some interesting results. We can see that the {\DejaSans ❤} symbol has the highest count in joy tweets, but given a random surprise tweet, it is much more likely to contain the emoji.
+
+With some human observation, we can see that emojis have a linkage to the emotion of a tweet. The {\DejaSans 😭} emotion shows a crying face, of which the normalised score for sadness has correctly resulted in the highest value. Likewise the {\DejaSans 😱} shows a concerned/shocked face, which led to fear given the highest assigned value. Some emotions are represented very well such as the {\includegraphics[scale=0.5]{images/anger.JPG} emoji which serves as an angry expression.
+
+The main limitation is that the emojis do not cover the full range of different emotions with a fair distribution. The surprise emotion has very few emojis associated with it as per the training data. It's also very difficult in some cases to directly coronate an emoji to a single emotion, even when under human observation.
+
+\subsection{Increasing the Weighting of Emoji Tweets} \label{emoj_weighting}
+
+We showed that a tweet with an emoji present could be used to associate it with a particular emotion. However, it would seem relatively naive to classify every tweet with a smiley face emoji as a joyful tweet. We also saw that some emotions do not have enough emojis associated with them. This makes it difficult to strictly rely on the normalised weighting \ref{em_dist} as a way of dealing with emoji tweets.
+
+In response to this problem, we can apply an additional weighting to our model to deal with emojis independent of our existing classifier. Tweets that contain certain emojis should be pushed towards the associated emotion, but not decisively so. To implement this, we should adapt our model to handle emojis in some-way. One other consideration we must make is that emojis are not mutually exclusive to any particular emotion, meaning the sadness emotion could contain the same emojis as the anger emotion; therefore we define the relationship as many-to-many.
+
+Our model now has an additional weight along with the components from \ref{log_model}.
+
+\begin{equation}
+\begin{split}
+\hat{w} = \argmax_{e \in E} \\ \lambda_1 SM \sum_{t}^{T} \log P(t \mid e)  + \\ \lambda_2 DM \sum_{t}^{T} \log P(t \mid e) + \\ EW \forall x_e \in A
+\end{split}
+\end{equation}
+
+Where $EW$ is the emoji weighting.$ \forall x_e$ is the emoji association for the given emotion $e$. $A$ is all of the emoji-emotion associations.
+
+\subsection{Observational Testing}
+
+We can first consider a tweet that contains an emoji:
+
+\begin{figure}[H]
+\center
+\includegraphics[width=15cm]{images/emoj_tweet.JPG}
+\caption{A tweet with an emojj}
+\end{figure}
+
+\begin{table}[H]
+\center
+ \begin{tabular}{|c|c|} 
+ \hline
+ \textbf{Classifier} & \textbf{Emotion} \\ [0.5ex] 
+ \hline
+ Static Classifier Only & Sadness \\ 
+ \hline
+ Dynamic Classifier Only & Joy \\
+ \hline
+ Static + Dynamic Classifier $\lambda = 0.5$ & Joy \\
+ \hline
+\end{tabular}
+\caption{Comparison of different classifiers with a tweet that contains an emojj}
+\end{table}
+
+Using the emoji-less training data (static classifier) we can see the tweet was given the sadness emotion. Using the dynamic training data the joy emotion was assigned. Combining both the dynamic and static classifier-weighted by a constant amount of 0.5 each the joy emotion was assigned again.
+
+Processing emojis also makes it easier to classify tweets that follow are more difficult to detect emotion, consider the following:
+
+\begin{figure}[H]
+\center
+\includegraphics[width=15cm]{images/emojj_tweet_rare.JPG}
+\caption{A tweet with an emoji that is difficult to classify}
+\end{figure}
+
+\begin{table}[H]
+\center
+ \begin{tabular}{|c|c|} 
+ \hline
+ \textbf{Classifier} & \textbf{Emotion} \\ [0.5ex] 
+ \hline
+ Static Classifier Only & Sadness \\ 
+ \hline
+ Dynamic Classifier Only & Disgust \\
+ \hline
+ Static + Dynamic Classifier $\lambda = 0.5$ $EW = 0.1$ & Disgust \\
+ \hline
+\end{tabular}
+\caption{Comparison of different classifiers with a tweet that contains an emojj}
+\end{table}
+
+Disgust which was one of our rarer emotions was assigned in this case. We applied a 0.1 additional weighting to the emoji found in the tweet.
+
+\subsection{Formal Testing} \label{fTesting}
+
+It 's hard to evaluate our system with our newly labeled data without human observation. This is because we cannot tell if the emotion labels assigned from the hashtag lookups are accurate or not.
+
+However, we can compare how well our old training data performs when using the new classifier. We can provide numerous combinations of analysis between new and old training data and classifiers. The ensemble classifier is a combines both the new and old training data into one dataset-no weighting to the datasets is applied.
+
+The decision was taken to remove hashtags from the training data for the analysis. This is because all of our new training data contains very similar hashtags due to the way we extracted it using the streaming api \ref{obtweets}. This resulted in highly inaccurate and deceivingly inflated performance results. 
+
+We had removed all URLs from tweets as they were causing deceptive results. 
+
+All these results are using the naive bayes classifier along with the pre-processing and other techniques described in \ref{cy2}, \ref{cy3}.
+
+\begin{table}[H]
+\center
+\scalebox{0.85}{
+ \begin{tabular}{|c|c|c|c|c|c|c|c|} 
+ \hline
+ \ Evaluation & \textbf{anger} & \textbf{joy} & \textbf{fear} & \textbf{disgust} & \textbf{sadness} & \textbf{surprise} & AVG \\ [0.5ex] 
+ \hline
+ \ \textbf{Old Classifier,Old Data} & & & & & & & 0.59 \\
+ \hline
+  Precision & 0.47 & 0.652 & 0.69 & 0.522 & 0.454 & 0.622 & 0.59 \\ 
+ \hline
+ Recall & 0.31 & 0.796 & 0.506 & 0.136 & 0.58 & 0.45 & 0.60 \\
+ \hline
+ F-Measure & 0.374 & 0.716 & 0.584 & 0.218 & 0.508 & 0.524 & 0.60 \\
+\hline
+
+ \ \textbf{New Classifier,Old Data} & & & & & & & 0.42 \\
+ \hline
+  Precision & 0.25 & 0.53 & 0.43  & 0.22 & 0.28 & 0.56 & 0.42 \\ 
+ \hline
+ Recall & 0.02 & 0.71 & 0.29  & 0.14 & 0.56 & 0.0 & 0.44 \\
+ \hline
+ F-Measure & 0.04 & 0.61 &0.34 & 0.17 & 0.38 & 0.01 & 0.33 \\
+\hline
+   
+ \ \textbf{New Classifier,New Data} & & & & & & & 0.71 \\
+ \hline
+  Precision & 0.354 & 0.862 & 0.572  & 0.376 & 0.536 & 0.486 & 0.71 \\ 
+ \hline
+ Recall & 0.218 &0.824 & 0.569  & 0.184 &0.758 & 0.128 & 0.70 \\
+ \hline
+ F-Measure & 0.262 & 0.846 &0.571 & 0.248 & 0.628 & 0.214 & 0.70 \\
+\hline
+
+ \ \textbf{Old Classifier,New Data} & & & & & & & 0.50 \\ 
+ \hline
+  Precision & 0.09 & 0.72 & 0.29  & 0.21 & 0.36  & 0.04 & 0.54 \\ 
+ \hline
+ Recall & 0.14  &0.66 & 0.23  & 0.06 &0.39 &0.18 & 0.50 \\
+ \hline
+ F-Measure & 0.11 & 0.69 &0.26 & 0.09 &0.38 & 0.06 & 0.52 \\
+\hline
+ 
+  \ \textbf{Ensemble Classifier,New Data} & & & & & & & 0.74 \\ 
+ \hline
+  Precision & 0.47 & 0.87 & 0.64  & 0.31 & 0.52  & 0.64 & 0.75 \\ 
+ \hline
+ Recall & 0.21  &0.86 & 0.57  & 0.28 &0.71 &0.22 & 0.75 \\
+ \hline
+ F-Measure & 0.29 & 0.87 &0.60 & 0.29 &0.60 & 0.33 & 0.74 \\
+\hline
+
+\ \textbf{Ensemble Classifier,Old Data} & & & & & & & 0.52 \\ 
+ \hline
+  Precision & 0.67 & 0.62  & 0.63  & 0.43 & 0.34  & 0.59 & 0.56 \\ 
+ \hline
+ Recall & 0.10  &0.73 & 0.49   & 0.17 &0.61 &0.29 & 0.52 \\
+ \hline
+ F-Measure & 0.17 & 0.67 &0.56  & 0.25 &0.43 & 0.39 & 0.50 \\
+\hline
+ 
+\end{tabular}}
+\caption{A comparison of scores between different classifier to data combinations}
+\end{table}
+
+
+We ran this analysis over 84418 new tweets with emojis and 21051 old tweets from a flat file. When comparing the old classifier to the old data and the new classifier to the new data we used five folds of validation. For the comparative datasets, we ran the whole data set through the evaluation. For the ensemble, we took a 20\% split from each dataset.
+
+The old classifier with the old data is the same evaluation undertaken earlier \ref{cy2}\ref{cy3}. 
+
+Using the old data with the new classifier performs poorly. We can see that the surprise have meager recall rates.
+
+\subsubsection{Tweet Test Distribution} \label{fTesting}
+
+So far, all of the results and analysis have were performed on a skewed data set. That is, we have an uneven distribution of tweets across different emotions. In practice, the prior probability of the naive bayes classifier is responsible for handling the balance of the dataset.
+
+With our old training data, the ratio of joy (most common emotion) to disgust (least common emotion) is around 10 to 1. With our new training data, the rof joy (most common emotion) to surprise (least common emotion) tweets is around 33 to 1. It's fairly reasonable to assume that tweets will often favor some emotions to others. For this reason, we should not deliberately attempt to distribute the tweet classification across emotions to make the system seem more appealing. 
+
+We can see how well our classifier performs when using an even distribution of training samples by using the same combinations of training data to classifiers as above. However, instead of taking a portion of the dataset as the test data, we can take $N$ amount of tweets for each emotion to test. As the surprise emotion has the least number of samples overall, we will use this as the basis for ensuring we have a suitable number of training to test samples. We can take 20\% of the surprise labels and round it up to the nearest 100. This gives us 500 test samples per emotion.
+
+\begin{table}[H]
+\center
+\scalebox{0.85}{
+ \begin{tabular}{|c|c|c|c|c|c|c|c|} 
+ \hline
+ \ Evaluation & \textbf{anger} & \textbf{joy} & \textbf{fear} & \textbf{disgust} & \textbf{sadness} & \textbf{surprise} & AVG \\ [0.5ex] 
+ \hline
+ \ \textbf{Old Classifier,Old Data} & & & & & & & 0.438 \\
+ \hline
+  Precision & 0.57 & 0.36 & 0.64 & 0.85 & 0.33 & 0.59 & 0.56 \\ 
+ \hline
+ Recall & 0.29 & 0.74 & 0.50 & 0.06 & 0.61 & 0.44 & 0.44 \\
+ \hline
+ F-Measure & 0.38 & 0.49 & 0.56 & 0.11 & 0.43 & 0.50 & 0.41 \\
+\hline
+
+ \ \textbf{New Classifier,Old Data} & & & & & & & 0.274 \\ 
+ \hline
+  Precision & 0.29 & 0.29 & 0.37  & 0.53 & 0.21 & 0.41& 0.35 \\ 
+ \hline
+ Recall & 0.03 & 0.69 & 0.19  & 0.18 & 0.51 & 0.01 & 0.27 \\
+ \hline
+ F-Measure & 0.05 & 0.41 &0.26 & 0.27 & 0.30 & 0.03 & 0.22 \\
+\hline
+   
+ \ \textbf{New Classifier,New Data} & & & & & & & 0.429 \\
+ \hline
+  Precision & 0.59 & 0.39 & 0.58   & 0.51 & 0.35 & 0.86 & 0.55 \\ 
+ \hline
+ Recall & 0.16 &0.87 & 0.60  & 0.15 &0.74 & 0.06 & 0.43 \\
+ \hline
+ F-Measure & 0.25 & 0.54 &0.59 & 0.23 & 0.47 & 0.12 & 0.37 \\
+\hline
+
+ \ \textbf{Old Classifier,New Data} & & & & & & & 0.28 \\
+ \hline
+  Precision & 0.32 & 0.25 & 0.36  & 0.34 & 0.28  & 0.23 & 0.30 \\ 
+ \hline
+ Recall & 0.20  &0.58 & 0.27  & 0.09 &0.41 &0.13 & 0.28 \\
+ \hline
+ F-Measure & 0.25 & 0.35 &0.31 & 0.14 &0.34 & 0.16 & 0.26 \\
+\hline
+ 
+  \ \textbf{Ensemble Classifier,New Data} & & & & & & & 0.435 \\
+ \hline
+  Precision & 0.59 & 0.39 & 0.59  & 0.51 & 0.36  & 0.59 & 0.51 \\ 
+ \hline
+ Recall & 0.17  &0.85 & 0.60  & 0.15 &0.75 &0.10 & 0.44 \\
+ \hline
+ F-Measure & 0.26 & 0.53 &0.60 & 0.23 &0.49 & 0.17 & 0.38 \\
+\hline
+
+\ \textbf{Ensemble Classifier,Old Data} & & & & & & & 0.4 \\ 
+ \hline
+  Precision & 0.77 & 0.39  & 0.60  & 0.72 & 0.25  & 0.58 & 0.55 \\ 
+ \hline
+ Recall & 0.13  &0.72 & 0.46   & 0.13 &0.61 &0.34 & 0.40 \\
+ \hline
+ F-Measure & 0.22 & 0.50 &0.52  & 0.22 &0.36 & 0.43 & 0.38 \\
+\hline
+ 
+\end{tabular}}
+\caption{A comparison of scores between different classifier to data combinations with 500 samples per emotion}
+\end{table}
+
+Using an even distribution has caused the results to decline drastically. Using the old training data on the new classifier has the worst average with a score of 0.274.
+
+We also tried placing the prior probability back into the classifier. This improved the average precision of the system, but the recall and overall accuracy declined even further.
+
+One positive thing we can take from these results is that the newly obtained training data is almost as good as the old training data. The overall system accuracy for old data on an old classifier was g
+
+
+\subsubsection{Evaluating weightings between models} \label{model_eval_lambda}
+
+We formalised our model earlier \ref{emoj_weighting} with three components-the dynamic model, the static model, and the emoji model. We designed our system such that we can apply a weighting $\lambda$ to each of them. This gives us greater flexibility when using our system in a production environment and also provides us some insurance against unreliability of the new training data.
+
+We can find the best weighting for both dynamic and static models by running a bulk evaluation across a test set of tweets. To do this we first constructed our ensemble classifier. We then extracted 10,000 database tweets for testing- we chose database tweets as they are more likely to represent live Twitter data. The tweets followed a natural bias, that is the 10,000 tweets were not evenly distributed between emotions. We then ran these 10,000 tweets through our classifier 100 times, increasing the weightings for both models as we progressed. We recorded the overall system accuracy (correctly classified tweets $/$ tweets classified (10,000)).
+
+The x-axis represents the static model, and the y-axis represents the dynamic model.
+
+\begin{table}[H]
+\center
+\scalebox{0.90}{
+ \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|r|} 
+\hline
+ $\lambda$&0.1&0.2&0.3&0.4&0.5&0.6&0.7&0.8&0.9&1.0\\
+\hline
+0.1&0.7479&0.693&0.6575&0.6381&0.6264&0.6175&0.6081&0.6006&0.5971&0.5934\\
+\hline
+0.2&\textbf{0.7565}&-&0.7169&0.693&0.6754&0.6575&0.645&0.6381&0.6312&0.6264\\
+\hline
+0.3&0.754&0.7552&-&0.7254&0.708&0.693&0.6806&0.6686&0.6575&0.648\\
+\hline
+0.4&0.7547&\textbf{0.7565}&0.7526&-&0.7321&0.7169&0.703&0.693&0.6835&0.6754\\
+\hline
+0.5&0.7546&0.755&0.7565&0.7513&-&0.7344&0.7211&0.7116&0.7008&0.693\\
+\hline
+0.6&0.7538&0.754&\textbf{0.7565}&0.7552&0.7504&-&0.7371&0.7254&0.7169&0.708\\
+\hline
+0.7&0.754&0.7545&0.7555&0.7568&0.7534&0.7502&-&0.7389&0.7294&0.7201\\
+\hline
+0.8&0.7539&0.7547&0.7548&\textbf{0.7565}&0.7564&0.7526&0.7505&-&0.74&0.7321\\
+\hline
+0.9&0.7533&0.755&0.754&0.7555&0.7565&0.7552&0.7519&0.7508&-&0.741\\
+\hline
+1.0&0.7532&0.7546&0.7544&0.755&\textbf{0.7565}&0.7565&0.7545&0.7513&0.7507&-\\
+\hline
+\end{tabular}}
+\caption{Accuracy scores for 10,000 tweets(database tweets) weighted against different values 0.1 - 1}
+\end{table}
+
+
+The even weighted score 0.7479. We can see we get the best result of 0.7565 when we give the dynamic model double the weighting of the static model. Increasing the weighting further causes the accuracy to decline.
+
+It again must be stated that the tweets follow a natural bias. We found that 6700 of the tweets were labeled joy, meaning that if we classified \textit{every} tweet that arrived as joyful, we would achieve a 0.67 accuracy.
+
+We can look at how the ensemble weighting compares when using an evenly distributed test set of 3000 tweets (500 per emotion):
+
+\begin{table}[H]
+\center
+\scalebox{0.90}{
+ \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|} 
+\hline
+ $\lambda$&0.1&0.2&0.3&0.4&0.5&0.6&0.7&0.8&0.9&1.0\\
+\hline
+0.1&0.4347&0.3873&0.3643&0.3457&0.3333&0.3140&0.3083&0.3050&0.3020&0.2980\\
+\hline
+0.2&\textbf{0.4380}&-&0.4123&0.3873&0.3733&0.3643&0.3517&0.3457&0.3400&0.3333\\
+\hline
+0.3&0.4343&0.4380&-&0.4173&0.4040&0.3873&0.3777&0.3697&0.3643&0.3557\\
+\hline
+0.4&0.4347&\textbf{0.4380}&0.4380&-&0.4223&0.4123&0.3987&0.3873&0.3797&0.3733\\
+\hline
+0.5&0.4343&0.4360&0.4380&0.4353&-&0.4227&0.4147&0.4073&0.3963&0.3873\\
+\hline
+0.6&0.4343&0.4343&\textbf{0.4380}&0.4380&0.4357&-&0.4250&0.4173&0.4123&0.4040\\
+\hline
+0.7&0.4337&0.4347&0.4363&0.4377&0.4387&0.4360&-&0.4263&0.4193&0.4140\\
+\hline
+0.8&0.4333&0.4347&0.4347&\textbf{0.4380}&0.4383&0.4380&0.4360&-&0.4267&0.4223\\
+\hline
+0.9&0.4330&0.4353&0.4343&0.4360&0.4373&0.4380&0.4373&0.4360&-&0.4273\\
+\hline
+1.0&0.4330&0.4343&0.4343&0.4360&\textbf{0.4380}&0.4380&0.4380&0.4353&0.4353&-\\
+\hline
+\end{tabular}}
+\caption{Accuracy scores for 3000 tweets(database tweets, even distribution) weighted against different values 0.1 - 1}
+\end{table}
+
+In a similar fashion it shows that applying double the weighting to the dynamic model provides the best result. We can update our model to reflect this:
+
+\begin{equation}
+\begin{split}
+\hat{w} = \argmax_{e \in E} \\ 0.5 SM \sum_{t}^{T} \log P(t \mid e)  + \\ 1.0 DM \sum_{t}^{T} \log P(t \mid e) + \\ EW \forall x_e \in A
+\end{split}
+\end{equation}
+
+\subsubsection{Evaluating Emoji Model} \label{eval_emoji_model}
+
+We can look at how much weighting to apply to our emoji model. Although our classifier handles emojis automatically, such as the direct emotional nature of an emoji, it makes sense for us to apply a weighting to our model.
+
+We first used a constant weight for all emojis. This will increase the direction of classification if an emoji match is found. We look up the directions in a hard-coded list. In this context, an emoji weighting score of 1 has no impact as we'd be multiplying 1by the current ensemble score. An emoji weighting of 2 would double the score for that particular ensemble emotion.
+
+The second method we can apply is to use the generated emoji scores from when looking at the emoji distribution \ref{em_dist}. These scores will fit comfortably into our model as they are equivalent to the likelihood probability of a naive bayes classifier. The process can be summarised as follows:
+
+\begin{itemize}
+\item Determine if a tweet contains an emoji
+\item If it does, extract it
+\item Use the emoji to index into our emoji scores and apply the score along with a weighting for each emotion.
+\end{itemize}
+
+Our final method is to leave out the emoji model altogether. We mentioned that our classifier would handle emojis automatically, but with not enough emphasis on the emoji's direct emotion. This evaluation will not be the same as previously conducted, as we are exclusively looking at emoji bearing tweets.
+
+To evaluate the performance of our emoji model, we first resumed the dynamic and static model weightings from earlier. We then selected an even distribution of 3000 tweets that contain any emoji. We then run these 600 (100 per emotion) tweets through our classifier slightly increasing the weighting of the emoji model after each iteration.
+
+It is important to note that the scores below should \textbf{not be directly compared} to the static and dynamic classifier analysis. This is because we have chosen only tweets that contain emojis to evaluate against.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=13cm]{figures/emoji_models_even.png}
+\caption{Accuracy of system over 600 emoji tweets (300 per emotion) when adjusting the emoji model weighting}
+\end{figure}
+
+The score when using no model does not change as the weighting has nothing to apply itself too.
+
+The rule-based emoji look up method has a slight increase in accuracy. We peak with a score around 0.38 when using a weighting of 7.0. This is a 2\% increase over not applying an additional model to deal with the emojis.
+
+Our generated model performs the best and presents an apparent growth in performance as we increase the model's weighting. We peak around \textbf{0.45} system accuracy; this is the highest score we have achieved so far when using an evenly distributed test set. This score also out-ranks the accuracy of using the old classifier with the old training data over an even distribution.
+ 
+Applying our distributed emoji model is something we should certainly do. The system has nothing to lose, as tweets that do not contain any emojis will not be affected, but tweets that do include emojis have a better chance of being correctly classified.
+
+
+\begin{equation}
+\begin{split}
+\hat{w} = \argmax_{e \in E} \\ 0.5 SM \sum_{t}^{T} \log P(t \mid e)  + \\ 1.0 DM \sum_{t}^{T} \log P(t \mid e) + \\  7.0 EM \sum_{e}^{E} \log Score(e)
+\end{split}
+\end{equation}
+
+\begin{equation}
+Score = \frac{Count (E_j,T_ej \in T)}{Count(T_ej \in T)}
+\end{equation}
+
+Where $E_j$ is a tweet that contains a \textit{given} emoji. $T$ is the whole set of tweets and  $T_ej$ is a tweet of a \textit{given} emotion that contains \textit{any} emoji.
