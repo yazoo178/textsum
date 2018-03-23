@@ -15,7 +15,7 @@ import random
 # Goal: sample until k relevant docs are found; work out what recall would be
 # Play about with varying k to see what effect this has on reliability
 
-CONFIDENCE = 0.05  # Confidence level if using flexible cutoffs
+CONFIDENCE = 0.001  # Confidence level if using flexible cutoffs
 
 
 def usage():

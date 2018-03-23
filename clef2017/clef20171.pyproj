@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{e7ae998e-ace8-4132-80d6-144dd2c763d1}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>stopping_methods\eval\evalulate_curve.py</StartupFile>
+    <StartupFile>stopping_methods\target_method.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

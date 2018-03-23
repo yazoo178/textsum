@@ -17,8 +17,8 @@ qrel_file = ''
 run_file = ''
 cutoff = ''
 true_scores_file = ''
-rate = 50
-sample_rate = 2
+rate = 70
+sample_rate = 3
 
 
 def find_nearest(array,value):
@@ -58,10 +58,10 @@ def eval(true_scores_file, curve_scores, filename):
     x_sam_val = find_nearest(y_p, max(y_p) * (rate / 100))
     x_val_true = findIn(int(round(max(scores) * (rate / 100))), scores)
 
-    effort = x_sam_val / ((len(scores) / sample_rate))
+    effort =  (((len(scores) - x_sam_val)/ sample_rate) + x_sam_val) / len(scores) 
 
     recall = (scores[x_sam_val] / max(scores))
-    return [recall, effort]
+    return [recall, effort, len(scores), max(scores)]
 
 
 
@@ -94,7 +94,8 @@ for i,filename in enumerate(os.listdir('intergrates_bin')):
     rSet['recall'] = results[0]
     rSet['above ' + str(rate)] = float(rSet['recall']) > (float(rate) / 100)
     rSet['effort'] = results[1]
-
+    rSet['docs'] = results[2]
+    rSet['rels'] = results[3]
 
     print(rSet)
 
@@ -102,7 +103,7 @@ for i,filename in enumerate(os.listdir('intergrates_bin')):
     dictResults.append(rSet)
 
 f = open(mode + '_results_' + str(rate) + "_" + str(sample_rate) +".csv", "w")
-f.write("recall" + "," + "above " + str(rate) + "," + "effort" + "\n")
+f.write("recall" + "," + "above " + str(rate) + "," + "effort" + "," "number of docs" + "," + "number of relevant" + "\n")
 
 
 
@@ -112,7 +113,7 @@ sums.append(0)
 sums.append(0)
 
 for element in dictResults:
-    f.write(str(element['recall']) + "," + str(element['above ' + str(rate)]) + "," + str(element['effort']))
+    f.write(str(element['recall']) + "," + str(element['above ' + str(rate)]) + "," + str(element['effort']) + "," + str(element['docs']) + "," +  str(element['rels']))
     sums[0]+=element['recall']
     sums[1]+=  int(element['above ' + str(rate)])
     sums[2]+=element['effort']

@@ -256,9 +256,9 @@ def process(file, name, trueFile):
 
 opts, args = getopt.getopt(sys.argv[1:],"hc:o:q:")
 method = "lin"
-sampleRate = 2
+sampleRate = 3
 qrel = 'qrel/qrel_abs_test'
-int_scores_folder = 'intgrates_s_2/'
+int_scores_folder = 'intgrates_s_3/'
 true_int_scores_folder = 'intergrates_bin/' 
 rate = 70
 
