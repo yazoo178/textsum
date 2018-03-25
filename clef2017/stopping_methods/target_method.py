@@ -5,17 +5,19 @@ import numpy as np
 import sys, getopt
 import random
 
-# Script to implement Cormack and Grossman (2016) method for determining when to stop with systematic 
+# Script to implement Cormack and Grossman (2016) method for determining
+# when to stop examining documents for systematic reviews 
 # reviews
+# Script also extended to implememts "cutoff" method which estimates total 
+# number of relevant document (based on percentage of sampled documents that 
+# are relevant and number of documents yet to be examined)
+#
 # Author: Mark Stevenson
-# Last updated: 14/6/2017    
+# Last updated: 25/3/2018
 #
 # Usage: target_method.py -o output -q qrels
 
-# Goal: sample until k relevant docs are found; work out what recall would be
-# Play about with varying k to see what effect this has on reliability
-
-CONFIDENCE = 0.001  # Confidence level if using flexible cutoffs
+CONFIDENCE = 0.05  # Confidence level if using flexible cutoffs
 
 
 def usage():
@@ -53,6 +55,7 @@ for opt, arg in opts:
 if(run_file == '' or qrel_file == '' or approach == "undefined"): 
     usage()
 
+# Print out info about which approach being run
 print("Run file is ", run_file)
 print("Qrel file is ", qrel_file)
 if approach == "target": 
@@ -76,9 +79,6 @@ for line in f:
     if(qrel is "1"): 
         judgements[topic][pid] = qrel
 f.close()
-
-# Read through run output, run target method, work out recall
-
 
 
 # Dict containing relevance counts 
@@ -114,44 +114,53 @@ for line in f:
     # Store in list of ranked documents
     rankedDocsDoL[topic].append(pid)
 
-# Run target method for each topic - aim is to predict the last document
+# Run target method for each topic
 recall_stats = {}
 effort_stats = {}
 
-for topic in sorted(rankedDocsDoL): 
+for topic in sorted(rankedDocsDoL):
+    # Create randomised list of ranks (simplifies sampling without replacement)
     total_docs = len(rankedDocsDoL[topic])
     ranks = list(range(0, len(rankedDocsDoL[topic])))
     random_ranks = random.sample(ranks, len(ranks))
-    
-    rel_found = 0
-    last_ranked = 0
-    docs_examined = 0
+
+    rel_found = 0       # Number of relevant documents found
+    last_ranked = 0     # Rank of last relevant document found
+    docs_sampled = 0    # Number of documents that have been looked at 
     for i in random_ranks:
-        docs_examined += 1
+        docs_sampled += 1
         # Check whether document is relevant
         if rankedDocsDoL[topic][i] in judgements[topic]:
             rel_found += 1
             if i > last_ranked:
                 last_ranked = i
-            
+                 
+            # Simple target method (i.e. continue until found k relevant)       
+            if approach == "target": 
+                if rel_found == target: 
+                    break
+           
+            # Cutoff method 
             if approach == "cutoff":
-                # Computes the estimated cutoff and stops when falls below set threshold
-                # 95% CI estimate for R (total number of relevant documents) 
-                est_prob_rel = rel_found / docs_examined +  (2 * math.sqrt(0.25 / docs_examined))
+                # Computes the estimated cutoff and stops when falls below set 
+                # threshold 95% CI estimate for R (total number of relevant 
+                # documents) 
+                # (1) estimate total number of relevant documents (with 
+                # confidence interval) 
+                est_prob_rel = rel_found / docs_sampled +  (2 * math.sqrt(0.25 / docs_sampled))
                 est_total_rel = ( est_prob_rel * total_docs )
                 # print("Rank {i} rel_found {r} docs_examined {d} est_prob_rel {t}".format(i = i, r = rel_found, d = docs_examined, t = est_prob_rel))
+                # (2) Use that estimate to estimate how many of the relevant 
+                # documents have already been seen
                 if rel_found < est_total_rel: 
                     cutoff_est = math.log(CONFIDENCE) / ( est_total_rel * math.log(1 - (rel_found / est_total_rel)))
                     # print("Rank {i} cutoff {c}".format(i = i, c = cutoff_est))
                     if cutoff_est < cutoff: 
                         break
 
-        # Simple target method (i.e. continue until found k relevant)         
-        if approach == "target": 
-            if rel_found == target: 
-                break
 
-    # Now compute recall etc. for topic given that last rank
+    # Compute recall, i.e. how many of the relevant documents would be returned
+    # if exmained everything up to last_rank
     total_rel = len(judgements[topic])
     rel_ret = 0
     for i in range(0, last_ranked+1): 
@@ -161,13 +170,23 @@ for topic in sorted(rankedDocsDoL):
     recall_stats[topic] = recall
 
     total_docs = len(rankedDocsDoL[topic])
-    effort = docs_examined / total_docs
+
+    # Compute effort (== total number of documents that had to be examined)
+    # Calculate as everything up to last ranked plus all sampled documents 
+    # with rank > last_rank
+    total_docs_examined = last_ranked
+    for i in random_ranks[:last_ranked]: 
+        if(i > last_ranked):
+            total_docs_examined += 1
+
+    effort = total_docs_examined / total_docs
     effort_stats[topic] = effort
 
+    # Compute some stats about topic for information
     percent_rel = ( total_rel * 100 ) / total_docs
     # print("Topic {t} total_rel {o} total_docs {d} (percent: {p:3.2f}%)".format(t=topic, o=total_rel, d=total_docs, p = percent_rel))
-    print("Topic {t}\tRecall {r:2.3f} Examined {e:2.3f}\t({o} / {d} = {p:3.2f}%)".format(t=topic, r=recall, e=effort,  o=total_rel, d=total_docs, p = percent_rel))
+    print("Topic {t}\tRecall {r:2.3f}  Effort {e:2.3f}\t({o} / {d} = {p:3.2f}%)".format(t=topic, r=recall, e=effort,  o=total_rel, d=total_docs, p = percent_rel))
 
 recall_avg = sum(recall_stats.values()) / len(recall_stats)
 effort_avg = sum(effort_stats.values()) / len(effort_stats)
-print("Averages:\tRecall {r:2.3f} Examined {e:2.3f}\n".format(r = recall_avg, e = effort_avg))
+print("Averages:\tRecall {r:2.3f}  Effort {e:2.3f}\n".format(r = recall_avg, e = effort_avg))
