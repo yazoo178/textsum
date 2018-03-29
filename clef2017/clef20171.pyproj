@@ -13,7 +13,8 @@
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
-    <CommandLineArguments>-k 5 -o C:\Users\william\Documents\TextSum\clef2017\Output\Test_Data_Sheffield-run-2 -q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test</CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -76,6 +77,9 @@
     <Compile Include="other files\log_likelihood_abstract+MeSH.py" />
     <Compile Include="other files\plot_runs.py" />
     <Compile Include="other files\run_4_LL.py" />
+    <Compile Include="Random\shuffle.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="retrieve_data.py" />
     <Compile Include="service.py">
       <SubType>Code</SubType>
@@ -109,11 +113,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".spyproject" />
+    <Folder Include="Random\" />
     <Folder Include="other files" />
     <Folder Include="plot runs" />
     <Folder Include="qrel" />
     <Folder Include="stopping_methods" />
     <Folder Include="stopping_methods\eval\" />
+    <Folder Include="random\" />
     <Folder Include="TestData" />
     <Folder Include="TrainingData" />
   </ItemGroup>

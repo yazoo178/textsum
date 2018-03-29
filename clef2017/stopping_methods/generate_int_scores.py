@@ -102,9 +102,10 @@ def calcDistirubtionTop1(testFiles, records, sample = 1):
         for record in records:
             QueiresToDist[record] = []
             for z in range(0, sample):
-                QueiresToDist[record].append([0] * int((len(records[record].docsReturned) / sample)))
+                QueiresToDist[record].append([0] * int((len(records[record].docsReturned) / sample) + 1))
                 for i, x in enumerate(records[record].docsReturned[z::sample]):
                     if x in queryIdToRelvDocs[record]:
+
                         QueiresToDist[record][z][i] = 1
             
 
@@ -170,15 +171,20 @@ def calcRecallForTopN(N, testFiles, records):
     #recallScores =  [recallScores[x] / N for x in recallScores]
     return recallScores
 
-sample = 2
-records = loadTestResults("Output/Test_Data_Sheffield-run-2")
+fileName = "Test_Data_Sheffield-run-2"
+
+sample = 5
+records = loadTestResults("Output/" + fileName)
 
 scores = calcDistirubtionTop1('qrel/qrel_abs_test', records, sample=sample)
 
+dir = fileName + "_int_scores_" + str(sample)
+if not os.path.exists(dir):
+    os.makedirs(dir)
 
 for score in scores:
 
-    f= open("intgrates_s_" + str(sample) + "/" + score + ".txt","w+")
+    f= open(dir + "/" + score + ".txt","w+")
     #vals = list(scores[score].values())
     vals = list(scores[score])
     

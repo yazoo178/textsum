@@ -18,7 +18,7 @@ run_file = ''
 cutoff = ''
 true_scores_file = ''
 rate = 70
-sample_rate = 3
+sample_rate = 5
 
 
 def find_nearest(array,value):
@@ -85,7 +85,7 @@ curve_scores = []
 for filename in os.listdir('curve_scores/' + mode + "/"):
     curve_scores.append(filename)
 
-for i,filename in enumerate(os.listdir('intergrates_bin')):
+for i,filename in enumerate(os.listdir('curve_scores/' + mode + "/")):
     rSet = {}
     
     true_scores_file = open('intergrates_bin/' + filename , "r+")
@@ -102,7 +102,7 @@ for i,filename in enumerate(os.listdir('intergrates_bin')):
 
     dictResults.append(rSet)
 
-f = open(mode + '_results_' + str(rate) + "_" + str(sample_rate) +".csv", "w")
+f = open(mode + '_results_' + str(rate) + "_" + str(sample_rate)  +".csv", "w")
 f.write("recall" + "," + "above " + str(rate) + "," + "effort" + "," "number of docs" + "," + "number of relevant" + "\n")
 
 

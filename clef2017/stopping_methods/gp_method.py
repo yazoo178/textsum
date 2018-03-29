@@ -121,7 +121,7 @@ def process(file, name, trueFile):
 
         alpha = 0.05 # 95% confidence interval = 100*(1-alpha)
 
-        fileWithOutPath = os.path.basename(file.name).split('.')[0] + "_" + method
+        fileWithOutPath = os.path.basename(file.name).split('.')[0]
         X_vals = np.array(range(0, len(trueScores)))
 
         if method is "gp":
@@ -256,9 +256,9 @@ def process(file, name, trueFile):
 
 opts, args = getopt.getopt(sys.argv[1:],"hc:o:q:")
 method = "lin"
-sampleRate = 3
+sampleRate = 5
 qrel = 'qrel/qrel_abs_test'
-int_scores_folder = 'intgrates_s_3/'
+int_scores_folder = 'Test_Data_Sheffield-run-2_int_scores_5/'
 true_int_scores_folder = 'intergrates_bin/' 
 rate = 70
 

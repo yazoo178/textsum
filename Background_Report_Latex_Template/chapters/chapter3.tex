@@ -2,9 +2,11 @@
 
 In this section I am going to present the work I have completed so far. Two main areas of the systematic review process has been focused on. Stopping criteria and indexing/querying pubmed.
 
-\section{Sample Method to Stopping}
+\section{Random Sample Method to Stopping}
 
-As approach to determining when to stop looking at document abstracts returned by the query we are proposing a new sampling method. The first step of this method is to randomly sample a returned set of documents into a subsets.
+As approach to determining when to stop looking at document abstracts returned by the query we are proposing a new sampling method. This approach assumes we have optimum ranking algorithm for returning documents for a query.
+
+The first step of this method is to randomly sample a returned set of documents into a subsets. 
 
 \begin{equation}
 U = \frac{|D|}{S}
@@ -13,4 +15,36 @@ U = \frac{|D|}{S}
 Where $U$ is the computed randomised subset, $D$ is the document collection and $S$ is the sample size.
 
 We then use this subset $U$ to create a model / baseline for our topic as a way of predicting how many documents one would need to look at to hit a threshold. The intuition behind this approach is that the rate of which relevant documents occur should be relatively similar when the number of returned documents in the same.
+
+Our first approach uses a simple curve fit against a sample set along with a simple non-linear function. $f(x)$
+
+\begin{equation}
+F(x) = n - a\exp^{-kx}
+\end{equation}
+
+Where $a$, $k$ and $n$ are learnt weights and $x$ is an associated return rate for a document.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|} 
+
+ \hline
+ sample size & recall & above 70\% & effort  \\ 
+ 1 & 0.70 &	0.6333	&	1 \\ 
+ 3 & 0.64 & 0.466	&	0.48 \\ 
+ 5 & 0.481 & 0.33	&	0.31 \\ 
+ \hline
+\end{tabular}
+\caption{Comparison of different sample sizes against recall and effort. Ranking Method: Test\_Data\_Sheffield-run-2 \cite{Alharbi2017}}
+
+\end{table}
+
+The first sample size of 1 is included to show how the effort metric is effected. For us to use sample everything, we would need to look at everything, as such the effort averaged out at 1. In this example we were only concerned in achieving 70\% recall, as such even when sampling everything we would really obtain 100\% recall at the expense of 100\% effort.
+
+Looking at every 3rd document and then producing a prediction curve will reduce our effort. We are still required to look at at 1/3 of documents, as such the effort will always be above 0.33. 
+
+
+
+
+
 
