@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{e7ae998e-ace8-4132-80d6-144dd2c763d1}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>stopping_methods\target_method.py</StartupFile>
+    <StartupFile>stopping_methods\eval\evalulate_curve.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -13,9 +13,8 @@
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
-    <CommandLineArguments>
-    </CommandLineArguments>
-    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <CommandLineArguments>-s 3 -t C:\Users\Will\OneDrive\Documents\textsum\clef2017\stopping_methods\\A-rank-cost_int_scores_1 -c C:\Users\Will\OneDrive\Documents\textsum\clef2017\stopping_methods\\A-rank-cost_int_scores_3\curve_scores -o waterloo</CommandLineArguments>
+    <EnableNativeCodeDebugging>True</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />

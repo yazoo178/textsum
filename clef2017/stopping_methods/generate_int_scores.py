@@ -1,4 +1,4 @@
-from numpy.ma.extras import polyfit
+﻿from numpy.ma.extras import polyfit
 print(__doc__)
 
 # Author: Vincent Dubourg <vincent.dubourg@gmail.com>
@@ -13,6 +13,7 @@ import os
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
 from sklearn.utils.extmath import softmax
+import sys, getopt
 
 np.random.seed(1)
 
@@ -171,21 +172,43 @@ def calcRecallForTopN(N, testFiles, records):
     #recallScores =  [recallScores[x] / N for x in recallScores]
     return recallScores
 
-fileName = "Test_Data_Sheffield-run-2"
+opts, args = getopt.getopt(sys.argv[1:],"hk:t:o:q:s:")
+fileName = "Output/" + "Test_Data_Sheffield-run-2"
+output = ""
+qrel = "qrel/qrel_abs_test"
+sample = 3
 
-sample = 5
-records = loadTestResults("Output/" + fileName)
+for opt, arg in opts:
+    if opt == '-h':
+        print("-t the run file path -s sample size [DEFAULT 3] -q qrel file path -o output location [DEFAULT current dir]")
+    elif opt in ("-t"):
+        fileName = arg
+    elif opt in ('-o'):
+        output = arg + "/"
+    elif opt in ('-q'):
+        qrel = arg
+    elif opt in ('-s'):
+        sample = int(arg)
 
-scores = calcDistirubtionTop1('qrel/qrel_abs_test', records, sample=sample)
 
-dir = fileName + "_int_scores_" + str(sample)
+#generate an output folder name from the file supplied
+fullOutputPath  = output  + os.path.basename(fileName).split(".")[0]
+
+#load the data from the results file
+records = loadTestResults(fileName)
+
+#calculate a distribution of releavent document occurences
+scores = calcDistirubtionTop1(qrel, records, sample=sample)
+
+#create a folder for the outputing the intergrated scroes
+dir = fullOutputPath + "_int_scores_" + str(sample)
+
 if not os.path.exists(dir):
     os.makedirs(dir)
 
 for score in scores:
 
     f= open(dir + "/" + score + ".txt","w+")
-    #vals = list(scores[score].values())
     vals = list(scores[score])
     
     # ----------------------------------------------------------------------
@@ -194,14 +217,13 @@ for score in scores:
 
     intrgrated = []
 
-
-    sum = 0
-
+    #Adjust the results to correct format
     vals = np.array(vals)
     vals = np.rot90(vals, 3)
 
     sums = [0] * sample
 
+    #write data to file
     for row in vals:
         for x, val in enumerate(row):
             sums[x]+=val
@@ -214,7 +236,8 @@ for score in scores:
 
     continue
     
-    
+
+        
     #intrgrated = softmax(np.array([intrgrated]))[0]
 
     #y = np.array([x / 2 for x in range(0, 10)])

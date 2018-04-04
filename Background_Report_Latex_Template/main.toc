@@ -10,4 +10,4 @@
 \contentsline {subsection}{\numberline {2.2.1}Evaluation Metrics for Finding Stopping Points}{5}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Existing Stopping Methods}{5}{subsection.2.2.2}
 \contentsline {chapter}{\numberline {3}Novel Work}{6}{chapter.3}
-\contentsline {section}{\numberline {3.1}Sample Method to Stopping}{6}{section.3.1}
+\contentsline {section}{\numberline {3.1}Random Sample Method to Stopping}{6}{section.3.1}

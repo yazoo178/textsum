@@ -9,6 +9,7 @@ import re
 #-k 10 -o Output/Test_Data_Sheffield-run-2 -q qrel/qrel_abs_test
 
 def usage():
+    print("-o output file name [OPTIONAL] -s sample size [DEFAULT 3] -t true score file -r recall rate [DEFAULT 70] -c curve scores path [OPTIONAL, DEFAULT looks in same folder as true scores]")
     sys.exit()
 
 
@@ -45,8 +46,8 @@ def eval(true_scores_file, curve_scores, filename):
               continue
           #if float(line) not in scores:
 
-        scores.append(int(val))
-        X_samps.append(float(c))
+            scores.append(int(val))
+            X_samps.append(float(c))
 
 
     for curveScore in open('./curve_scores/' + mode + "/" + curve_scores, 'r+'):
@@ -67,9 +68,12 @@ def eval(true_scores_file, curve_scores, filename):
 
 
 
-opts, args = getopt.getopt(sys.argv[1:],"hc:o:q:")
+opts, args = getopt.getopt(sys.argv[1:],"hc:t:s:r:c:o:")
 dictResults = []
 mode = "lin"
+trueFilePath = 'None'
+scoresPath = "None"
+output = ""
 
 for opt, arg in opts:
     if opt == '-h':
@@ -78,17 +82,26 @@ for opt, arg in opts:
         rate = int(arg)
     elif opt in ("-s"):
         sample_rate = int(arg)
+    elif opt in ('-t'):
+        trueFilePath = arg + "/"
+    elif opt in ('-c'):
+        scoresPath = arg + "/"
+    elif opt in ('-o'):
+        output = arg
+        
 
+print(trueFilePath)
+print(scoresPath)
 
 print("Recalls:")
 curve_scores = []
-for filename in os.listdir('curve_scores/' + mode + "/"):
+for filename in os.listdir(scoresPath):
     curve_scores.append(filename)
 
-for i,filename in enumerate(os.listdir('curve_scores/' + mode + "/")):
+for i,filename in enumerate(os.listdir(scoresPath)):
     rSet = {}
     
-    true_scores_file = open('intergrates_bin/' + filename , "r+")
+    true_scores_file = open(trueFilePath + filename , "r+")
     results = eval(true_scores_file, curve_scores[i], filename)
 
     rSet['recall'] = results[0]
@@ -102,7 +115,10 @@ for i,filename in enumerate(os.listdir('curve_scores/' + mode + "/")):
 
     dictResults.append(rSet)
 
-f = open(mode + '_results_' + str(rate) + "_" + str(sample_rate)  +".csv", "w")
+if output == "":
+    output = mode + '_results_' + str(rate) + "_" + str(sample_rate)
+
+f = open(output  +".csv", "w")
 f.write("recall" + "," + "above " + str(rate) + "," + "effort" + "," "number of docs" + "," + "number of relevant" + "\n")
 
 

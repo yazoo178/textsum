@@ -57,7 +57,7 @@ def find_nearest(array,value):
 
 
 
-def process(file, name, trueFile):
+def process(file, name, trueFile, outputPath):
 
     scores = []
     trueScores = []
@@ -114,8 +114,7 @@ def process(file, name, trueFile):
         arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
             
             
-
-
+    
     for i, scoreSet in enumerate(scores):
 
 
@@ -131,7 +130,8 @@ def process(file, name, trueFile):
             #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
 
 
-            y2Scores = open('curve_scores/gp/' + fileWithOutPath + '.txt', 'w')
+
+            y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
 
             for item in y2:
                 y2Scores.write("%s\n" % item)
@@ -163,10 +163,7 @@ def process(file, name, trueFile):
 
             tval = t.ppf(1.0-alpha/2., dof) 
             c = 'g'
-
-
-
-            y2Scores = open('curve_scores/lin/' + fileWithOutPath + '.txt', 'w')
+            y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
 
             for item in y2:
                 y2Scores.write("%s\n" % item)
@@ -254,23 +251,30 @@ def process(file, name, trueFile):
 
 
 
-opts, args = getopt.getopt(sys.argv[1:],"hc:o:q:")
+opts, args = getopt.getopt(sys.argv[1:],"hc:i:m:s:")
 method = "lin"
-sampleRate = 5
+sampleRate = 3
 qrel = 'qrel/qrel_abs_test'
 int_scores_folder = 'Test_Data_Sheffield-run-2_int_scores_5/'
 true_int_scores_folder = 'intergrates_bin/' 
 rate = 70
 
+
 for opt, arg in opts:
     if opt == '-h':
-        print ("-m mode gp/lin -s sample rate [DEFAULT 2]")
+        print ("-m mode gp/lin -s sample rate [DEFAULT 3] -i intergration scores folder")
     elif opt in ("-m"):
-        mode = int(arg)
+        method = arg
     elif opt in ("-s"):
         sampleRate = int(arg)
+    elif opt in ("-i"):
+        int_scores_folder = arg + "/"
 
 
+
+
+if not os.path.exists(int_scores_folder + "curve_scores/"):
+    os.makedirs(int_scores_folder + "curve_scores/")
 
 queryIdToRelvDocs = {}
 with open(qrel, encoding='utf-8') as content:
@@ -290,12 +294,16 @@ with open(qrel, encoding='utf-8') as content:
 sum = 0
 sucess = 0
 for filename in os.listdir(int_scores_folder):
-    #filename = 'CD008803.txt'
+
+    #its a folder skip over
+    if os.path.isdir(int_scores_folder + filename):
+        continue
+
     file = open(int_scores_folder + filename , "r+")
     fileTrue = open(true_int_scores_folder + filename , "r+")
     
     try:
-        sum += process(file, filename, fileTrue)
+        sum += process(file, filename, fileTrue, int_scores_folder + "curve_scores/")
         sucess += 1
     except RuntimeError:
         pass
