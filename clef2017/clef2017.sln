@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "clef2017", "clef2017.pyproj", "{0255B317-0A2A-4BE7-B576-0C05B1ABD154}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "clef2017", "clef2017.pyproj", "{2C02EB12-EF7D-44E0-A0E9-3E712B65FA37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +11,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0255B317-0A2A-4BE7-B576-0C05B1ABD154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0255B317-0A2A-4BE7-B576-0C05B1ABD154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C02EB12-EF7D-44E0-A0E9-3E712B65FA37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C02EB12-EF7D-44E0-A0E9-3E712B65FA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F61ADDD8-4934-4377-8B6B-D131F164FC79}
+		SolutionGuid = {68BD5153-0051-4055-84B8-6D737FEAA671}
 	EndGlobalSection
 EndGlobal

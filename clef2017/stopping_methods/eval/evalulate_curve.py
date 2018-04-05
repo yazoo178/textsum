@@ -50,7 +50,7 @@ def eval(true_scores_file, curve_scores, filename):
             X_samps.append(float(c))
 
 
-    for curveScore in open('./curve_scores/' + mode + "/" + curve_scores, 'r+'):
+    for curveScore in open(curve_scores, 'r+'):
         y_p.append(float(curveScore))
 
     y_p = np.array(y_p)
@@ -96,11 +96,18 @@ print(scoresPath)
 print("Recalls:")
 curve_scores = []
 for filename in os.listdir(scoresPath):
-    curve_scores.append(filename)
+    curve_scores.append(scoresPath + "curve_scores/" + filename)
 
 for i,filename in enumerate(os.listdir(scoresPath)):
     rSet = {}
     
+    #skip over dir
+    if os.path.isdir(scoresPath + filename):
+        continue
+
+    if not os.path.exists(curve_scores[i]):
+        continue
+
     true_scores_file = open(trueFilePath + filename , "r+")
     results = eval(true_scores_file, curve_scores[i], filename)
 

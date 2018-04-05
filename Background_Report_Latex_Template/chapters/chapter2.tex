@@ -38,6 +38,24 @@ Naturally we could exclusively optimized each of the parameters by either return
 
 Therefore it becomes difficult for us to evaluate our stopping criteria as we need to consider both of these parameters adjacently.
 
+In response to this we can make use of two more evaluation metrics that tell use  more about the performance of our stopping method \cite{Cormack2016}
+
+\begin{equation}
+reliability = P [acceptable(S) == 1]
+\end{equation}
+
+reliability is computed over all searches and is read as the probability of the acceptability being 1. Where acceptability is calculated as:
+
+\begin{equation}
+  acceptability(S)=\begin{cases}
+    1, & \text{$recall(S)>=0.7$}.\\
+    0, & \text{$recall(S)<0.7$}.
+  \end{cases}
+\end{equation}
+
+A stopping point is deemed to be acceptable if 70\% of the relevant documents have been found. As such, the reliability is an average over a search method.
+
+
 \subsection{Existing Stopping Methods} \label{methods}
 
 The target method is a fairly straight forward approach to establishing a stopping point.

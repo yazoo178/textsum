@@ -57,15 +57,16 @@ def find_nearest(array,value):
 
 
 
-def process(file, name, trueFile, outputPath):
+def process(file, name, outputPath):
 
     scores = []
-    trueScores = []
+    
+    #trueScores = []
     c = 0
     X_samps = []
 
-    scores_5 = []
-    X_samps_5 = []
+   # scores_5 = []
+   # X_samps_5 = []
 
     
     
@@ -86,15 +87,15 @@ def process(file, name, trueFile, outputPath):
 
 
     # Read in cumulative total for true scores
-    for line in trueFile:
-        trueScores.append(float(line))
+   # for line in trueFile:
+        #trueScores.append(float(line))
 
 
 
     #recallFile.write(str(len(trueScores)) + ",")
     #recallFile.write(str(max(trueScores)) + ",")
 
-    x_val_true =findIn(int(round(max(trueScores) * (rate / 100))), trueScores)
+    #x_val_true =findIn(int(round(max(trueScores) * (rate / 100))), trueScores)
     #recallFile.write(str(x_val_true) + ",")
     
     scores = np.array(scores)
@@ -102,26 +103,29 @@ def process(file, name, trueFile, outputPath):
     X_samps = np.array(X_samps)
 
 
-    x = np.atleast_2d([float(x) for x in range(0, len(trueScores))]).T
-    trueScores = np.array(trueScores)
-    x = np.array(x).ravel()
+   # x = np.atleast_2d([float(x) for x in range(0, len(trueScores))]).T
+   # trueScores = np.array(trueScores)
+   # x = np.array(x).ravel()
     
-    scores_5 = np.array(scores_5)
-    X_samps_5 = np.array(X_samps_5)
-    plt.plot(x, trueScores)
-    plt.scatter([x_val_true], [int(round(max(trueScores) * (rate / 100)))], s=60, c='r')
-    plt.annotate(str(rate) + "%" + "recall", xy=(x_val_true, int(round(max(trueScores) * (rate / 100)))), xytext=(20,20), bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
-        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
+   # scores_5 = np.array(scores_5)
+   # X_samps_5 = np.array(X_samps_5)
+   # plt.plot(x, trueScores)
+   # plt.scatter([x_val_true], [int(round(max(trueScores) * (rate / 100)))], s=60, c='r')
+  #  plt.annotate(str(rate) + "%" + "recall", xy=(x_val_true, int(round(max(trueScores) * (rate / 100)))), xytext=(20,20), bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
+   #     arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
             
-            
-    
+      
+    totalDocs = sum(([len(x) for x in scores]))
+
     for i, scoreSet in enumerate(scores):
 
 
         alpha = 0.05 # 95% confidence interval = 100*(1-alpha)
 
         fileWithOutPath = os.path.basename(file.name).split('.')[0]
-        X_vals = np.array(range(0, len(trueScores)))
+
+
+        X_vals = np.array(range(0, totalDocs))
 
         if method is "gp":
             gp = GP()
@@ -172,9 +176,9 @@ def process(file, name, trueFile, outputPath):
 
             return 0
         
-        x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
+        #x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
         #recallFile.write(str(x_sam_val) + ",")
-        score = ((len(trueScores) - x_sam_val) / sampleRate) / x_val_true
+        #score = ((len(trueScores) - x_sam_val) / sampleRate) / x_val_true
 
 
 
@@ -251,24 +255,26 @@ def process(file, name, trueFile, outputPath):
 
 
 
-opts, args = getopt.getopt(sys.argv[1:],"hc:i:m:s:")
+opts, args = getopt.getopt(sys.argv[1:],"hc:i:m:s:q:")
 method = "lin"
 sampleRate = 3
 qrel = 'qrel/qrel_abs_test'
 int_scores_folder = 'Test_Data_Sheffield-run-2_int_scores_5/'
-true_int_scores_folder = 'intergrates_bin/' 
+#true_int_scores_folder = 'intergrates_bin/' 
 rate = 70
 
 
 for opt, arg in opts:
     if opt == '-h':
-        print ("-m mode gp/lin -s sample rate [DEFAULT 3] -i intergration scores folder")
+        print ("-m mode gp/lin [DEFAULT lin] -s sample rate [DEFAULT 3] -i intergration scores folder -q qrel file")
     elif opt in ("-m"):
         method = arg
     elif opt in ("-s"):
         sampleRate = int(arg)
     elif opt in ("-i"):
         int_scores_folder = arg + "/"
+    elif opt in ("-q"):
+        qrel = arg
 
 
 
@@ -291,7 +297,7 @@ with open(qrel, encoding='utf-8') as content:
             queryIdToRelvDocs[tabbed[0]].append(0)
 
 
-sum = 0
+total = 0
 sucess = 0
 for filename in os.listdir(int_scores_folder):
 
@@ -300,15 +306,14 @@ for filename in os.listdir(int_scores_folder):
         continue
 
     file = open(int_scores_folder + filename , "r+")
-    fileTrue = open(true_int_scores_folder + filename , "r+")
     
     try:
-        sum += process(file, filename, fileTrue, int_scores_folder + "curve_scores/")
+        total += process(file, filename, int_scores_folder + "curve_scores/")
         sucess += 1
     except RuntimeError:
         pass
    
-print(sum / sucess)
+print(total / sucess)
 
     
 

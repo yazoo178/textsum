@@ -1,6 +1,6 @@
 \chapter{Novel Work}
 
-In this section I am going to present the work I have completed so far. Two main areas of the systematic review process has been focused on. Stopping criteria and indexing/querying pubmed.
+In this section the work completed so far will be presented. Two main areas of the systematic review process has been focused on. Stopping criteria and indexing/querying pubmed.
 
 \section{Random Sample Method to Stopping}
 
@@ -16,6 +16,17 @@ Where $U$ is the computed randomised subset, $D$ is the document collection and 
 
 We then use this subset $U$ to create a model / baseline for our topic as a way of predicting how many documents one would need to look at to hit a threshold. The intuition behind this approach is that the rate of which relevant documents occur should be relatively similar when the number of returned documents in the same.
 
+A limitation of this sampling method is that for topics with very few documents it is easy for a sample to miss many of them. This creates a subset set bias, where one set contains a larger percentage of relevant documents. Consider a query that returns 10000 candidate documents of which only 10 have been pre-determined to be relevant. Its not too unlikely that a randomly sampled subset would contain 0 relevant documents. We can use the following equation to tell us how much information we can take from a pre-evaluated topic:
+
+\begin{equation}
+I = \frac{rel(T_i)}{|T_i|}
+\end{equation}
+
+Where $T_i$ is a given topic and $rel$ computes the number of relevant documents for that topic.
+
+
+\subsection{Curve Fitting}
+
 Our first approach uses a simple curve fit against a sample set along with a simple non-linear function. $f(x)$
 
 \begin{equation}
@@ -29,10 +40,10 @@ Where $a$, $k$ and $n$ are learnt weights and $x$ is an associated return rate f
 \begin{tabular}{|c|c|c|c|} 
 
  \hline
- sample size & recall & above 70\% & effort  \\ 
- 1 & 0.70 &	0.6333	&	1 \\ 
- 3 & 0.64 & 0.466	&	0.48 \\ 
- 5 & 0.481 & 0.33	&	0.31 \\ 
+ sample size & recall & reliability & effort  \\ 
+ 1 & 0.91 &	0.96	&	1 \\ 
+ 3 & 0.66 & 0.5	&	0.48 \\ 
+ 5 & 0.481 & 0.33	&	0.315 \\ 
  \hline
 \end{tabular}
 \caption{Comparison of different sample sizes against recall and effort. Ranking Method: Test\_Data\_Sheffield-run-2 \cite{Alharbi2017}}
@@ -43,12 +54,30 @@ The first sample size of 1 is included to show how the effort metric is effected
 
 Looking at every 3rd document and then producing a prediction curve will reduce our effort. We are still required to look at at 1/3 of documents, as such the effort will always be above 0.33. 
 
-\subsection{Relevance Ranking}
+\subsubsection{Relevance Ranking}
 
-Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2017} of CLEF 2017. Naturally, the reliability of our curve is heavily based on how good the initial rankings are for each topic. We can compare different ranking methods for generating our stopping curve.
-
-
+Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2017} of CLEF 2017. Naturally, the reliability of our curve is heavily based on how good the initial rankings are for each topic. We can compare different ranking methods for generating our stopping curve. By looking at the CLEF 2017 technology assisted review task \cite{Kanoulas12017} we can determine the best candidates to use. We introduce an additional field of topics sampled as some of the ranking methods do not produce enough relevant documents to generate a suitable curve.
 
 
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+
+ \hline
+ Submission & recall & reliability & effort & topics sampled [Max 30]  \\ 
+ Test\_Data\_Sheffield-run-2 & 0.66 &	0.5	&	0.48 & 30 \\ 
+ Waterloo A-rank-cost & 0.65 & 0.41	&	0.39 & 29 \\ 
+ Waterloo B-rank-cost & 0.70 & 0.46	&	0.40 & 30 \\ 
+ auth run-1 & 0.71 & 0.5	&	0.41 & 30 \\ 
+ auth run-2 & 0.67 & 0.46	&	0.40 & 30 \\ 
+ ntu run-1 & 0.56 & 0.18	&	0.54 & 22 \\ 
+ ucl full-text & 0.55 & 0.36	&	0.70 & 11 \\ 
+ \hline
+\end{tabular}
+\caption{Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method}
+
+\end{table}
+
+We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria.
 
 
