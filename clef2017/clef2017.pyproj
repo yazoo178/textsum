@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
-    <CommandLineArguments>-s 5 -c C:\Users\william\Documents\TextSum\clef2017\stopping_methods\Test_Data_Sheffield-run-2_int_scores_5 -t C:\Users\william\Documents\TextSum\clef2017\stopping_methods\Test_Data_Sheffield-run-2_int_scores_1 -o shef_lin_5</CommandLineArguments>
+    <CommandLineArguments>-s 3 -c C:\Users\william\Documents\TextSum\clef2017\stopping_methods\Test_Data_Sheffield-run-2_int_scores_3 -t C:\Users\william\Documents\TextSum\clef2017\stopping_methods\Test_Data_Sheffield-run-2_int_scores_1 -o shef_gp_3</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />

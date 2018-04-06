@@ -18,8 +18,8 @@ class GP:
         kernel = C(1.0, (1e-3, 1e3)) * RBF(10, (1e-2, 1e2))
 
 
-        gp_kernel = ExpSineSquared(1.0, 5.0, periodicity_bounds=(1e-2, 1e1)) \
-        + C(1.0, (1e-3, 1e3))
+        #gp_kernel = ExpSineSquared(1.0, 5.0, periodicity_bounds=(1e-2, 1e1)) \
+        #+ C(1.0, (1e-3, 1e3))
 
         ##C(1.0, (1e-3, 1e3)) 
         self.gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=9)
@@ -122,29 +122,43 @@ def process(file, name, outputPath):
 
         alpha = 0.05 # 95% confidence interval = 100*(1-alpha)
 
+        #get a file name
         fileWithOutPath = os.path.basename(file.name).split('.')[0]
 
-
+        #x axis array of points 0 to total number of documents for topic
         X_vals = np.array(range(0, totalDocs))
 
-        if method is "gp":
+
+        if method == "gp":
+
             gp = GP()
             gp.create(np.array([X_samps]).reshape(len(X_samps), 1), np.array(scoreSet))
             y2, sigma = gp.predict(X_vals.reshape(len(X_vals), 1))
             #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
 
 
-
+            #create new gp file
             y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
 
+            #write gp to file
             for item in y2:
                 y2Scores.write("%s\n" % item)
 
             y2Scores.close()
 
-           # plt.plot(X_vals, y2, label=u'True')
-            #plt.show()
-            return 0
+            if not show_curve:
+                return 0
+
+
+
+            plt.plot(X_vals, y2)
+            # plt.fill(np.concatenate([x_pred, x_pred[::-1]]),
+            #          np.concatenate([y_pred - 1.9600 * sigma,
+            #                         (y_pred + 1.9600 * sigma)[::-1]]),
+            #          alpha=.5, fc='b', ec='None', label='95% confidence interval')
+
+
+            plt.show()
 
         else:
 
@@ -155,118 +169,76 @@ def process(file, name, outputPath):
             # y2 = other_func(X_samps, a, k, n)
             
 
-
             y2 = other_func(X_vals, a, k, n)
-
             n = len(y2)    # number of data points
             p = len(opt) # number of parameters
-
             dof = max(0, n - p) # number of degrees of freedom
 
-            # student-t value for the dof and confidence level
 
             tval = t.ppf(1.0-alpha/2., dof) 
             c = 'g'
+
+            #create curve file
             y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
 
+            #write curve to file
             for item in y2:
                 y2Scores.write("%s\n" % item)
 
             y2Scores.close()
 
-            return 0
+            if not show_curve:
+                return 0
         
-        #x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
-        #recallFile.write(str(x_sam_val) + ",")
-        #score = ((len(trueScores) - x_sam_val) / sampleRate) / x_val_true
-
-
-
-
-
-
-
-        #recall = (trueScores[x_sam_val] / max(trueScores))
-       # re#callFile.write(str(recall >= rate) + ",")
-       # recallFile.write(str(recall) + ",")
-        #recallFile.write(str(score))
-
-
-        
-
-
-
-        lower = []
-        upper = []
-        for p,var in zip(opt, np.diag(pcov)):
-            sigma = var**0.5
-            lower.append(p - sigma*tval)
-            upper.append(p + sigma*tval)
-
-        yfit = other_func(X_vals, *lower)
-        plt.plot(X_vals,yfit,'--', color=c)
-        yfit = other_func(X_vals, *upper)
-        plt.plot(X_vals,yfit,'--', label='CI 95%', color=c)
-
-        plt.plot(X_vals, y2, label=u'Sample 3 - ' + str(i))
-
-
-        plt.fill(np.concatenate([X_vals, X_vals[::-1]]),
-             np.concatenate([y2 - 1.9500 * sigma,
-                            (y2 + 1.9500 * sigma)[::-1]]),
-            alpha=.1, fc='g', ec='None', label='95% confidence interval')
-
-        break
-
-    
-
-
-
-
-    opt, pcov = curve_fit(other_func, x, trueScores)
-    a, k, n = opt
-    y1 = other_func(x, a, k, n)
-
-    plt.plot(x, y1, label=u'True')
-    
-
-    #p1 = plt.plot(X_samps, scores, c='C1', label=u'True')
-
-
+            lower = []
+            upper = []
  
+            for p,var in zip(opt, np.diag(pcov)):
+                sigma = var**0.5
+                lower.append(p - sigma*tval)
+                upper.append(p + sigma*tval)
+
+            yfit = other_func(X_vals, *lower)
+            plt.plot(X_vals,yfit,'--', color=c)
+            yfit = other_func(X_vals, *upper)
+            plt.plot(X_vals,yfit,'--', label='CI 95%', color=c)
+
+            plt.plot(X_vals, y2, label=u'Sample - ' + str(sampleRate))
+
+
+            plt.fill(np.concatenate([X_vals, X_vals[::-1]]),
+                 np.concatenate([y2 - 1.9500 * sigma,
+                                (y2 + 1.9500 * sigma)[::-1]]),
+                alpha=.1, fc='g', ec='None')
+
+            plt.xlabel("Total number of documents for query", fontsize=16)
+            plt.ylabel("Estimated number of releavent documents", fontsize=16)
+            plt.legend(loc='lower right', fontsize=16)
+            plt.title(fileWithOutPath, fontsize=16)
+            plt.show()
+        
+            
+            break
+
+    return 0
 
 
 
-    opt, pcov = curve_fit(other_func, X_samps_5, scores_5)
-    a, k, n = opt
-    y3 = other_func(X_samps_5, a, k, n)
-    
-
-    #p1 = plt.plot(X_samps_5, y3, c='b', label=u'Sample 5')
 
 
-
-
-    plt.legend(loc='lower right')
-    #plt.show()
-    return score
-
-
-
-
-
-opts, args = getopt.getopt(sys.argv[1:],"hc:i:m:s:q:")
+opts, args = getopt.getopt(sys.argv[1:],"hc:i:m:s:q:c")
 method = "lin"
 sampleRate = 3
 qrel = 'qrel/qrel_abs_test'
 int_scores_folder = 'Test_Data_Sheffield-run-2_int_scores_5/'
 #true_int_scores_folder = 'intergrates_bin/' 
 rate = 70
+show_curve = False
 
 
 for opt, arg in opts:
     if opt == '-h':
-        print ("-m mode gp/lin [DEFAULT lin] -s sample rate [DEFAULT 3] -i intergration scores folder -q qrel file")
+        print ("-m mode gp/lin [DEFAULT lin] -s sample rate [DEFAULT 3] -i intergration scores folder -q qrel file -c show curves [DEFAULT N]")
     elif opt in ("-m"):
         method = arg
     elif opt in ("-s"):
@@ -275,9 +247,12 @@ for opt, arg in opts:
         int_scores_folder = arg + "/"
     elif opt in ("-q"):
         qrel = arg
+    elif opt in ("-c"):
+        show_curve = True
 
 
 
+print("Method :" + method)
 
 if not os.path.exists(int_scores_folder + "curve_scores/"):
     os.makedirs(int_scores_folder + "curve_scores/")

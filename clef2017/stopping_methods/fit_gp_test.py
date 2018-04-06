@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 def exponential_cov(x, y, params):
     return params[0] * np.exp( -0.5 * params[1] * np.subtract.outer(x, y)**2)
 

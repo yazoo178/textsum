@@ -22,7 +22,12 @@ A limitation of this sampling method is that for topics with very few documents 
 I = \frac{rel(T_i)}{|T_i|}
 \end{equation}
 
-Where $T_i$ is a given topic and $rel$ computes the number of relevant documents for that topic.
+Where $T_i$ is a given topic and $rel$ computes the number of relevant documents for that topic. Therefore $I$ is telling us how useful the topic is at fitting a curve. We can take the average simply by taking the mean of $I$ across all topics:
+
+\begin{equation}
+Usefullness = \frac{\sum{I}}{|T|}
+\end{equation}
+
 
 
 \subsection{Curve Fitting}
@@ -34,6 +39,14 @@ F(x) = n - a\exp^{-kx}
 \end{equation}
 
 Where $a$, $k$ and $n$ are learnt weights and $x$ is an associated return rate for a document.
+
+We can visualise the curve along with the confidence intervals. The Y axis is the predicted number of relevant documents for the topic. X axis shows the true number of documents returned for the query. 
+
+\begin{figure}[H]
+\center
+\includegraphics[width=10cm]{figures/curve_fit_example.png}
+\caption{Example of fitting a curve for a topic using sampling}
+\end{figure}
 
 \begin{table}[H]
 \centering
@@ -78,6 +91,24 @@ Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2
 
 \end{table}
 
-We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria.
+We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is.
 
+\subsection{Gaussian Process fitting}
 
+As an alternate approach to fitting a simple curve, we can apply a GP.
+
+We will apply a constant kernel plus a squared-exponential kernel.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+
+ \hline
+ Submission & recall & reliability & effort & topics sampled [Max 30]  \\ 
+ Test\_Data\_Sheffield-run-2 & 0.694 &	0.66	&	0.49 & 30 \\ 
+
+ \hline
+\end{tabular}
+\caption{Comparison of different of sample method using GP fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method.}
+
+\end{table}

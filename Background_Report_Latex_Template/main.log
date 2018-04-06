@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  5 APR 2018 17:38
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  6 APR 2018 17:45
 entering extended mode
 **./main.tex
 (main.tex
@@ -1961,12 +1961,15 @@ Chapter 3.
 [7
 
 ]
-Overfull \hbox (0.2721pt too wide) in paragraph at lines 59--60
+File: figures/curve_fit_example.png Graphic file (type bmp)
+<figures/curve_fit_example.png>
+ [8]
+Overfull \hbox (0.2721pt too wide) in paragraph at lines 72--73
 \TU/lmr/m/n/10.95 Our results so far have been based on Test_-Data_-Sheffield-r
 un-2 [[]] of CLEF 2017. Naturally,
  []
 
-[8]) (main.bbl [9]
+[9]) (main.bbl [10]
 Underfull \hbox (badness 10000) in paragraph at lines 43--47
 []\TU/lmr/m/sc/10.95 Nunn, J.  \TU/lmr/m/n/10.95 cochranes.  []$[][][][] [] [] 
 [] [][][][][] [] [][][][][][][][] [] [][][] []
@@ -1979,7 +1982,7 @@ Underfull \hbox (badness 1629) in paragraph at lines 49--52
 [][][] []
  []
 
-) [10
+) [11
 
 ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 106.
@@ -1990,12 +1993,12 @@ Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 106.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 106.
  ) 
 Here is how much of TeX's memory you used:
- 40155 strings out of 427836
- 929052 string characters out of 3148132
- 1145766 words of memory out of 3000000
- 43625 multiletter control sequences out of 15000+200000
+ 40163 strings out of 427836
+ 929217 string characters out of 3148132
+ 1144859 words of memory out of 3000000
+ 43631 multiletter control sequences out of 15000+200000
  534891 words of font info for 61 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  62i,12n,96p,10429b,479s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.pdf (16 pages).
+Output written on main.pdf (17 pages).
