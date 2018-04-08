@@ -58,4 +58,6 @@ A stopping point is deemed to be acceptable if 70\% of the relevant documents ha
 
 \subsection{Existing Stopping Methods} \label{methods}
 
-The target method is a fairly straight forward approach to establishing a stopping point.
+The target method is a fairly straight forward approach to establishing a stopping point. It was first proposed by Cormack and Grossman \citep{Cormack2016}.
+
+The target $T$ denotes how many documents we should randomly select from our initial query. A larger value of $T$ will increase the effort required as we are more likely to select a document towards the end of the query set. Documents are looked at until the target point $T$ has been reached.

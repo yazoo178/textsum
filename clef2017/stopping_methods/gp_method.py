@@ -12,14 +12,15 @@ from scipy.stats.distributions import  t
 from sklearn.gaussian_process.kernels import WhiteKernel, ExpSineSquared
 import sys, getopt
 
+
 class GP:
     def create(self, x, y):
         dy = 0.5 + 1.0 * np.random.random(np.array(y).shape)
-        kernel = C(1.0, (1e-3, 1e3)) * RBF(10, (1e-2, 1e2))
+        #kernel = C(1.0, (1e-3, 1e3)) * RBF(2, (1e-2, 1e2))
+        #kernel =  C(10, (1e-2, 1e4))
 
-
-        #gp_kernel = ExpSineSquared(1.0, 5.0, periodicity_bounds=(1e-2, 1e1)) \
-        #+ C(1.0, (1e-3, 1e3))
+        #kernel = ExpSineSquared(1.0, 5.0, periodicity_bounds=(1e-2, 1e1)) \
+       # + C(1.0, (1e-3, 1e3))
 
         ##C(1.0, (1e-3, 1e3)) 
         self.gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=9)
