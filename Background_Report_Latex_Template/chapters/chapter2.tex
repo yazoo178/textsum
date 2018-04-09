@@ -2,11 +2,22 @@
 
 Systematic reviews have many different stages that propose themselves as a candidate for automation. This section is going to look at the techniques that have been applied for some of these stages in previous literature.
 
-\section{Indexing and Querying Medline}
+\section{Indexing and Querying Medline and Automated Query Generation}
 
 Medline is a large collection of medical literature and data from around the world. Typically each entity will contain a title and an abstract containing some information on the study. Whilest Medline as a whole is very easy to access \cite{medline}, the large size and complexity of the data makes it difficult to retrieve the relevant information.
 
-Being able to create a reliant index of Medline would help with the effectiveness of the queries. As such existing medline indexes and IR systems have been created \cite{nlm}
+Being able to create a reliant index of Medline would help with the effectiveness of the queries. As such existing medline indexes and IR systems have been created \cite{nlm}.
+
+\subsection{Automated Query Generation}
+
+Being able to automate query generation for literature searching would save systematic reviewers a significant amount of time. However, medical literature queries are typically complex and contain multiple levels of logical operators and synonymous term look ups. This makes the task of creating a query manually in-its-self a challenging piece of work.
+
+\subsubsection{Rapid Automatic Keyword Extraction Algorithm}
+
+Rapid automatic keyword extraction (RAKE) is a keyword extraction algorithm was proposed by Rose, Engel and Cramer in 2010 \cite{rake}. This algorithm is used for taking the key pieces of information from text and is useful the domain of information extraction. This algorithm is of interest to us as it has potential usage within the field of query generation.
+
+RAKE is heavily relies on stop-words and punctuation separators as an indicator for the importance of a phrases and words. RAKE will iterator over sequences of words until a stop-word or separator is found, this phrase/word is then split and extracted. Frequency of occurrence (tf) and word co-occurrence matrices can then be used to reduce the key-word set down further.
+
 
 \section{Stopping Criteria} \label{stops}
 
@@ -58,6 +69,15 @@ A stopping point is deemed to be acceptable if 70\% of the relevant documents ha
 
 \subsection{Existing Stopping Methods} \label{methods}
 
-The target method is a fairly straight forward approach to establishing a stopping point. It was first proposed by Cormack and Grossman \citep{Cormack2016}.
+\subsubsection{Target}
+
+The target method is a fairly straight forward approach to establishing a stopping point. It was first proposed by Cormack and Grossman \cite{Cormack2016}.
 
 The target $T$ denotes how many documents we should randomly select from our initial query. A larger value of $T$ will increase the effort required as we are more likely to select a document towards the end of the query set. Documents are looked at until the target point $T$ has been reached.
+
+While this approach is shown to acquire 95\% reliability, the effort needed is often significantly highly, often requiring us to look at huge volume of documents.
+
+We can evaluate how well this method does against an existing set of relevance rankings. We will use the Sheffield run data from the CLEF 2017 task \cite{Kanoulas12017}. We found that a $T$ parameter of 5 was the lowest we could go to still acquire a reliability of over 70\%. Overall we were able to obtain an average recall of 90\% by making an average effort of 58\%.
+
+
+

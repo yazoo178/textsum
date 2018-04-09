@@ -120,6 +120,7 @@ def process(file, name, outputPath):
 
     for i, scoreSet in enumerate(scores):
 
+        
 
         alpha = 0.05 # 95% confidence interval = 100*(1-alpha)
 
@@ -176,40 +177,57 @@ def process(file, name, outputPath):
             dof = max(0, n - p) # number of degrees of freedom
 
 
+
             tval = t.ppf(1.0-alpha/2., dof) 
             c = 'g'
+
+
+            if float(max(y2) / totalDocs) < jump_skip:
+                print("Skipped topic: " + fileWithOutPath)
+                return 0
 
             #create curve file
             y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
 
-            #write curve to file
-            for item in y2:
-                y2Scores.write("%s\n" % item)
 
-            y2Scores.close()
-
-            if not show_curve:
-                return 0
-        
             lower = []
             upper = []
  
             for p,var in zip(opt, np.diag(pcov)):
-                sigma = var**0.5
+                sigma = var**0.90
                 lower.append(p - sigma*tval)
                 upper.append(p + sigma*tval)
 
-            yfit = other_func(X_vals, *lower)
-            plt.plot(X_vals,yfit,'--', color=c)
-            yfit = other_func(X_vals, *upper)
-            plt.plot(X_vals,yfit,'--', label='CI 95%', color=c)
+            yfitLower = other_func(X_vals, *lower)
+            yfitUpper = other_func(X_vals, *upper)
+
+            #write curve to file
+            for i,  item in enumerate(y2):
+                y2Scores.write(str(item) + "\t" + str(yfitLower[i]) + "\t" + str(yfitUpper[i]) + "\n")
+
+            y2Scores.close()
+
+            
+
+
+            if not show_curve:
+                return 1
+        
+            
+                
+
+            
+            plt.plot(X_vals,yfitLower,'--', color=c)
+
+            
+            plt.plot(X_vals,yfitUpper,'--', label='CI 95%', color=c)
 
             plt.plot(X_vals, y2, label=u'Sample - ' + str(sampleRate))
 
 
             plt.fill(np.concatenate([X_vals, X_vals[::-1]]),
-                 np.concatenate([y2 - 1.9500 * sigma,
-                                (y2 + 1.9500 * sigma)[::-1]]),
+                 np.concatenate([y2 - 1.95 * sigma,
+                                (y2 + 1.95 * sigma)[::-1]]),
                 alpha=.1, fc='g', ec='None')
 
             plt.xlabel("Total number of documents for query", fontsize=16)
@@ -221,13 +239,13 @@ def process(file, name, outputPath):
             
             break
 
-    return 0
+    return 1
 
 
 
 
 
-opts, args = getopt.getopt(sys.argv[1:],"hc:i:m:s:q:c")
+opts, args = getopt.getopt(sys.argv[1:],"hc:i:m:s:q:c:j:")
 method = "lin"
 sampleRate = 3
 qrel = 'qrel/qrel_abs_test'
@@ -235,11 +253,11 @@ int_scores_folder = 'Test_Data_Sheffield-run-2_int_scores_5/'
 #true_int_scores_folder = 'intergrates_bin/' 
 rate = 70
 show_curve = False
-
+jump_skip = 1.0
 
 for opt, arg in opts:
     if opt == '-h':
-        print ("-m mode gp/lin [DEFAULT lin] -s sample rate [DEFAULT 3] -i intergration scores folder -q qrel file -c show curves [DEFAULT N]")
+        print ("-m mode gp/lin [DEFAULT lin] -s sample rate [DEFAULT 3] -i intergration scores folder -q qrel file -c show curves [DEFAULT N] -j determines if we should skip a topic if the number of realvent documents falls below a certain percentage")
     elif opt in ("-m"):
         method = arg
     elif opt in ("-s"):
@@ -250,7 +268,10 @@ for opt, arg in opts:
         qrel = arg
     elif opt in ("-c"):
         show_curve = True
-
+    elif opt in ("-j"):
+        print(arg)
+        jump_skip = float(arg)
+      
 
 
 print("Method :" + method)
@@ -285,11 +306,10 @@ for filename in os.listdir(int_scores_folder):
     
     try:
         total += process(file, filename, int_scores_folder + "curve_scores/")
-        sucess += 1
     except RuntimeError:
         pass
    
-print(total / sucess)
+print("Topics created: " + str(total))
 
     
 

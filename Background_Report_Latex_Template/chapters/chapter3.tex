@@ -69,15 +69,16 @@ Looking at every 3rd document and then producing a prediction curve will reduce 
 
 \subsubsection{Relevance Ranking}
 
-Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2017} of CLEF 2017. Naturally, the reliability of our curve is heavily based on how good the initial rankings are for each topic. We can compare different ranking methods for generating our stopping curve. By looking at the CLEF 2017 technology assisted review task \cite{Kanoulas12017} we can determine the best candidates to use. We introduce an additional field of topics sampled as some of the ranking methods do not produce enough relevant documents to generate a suitable curve.
+Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2017} of CLEF 2017. Naturally, the reliability of our curve is heavily based on how good the initial rankings are for each topic. We can compare different ranking methods for generating our stopping curve. By looking at the CLEF 2017 technology assisted review task \cite{Kanoulas12017} we can determine the best candidates to use.
 
+We also introduce a new field. Topics sampled is the number of topics that were evaluated using the curve. This is included as some of the ranking methods do not produce enough relevant documents to generate a suitable curve. 
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|} 
 
  \hline
- Submission & recall & reliability & effort & topics sampled [Max 30]  \\ 
+ Submission & recall & reliability & effort & topics sampled  \\ 
  Test\_Data\_Sheffield-run-2 & 0.66 &	0.5	&	0.48 & 30 \\ 
  Waterloo A-rank-cost & 0.65 & 0.41	&	0.39 & 29 \\ 
  Waterloo B-rank-cost & 0.70 & 0.46	&	0.40 & 30 \\ 
@@ -87,11 +88,37 @@ Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2
  ucl full-text & 0.55 & 0.36	&	0.70 & 11 \\ 
  \hline
 \end{tabular}
-\caption{Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method}
+\caption{Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. No topic drop-out}
 
 \end{table}
 
-We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is.
+
+This second set of results will use a mandatory drop out parameter for topics with less than 0.5\% of relevant documents.  The maximum number of topics for this dataset remains at 30.
+
+We also include a confidence interval evaluation for lower bounded range of a 90\% confidence interval. The key advantages of using a curve as  method of evaluating stopping criteria is being able to make use of this confidence interval in a real systematic review. In the context of a systematic reviewers at the data filtering stage, we could specify that the system is 90\% certain that 70\% of relevant documents have been found. At which point the reviewer can decide if its worth continuing to look at documents.
+
+\begin{table}[H]
+\scalebox{0.8}{
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+
+ \hline
+ Submission & recall-lower-upper & reliability-lower-upper & effort-lower-upper & topics sampled  \\ 
+ Test\_Data\_Sheffield-run-2 & 0.71 \, 0.67 \, 0.71, &	0.57 \, 0.53 \, 0.57	&	0.50 \, 0.48 \, 0.50 & 26 \\ 
+ Waterloo A-rank-cost & 0.68 \, 0.67 \, 0.68, &	0.41 \, 0.33 \, 0.41	&	0.40 \, 0.40 \, 0.41 & 24 \\ 
+ Waterloo B-rank-cost & 0.72 \, 0.71 \, 0.73, &	0.53 \, 0.53 \, 0.61	&	0.41 \, 0.41 \, 0.41 & 26 \\ 
+ auth run-1 & 0.73 \, 0.73 \, 0.74, &	0.52 \, 0.52 \, 0.60	&	0.42 \, 0.42 \, 0.43 & 23 \\ 
+ auth run-2 & 0.72 \, 0.72 \, 0.72, &	0.54 \, 0.52 \, 0.54	&	0.42 \, 0.42 \, 0.42 & 22 \\ 
+ ntu run-1 & 0.61 \, 0.55 \, 0.60, &	0.26\, 0.25 \, 0.26	&	0.54 \, 0.52 \, 0.54 & 15 \\ 
+ ucl full-text & 0.61 \, 0.29 \, 0.58, &	0.5 \, 0.125 \, 0.375	&	0.75 \, 0.52 \, 0.68 & 8 \\ 
+ \hline
+\end{tabular}
+}
+\caption{Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% drop-out}
+
+\end{table}
+
+We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is. Some of the ranking methods struggle to produce curves and when combined with a drop-out parameter produce become not worth considering in our evaluation.
 
 \subsection{Gaussian Process fitting}
 
@@ -112,3 +139,14 @@ We will apply a constant kernel plus a squared-exponential kernel.
 \caption{Comparison of different of sample method using GP fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method.}
 
 \end{table}
+
+\section{Indexing and Querying Medline using Systematic Review Protocols}
+
+Being able to produce an efficient index of Medline is something highly desirable in the field of medicial research. A more efficient index will produce more concise results when given a query. This could potentially save time in filtering through many non-relevant studies and providing a more concise data-set for reviewers to observe. 
+
+\subsection{Acquiring Key Information from A Systematic Review Protocol}
+
+A systematic review protocol is created before the systematic review process is started. A systematic review protocol describes the rationale, hypothesis, and planned methods of the review. The Medline query is created manually with the help of the protocol. Here we are looking to generate a suitable query/relevant information from the protocol to then automatically query Medline. 
+
+
+
