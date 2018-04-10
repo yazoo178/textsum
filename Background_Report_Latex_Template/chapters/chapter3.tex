@@ -146,7 +146,27 @@ Being able to produce an efficient index of Medline is something highly desirabl
 
 \subsection{Acquiring Key Information from A Systematic Review Protocol}
 
-A systematic review protocol is created before the systematic review process is started. A systematic review protocol describes the rationale, hypothesis, and planned methods of the review. The Medline query is created manually with the help of the protocol. Here we are looking to generate a suitable query/relevant information from the protocol to then automatically query Medline. 
+A systematic review protocol is created before the systematic review process is started. A systematic review protocol describes the rationale, hypothesis, and planned methods of the review. The Medline query is created manually with the help of the protocol. Here we are looking to generate a suitable query/relevant information from the protocol to then automatically query Medline.
 
+We will use RAKE \cite{rake} to extraction key-words from a protocol, which we can see an example of below:
+
+\begin{tcolorbox}
+
+Topic: CD008122 
+
+Title: Rapid diagnostic tests for diagnosing uncomplicated P. falciparum malaria in endemic countries 
+
+Objective: To assess the diagnostic accuracy of RDTs for detecting clinical P. falciparum malaria (symptoms suggestive of malaria plus P. falciparum parasitaemia detectable by microscopy) in persons living in malaria endemic areas who present to ambulatory healthcare facilities with symptoms of malaria, and to identify which types and brands of commercial test best detect clinical P. falciparum malaria.
+
+\end{tcolorbox}
+
+ 
+\begin{tcolorbox}
+
+endemic countries objective|ambulatory healthcare facilities|rapid diagnostic tests|falciparum parasitaemia detectable|malaria endemic areas|diagnostic accuracy|falciparum malaria
+
+\end{tcolorbox}
+
+The | symbol represents a separation between a phrase. The protcols are pre-processed as follows: Reference removal, lowercase, words less than $N$ length removed, pubmed stoplist. We decided to not perform any stemming/additional manipulation at this stage, due to uncertainty of query format.
 
 
