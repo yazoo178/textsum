@@ -16,7 +16,7 @@ import sys, getopt
 class GP:
     def create(self, x, y):
         dy = 0.5 + 1.0 * np.random.random(np.array(y).shape)
-        #kernel = C(1.0, (1e-3, 1e3)) * RBF(2, (1e-2, 1e2))
+        kernel = C(1.0, (1e-3, 1e3)) * RBF(2, (1e-2, 1e2))
         #kernel =  C(10, (1e-2, 1e4))
 
         #kernel = ExpSineSquared(1.0, 5.0, periodicity_bounds=(1e-2, 1e1)) \
@@ -139,6 +139,10 @@ def process(file, name, outputPath):
             #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
 
 
+            if float(max(y2) / totalDocs) < jump_skip:
+                print("Skipped topic: " + fileWithOutPath)
+                return 0
+
             #create new gp file
             y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
 
@@ -147,6 +151,8 @@ def process(file, name, outputPath):
                 y2Scores.write("%s\n" % item)
 
             y2Scores.close()
+
+
 
             if not show_curve:
                 return 0

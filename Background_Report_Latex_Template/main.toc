@@ -19,3 +19,5 @@
 \contentsline {subsection}{\numberline {3.1.2}Gaussian Process fitting}{10}{subsection.3.1.2}
 \contentsline {section}{\numberline {3.2}Indexing and Querying Medline using Systematic Review Protocols}{11}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Acquiring Key Information from A Systematic Review Protocol}{11}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Indexing medline}{12}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Results}{12}{subsection.3.2.3}
