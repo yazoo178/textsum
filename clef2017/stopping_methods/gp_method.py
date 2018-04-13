@@ -86,18 +86,6 @@ def process(file, name, outputPath):
         scores.append(np.array(tmp)) # y-axis
         X_samps.append(float(c))     # x-axis
 
-
-    # Read in cumulative total for true scores
-   # for line in trueFile:
-        #trueScores.append(float(line))
-
-
-
-    #recallFile.write(str(len(trueScores)) + ",")
-    #recallFile.write(str(max(trueScores)) + ",")
-
-    #x_val_true =findIn(int(round(max(trueScores) * (rate / 100))), trueScores)
-    #recallFile.write(str(x_val_true) + ",")
     
     scores = np.array(scores)
     scores = np.rot90(scores)
@@ -121,7 +109,6 @@ def process(file, name, outputPath):
     for i, scoreSet in enumerate(scores):
 
         
-
         alpha = 0.05 # 95% confidence interval = 100*(1-alpha)
 
         #get a file name
@@ -130,25 +117,29 @@ def process(file, name, outputPath):
         #x axis array of points 0 to total number of documents for topic
         X_vals = np.array(range(0, totalDocs))
 
-
         if method == "gp":
 
             gp = GP()
             gp.create(np.array([X_samps]).reshape(len(X_samps), 1), np.array(scoreSet))
             y2, sigma = gp.predict(X_vals.reshape(len(X_vals), 1))
             #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
-
+            
 
             if float(max(y2) / totalDocs) < jump_skip:
                 print("Skipped topic: " + fileWithOutPath)
                 return 0
 
+            interval = sigma * 1.91
+            lower = y2 - interval
+            upper = y2 + interval
+
+
             #create new gp file
             y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
 
             #write gp to file
-            for item in y2:
-                y2Scores.write("%s\n" % item)
+            for i,  item in enumerate(y2):
+                y2Scores.write(str(item) + "\t" + str(lower[i]) + "\t" + str(upper[i]) + "\n")
 
             y2Scores.close()
 
@@ -200,7 +191,7 @@ def process(file, name, outputPath):
             upper = []
  
             for p,var in zip(opt, np.diag(pcov)):
-                sigma = var**0.90
+                sigma = var**0.5
                 lower.append(p - sigma*tval)
                 upper.append(p + sigma*tval)
 
@@ -222,19 +213,30 @@ def process(file, name, outputPath):
             
                 
 
-            
-            plt.plot(X_vals,yfitLower,'--', color=c)
+            x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
+            index = findIn(x_sam_val, X_vals)
+            plt.scatter(np.array([int(x_sam_val)]), np.array([y2[x_sam_val]]), c='black', label='Estimated 70% recall point', s = 18)
+
+            x_sam_val = find_nearest(yfitLower, max(yfitLower) * (rate / 100))
+            index = findIn(x_sam_val, X_vals)
+            plt.scatter(np.array([int(x_sam_val)]), np.array([yfitLower[x_sam_val]]), c='black', s = 18)
+
+            x_sam_val = find_nearest(yfitUpper, max(yfitUpper) * (rate / 100))
+            index = findIn(x_sam_val, X_vals)
+            plt.scatter(np.array([int(x_sam_val)]), np.array([yfitUpper[x_sam_val]]), c='black', s = 18)
+
+            plt.plot(X_vals,yfitLower,'--', label='Lower CI 95%', color="g")
 
             
-            plt.plot(X_vals,yfitUpper,'--', label='CI 95%', color=c)
+            plt.plot(X_vals,yfitUpper,'--',  label='Upper CI 95%', color="r")
 
             plt.plot(X_vals, y2, label=u'Sample - ' + str(sampleRate))
 
 
-            plt.fill(np.concatenate([X_vals, X_vals[::-1]]),
-                 np.concatenate([y2 - 1.95 * sigma,
-                                (y2 + 1.95 * sigma)[::-1]]),
-                alpha=.1, fc='g', ec='None')
+          #  plt.fill(np.concatenate([X_vals, X_vals[::-1]]),
+           #      np.concatenate([y2 - 1.999 * sigma,
+            #                    (y2 + 1.999 * sigma)[::-1]]),
+           #     alpha=.1, fc='g', ec='None')
 
             plt.xlabel("Total number of documents for query", fontsize=16)
             plt.ylabel("Estimated number of releavent documents", fontsize=16)

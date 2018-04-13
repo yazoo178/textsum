@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
-    <CommandLineArguments>-s 3 -c C:\Users\william\Documents\TextSum\clef2017\stopping_methods\test_ranked_run_1_int_scores_3 -t C:\Users\william\Documents\TextSum\clef2017\stopping_methods\test_ranked_run_1_int_scores_1 -o ntu_run1_drop_lin_3</CommandLineArguments>
+    <CommandLineArguments>-s 3 -c C:\Users\william\Documents\TextSum\clef2017\stopping_methods\run-2_int_scores_3 -t C:\Users\william\Documents\TextSum\clef2017\stopping_methods\run-2_int_scores_1 -o auth_2_3_gp_upper</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />

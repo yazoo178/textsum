@@ -52,7 +52,7 @@ def eval(true_scores_file, curve_scores, filename):
 
     for curveScore in open(curve_scores, 'r+'):
         vals = curveScore.split('\t')
-        y_p.append(float(vals[0]))
+        y_p.append(float(vals[2]))
 
 
 

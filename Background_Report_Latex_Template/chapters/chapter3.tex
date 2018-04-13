@@ -95,7 +95,15 @@ We also introduce a new field. Topics sampled is the number of topics that were 
 
 This second set of results will use a mandatory drop out parameter for topics with less than 0.5\% of relevant documents.  The maximum number of topics for this dataset remains at 30.
 
-We also include a confidence interval evaluation for lower bounded range of a 90\% confidence interval. The key advantages of using a curve as  method of evaluating stopping criteria is being able to make use of this confidence interval in a real systematic review. In the context of a systematic reviewers at the data filtering stage, we could specify that the system is 90\% certain that 70\% of relevant documents have been found. At which point the reviewer can decide if its worth continuing to look at documents.
+We also include a confidence interval evaluation for lower bounded range of a 95\% confidence interval. The key advantages of using a curve as  method of evaluating stopping criteria is being able to make use of this confidence interval in a real systematic review. In the context of a systematic reviewers at the data filtering stage, we could specify that the system is 95\% certain that 70\% of relevant documents have been found. At which point the reviewer can decide if its worth continuing to look at documents.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=12cm]{figures/cf_example.png}
+\caption{Visualisation of using a confidence interval for predicting a stopping point.}
+\end{figure}
+
+
 
 \begin{table}[H]
 \scalebox{0.8}{
@@ -103,7 +111,7 @@ We also include a confidence interval evaluation for lower bounded range of a 90
 \begin{tabular}{|c|c|c|c|c|} 
 
  \hline
- Submission & recall-lower-upper & reliability-lower-upper & effort-lower-upper & topics sampled  \\ 
+ Submission & recall-upper-lower & reliability-upper-lower & effort-upper-lower & topics sampled  \\ 
  Test\_Data\_Sheffield-run-2 & 0.71 \, 0.67 \, 0.71, &	0.57 \, 0.53 \, 0.57	&	0.50 \, 0.48 \, 0.50 & 26 \\ 
  Waterloo A-rank-cost & 0.68 \, 0.67 \, 0.68, &	0.41 \, 0.33 \, 0.41	&	0.40 \, 0.40 \, 0.41 & 24 \\ 
  Waterloo B-rank-cost & 0.72 \, 0.71 \, 0.73, &	0.53 \, 0.53 \, 0.61	&	0.41 \, 0.41 \, 0.41 & 26 \\ 
@@ -120,25 +128,50 @@ We also include a confidence interval evaluation for lower bounded range of a 90
 
 We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is. Some of the ranking methods struggle to produce curves and when combined with a drop-out parameter produce become not worth considering in our evaluation.
 
+
 \subsection{Gaussian Process fitting}
 
 As an alternate approach to fitting a simple curve, we can apply a GP.
 
-We will apply a constant kernel plus a squared-exponential kernel.
+We will apply a constant kernel plus a squared-exponential kernel. One of the key challenges when applying a Gaussian Process was the amount of over-fitting.  
+
 
 \begin{table}[H]
+\scalebox{0.8}{
 \centering
 \begin{tabular}{|c|c|c|c|c|} 
 
  \hline
- Submission & recall & reliability & effort & topics sampled [Max 30]  \\ 
- Test\_Data\_Sheffield-run-2 & 0.694 &	0.66	&	0.49 & 30 \\ 
-
+ Submission & recall-upper-lower & reliability-upper-lower & effort-upper-lower & topics sampled  \\ 
+ Test\_Data\_Sheffield-run-2 & 0.71 \, 0.67 \, 0.71, &	0.57 \, 0.53 \, 0.57	&	0.50 \, 0.48 \, 0.50 & 26 \\ 
+ 
+ 
+ Waterloo A-rank-cost & 0.68 \, 0.67 \, 0.68, &	0.41 \, 0.33 \, 0.41	&	0.40 \, 0.40 \, 0.41 & 24 \\ 
+ 
+ 
+ Waterloo B-rank-cost & 0.73 \, 0.73 \, 0.73, &	0.71 \, 0.71 \, 0.71	&	0.41 \, 0.41 \, 0.41 & 27 \\ 
+ 
+ 
+ auth run-1 & 0.74 \, 0.60 \, 0.75, &	0.56 \, 0.52 \, 0.60	&	0.42 \, 0.41 \, 0.39 & 23 \\ 
+ 
+ 
+ auth run-2 & 0.72 \, 0.70 \, 0.73, &	0.52 \, 0.56 \, 0.52	&	0.42 \, 0.42 \, 0.42 & 23 \\ 
+ 
+ 
+ ntu run-1 & 0.67 \, 0.67 \, 0.67, &	0.40\, 0.36 \, 0.40	&	0.64 \, 0.64 \, 0.64 & 22 \\ 
+ 
+ 
+ ucl full-text & 0.72 \, 0.72 \, 0.72, &	0.52 \, 0.56 \, 0.56	&	0.82 \, 0.82 \, 0.82 & 25 \\ 
  \hline
 \end{tabular}
-\caption{Comparison of different of sample method using GP fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method.}
+}
+\caption{Comparison of different of sample method using gp for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% drop-out}
 
 \end{table}
+
+\end{table}
+
+We can see the gp does a better job at fitting to the topics than the curve method. However, for most of the lower ranking runs the effort is increases significantly, suggesting the gp is not fitting very well to the data.
 
 \section{Indexing and Querying Medline using Systematic Review Protocols}
 

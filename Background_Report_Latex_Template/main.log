@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  12 APR 2018 16:36
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  13 APR 2018 16:40
 entering extended mode
 **./main.tex
 (main.tex
@@ -1982,13 +1982,13 @@ py in managing aggressive behaviour
 Chapter 2.
 [4
 
-]
-Overfull \hbox (1.7625pt too wide) in paragraph at lines 48--49
+] [5]
+Overfull \hbox (1.7625pt too wide) in paragraph at lines 50--51
 []\TU/lmr/m/n/10.95 Naturally we could exclusively optimized each of the parame
 ters by either returning everything
  []
 
-[5]) (chapters/chapter3.tex [6]
+) (chapters/chapter3.tex [6]
 Chapter 3.
 [7
 
@@ -2001,25 +2001,28 @@ Overfull \hbox (0.2721pt too wide) in paragraph at lines 72--73
 un-2 [[]] of CLEF 2017. Naturally,
  []
 
-[9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 166--167
+[9]
+File: figures/cf_example.png Graphic file (type bmp)
+<figures/cf_example.png>
+ [10] [11]
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
 []\TU/lmr/m/n/10.95 endemic countries objective|ambulatory healthcare facilitie
 s|rapid diagnostic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 166--167
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
 \TU/lmr/m/n/10.95 tests|falciparum parasitaemia detectable|malaria endemic area
 s|diagnostic
  []
 
-[11] [12]
-Overfull \hbox (12.74413pt too wide) in paragraph at lines 237--238
+[12]
+Overfull \hbox (12.74413pt too wide) in paragraph at lines 282--283
 []\TU/lmr/m/n/10.95 MeSH headings would be useful in expanding the range of the
  query to capture synonymous
  []
 
-) (main.bbl [13]
+[13]) (main.bbl [14]
 Underfull \hbox (badness 10000) in paragraph at lines 43--47
 []\TU/lmr/m/sc/10.95 Nunn, J.  \TU/lmr/m/n/10.95 cochranes.  []$[][][][] [] [] 
 [] [][][][][] [] [][][][][][][][] [] [][][] []
@@ -2032,7 +2035,7 @@ Underfull \hbox (badness 1629) in paragraph at lines 49--52
 [][][] []
  []
 
-) [14
+) [15
 
 ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 107.
@@ -2042,12 +2045,12 @@ Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 107.
 Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 107.
  ) 
 Here is how much of TeX's memory you used:
- 42115 strings out of 427836
- 974997 string characters out of 3148132
+ 42119 strings out of 427836
+ 975090 string characters out of 3148132
  1193350 words of memory out of 3000000
- 45569 multiletter control sequences out of 15000+200000
+ 45572 multiletter control sequences out of 15000+200000
  534891 words of font info for 61 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  62i,12n,96p,10429b,479s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.pdf (20 pages).
+Output written on main.pdf (21 pages).
