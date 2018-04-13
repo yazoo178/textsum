@@ -164,16 +164,12 @@ def process(file, name, outputPath):
             # Fit curve using sampled data
             opt, pcov = curve_fit(other_func, X_samps, scoreSet, maxfev=1000)
             a, k, n = opt
-            # Fit estimated curve onto compete range and save to file
-            # y2 = other_func(X_samps, a, k, n)
-            
-
             y2 = other_func(X_vals, a, k, n)
+
+
             n = len(y2)    # number of data points
             p = len(opt) # number of parameters
             dof = max(0, n - p) # number of degrees of freedom
-
-
 
             tval = t.ppf(1.0-alpha/2., dof) 
             c = 'g'
@@ -189,29 +185,28 @@ def process(file, name, outputPath):
 
             lower = []
             upper = []
- 
+
             for p,var in zip(opt, np.diag(pcov)):
                 sigma = var**0.5
+                print(sigma)
                 lower.append(p - sigma*tval)
                 upper.append(p + sigma*tval)
 
+            #fit the lower and upper confidence curves using the same function
             yfitLower = other_func(X_vals, *lower)
             yfitUpper = other_func(X_vals, *upper)
 
-            #write curve to file
+            #write curve to file along with confidence margins to a file
             for i,  item in enumerate(y2):
                 y2Scores.write(str(item) + "\t" + str(yfitLower[i]) + "\t" + str(yfitUpper[i]) + "\n")
 
             y2Scores.close()
 
-            
-
-
+          
             if not show_curve:
                 return 1
         
-            
-                
+
 
             x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
             index = findIn(x_sam_val, X_vals)
