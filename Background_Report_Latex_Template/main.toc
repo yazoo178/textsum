@@ -17,7 +17,7 @@
 \contentsline {subsection}{\numberline {3.1.1}Curve Fitting}{8}{subsection.3.1.1}
 \contentsline {subsubsection}{Relevance Ranking}{9}{section*.8}
 \contentsline {subsection}{\numberline {3.1.2}Gaussian Process fitting}{11}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}Indexing and Querying Medline using Systematic Review Protocols}{11}{section.3.2}
+\contentsline {section}{\numberline {3.2}Indexing and Querying Medline using Systematic Review Protocols}{12}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Acquiring Key Information from A Systematic Review Protocol}{12}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Indexing medline}{13}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Results}{13}{subsection.3.2.3}

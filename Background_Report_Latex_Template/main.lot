@@ -4,8 +4,7 @@
 \contentsline {table}{\numberline {3.1}{\ignorespaces Comparison of different sample sizes against recall and effort. Ranking Method: Test\_Data\_Sheffield-run-2 \cite {Alharbi2017}}}{9}{table.3.1}
 \contentsline {table}{\numberline {3.2}{\ignorespaces Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. No topic drop-out}}{9}{table.3.2}
 \contentsline {table}{\numberline {3.3}{\ignorespaces Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% drop-out}}{10}{table.3.3}
-\contentsline {table}{\numberline {3.4}{\ignorespaces Comparison of different of sample method using GP fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method.}}{11}{table.3.4}
-\contentsline {table}{\numberline {3.5}{\ignorespaces Comparison of different of sample method using gp for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% drop-out}}{11}{table.3.4}
-\contentsline {table}{\numberline {3.6}{\ignorespaces Results for IR medline system. 1000 Returned documents ($N$)}}{13}{table.3.6}
-\contentsline {table}{\numberline {3.7}{\ignorespaces Results for IR medline system. 5000 Returned documents ($N$)}}{13}{table.3.7}
-\contentsline {table}{\numberline {3.8}{\ignorespaces Results for IR medline system. 25000 Returned documents ($N$) }}{13}{table.3.8}
+\contentsline {table}{\numberline {3.4}{\ignorespaces Comparison of different of sample method using gp for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% drop-out}}{11}{table.3.4}
+\contentsline {table}{\numberline {3.5}{\ignorespaces Results for IR medline system. 1000 Returned documents ($N$)}}{13}{table.3.5}
+\contentsline {table}{\numberline {3.6}{\ignorespaces Results for IR medline system. 5000 Returned documents ($N$)}}{13}{table.3.6}
+\contentsline {table}{\numberline {3.7}{\ignorespaces Results for IR medline system. 25000 Returned documents ($N$) }}{14}{table.3.7}

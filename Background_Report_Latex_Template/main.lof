@@ -3,3 +3,4 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Example of fitting a curve for a topic using sampling}}{8}{figure.3.1}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point.}}{10}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp. We can see the gp is significantly over fitting to the data.}}{11}{figure.3.3}

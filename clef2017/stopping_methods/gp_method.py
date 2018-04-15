@@ -1,4 +1,6 @@
 ﻿import numpy as np
+import matplotlib
+matplotlib.use('agg')
 from matplotlib import pyplot as plt
 import re
 import os
@@ -143,8 +145,6 @@ def process(file, name, outputPath):
 
             y2Scores.close()
 
-
-
             if not show_curve:
                 return 0
 
@@ -270,6 +270,7 @@ for opt, arg in opts:
     elif opt in ("-q"):
         qrel = arg
     elif opt in ("-c"):
+        print("Showing curve")
         show_curve = True
     elif opt in ("-j"):
         print(arg)
