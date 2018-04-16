@@ -1,6 +1,6 @@
 ﻿import numpy as np
 import matplotlib
-matplotlib.use('agg')
+#matplotlib.use('agg')
 from matplotlib import pyplot as plt
 import re
 import os
@@ -119,18 +119,21 @@ def process(file, name, outputPath):
         #x axis array of points 0 to total number of documents for topic
         X_vals = np.array(range(0, totalDocs))
 
+
+        
+
+
         if method == "gp":
 
             gp = GP()
             gp.create(np.array([X_samps]).reshape(len(X_samps), 1), np.array(scoreSet))
             y2, sigma = gp.predict(X_vals.reshape(len(X_vals), 1))
             #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
-            
 
             if float(max(y2) / totalDocs) < jump_skip:
                 print("Skipped topic: " + fileWithOutPath)
                 return 0
-
+            
             interval = sigma * 1.91
             lower = y2 - interval
             upper = y2 + interval
@@ -161,44 +164,47 @@ def process(file, name, outputPath):
 
         else:
 
+
+
+
             # Fit curve using sampled data
             opt, pcov = curve_fit(other_func, X_samps, scoreSet, maxfev=1000)
             a, k, n = opt
             y2 = other_func(X_vals, a, k, n)
 
-
-            n = len(y2)    # number of data points
-            p = len(opt) # number of parameters
-            dof = max(0, n - p) # number of degrees of freedom
-
-            tval = t.ppf(1.0-alpha/2., dof) 
-            c = 'g'
-
-
             if float(max(y2) / totalDocs) < jump_skip:
                 print("Skipped topic: " + fileWithOutPath)
                 return 0
 
+            sigma = np.sqrt([pcov[0,0], pcov[1,1], pcov[2,2]])
+
+
+            values = np.array([
+            other_func(X_vals, opt[0] + sigma[0], opt[1] + sigma[1], opt[2] + sigma[2]), 
+            other_func(X_vals, opt[0] + sigma[0], opt[1] - sigma[1], opt[2] + sigma[2]),   
+            other_func(X_vals, opt[0] + sigma[0], opt[1] + sigma[1], opt[2] - sigma[2]), 
+            other_func(X_vals, opt[0] + sigma[0], opt[1] - sigma[1], opt[2] - sigma[2]), 
+            other_func(X_vals, opt[0] - sigma[0], opt[1] + sigma[1], opt[2] + sigma[2]), 
+            other_func(X_vals, opt[0] - sigma[0], opt[1] - sigma[1], opt[2] + sigma[2]),
+            other_func(X_vals, opt[0] - sigma[0], opt[1] + sigma[1], opt[2] - sigma[2]), 
+            other_func(X_vals, opt[0] - sigma[0], opt[1] - sigma[1], opt[2] - sigma[2]) 
+            ])
+
+            fitError = np.std(values, axis=0)
+
+            nSigma = 3
+
+            lowerBar = y2 - nSigma*fitError
+            upperBar = y2 + nSigma*fitError
+
+            
+
             #create curve file
             y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
 
-
-            lower = []
-            upper = []
-
-            for p,var in zip(opt, np.diag(pcov)):
-                sigma = var**0.5
-                print(sigma)
-                lower.append(p - sigma*tval)
-                upper.append(p + sigma*tval)
-
-            #fit the lower and upper confidence curves using the same function
-            yfitLower = other_func(X_vals, *lower)
-            yfitUpper = other_func(X_vals, *upper)
-
             #write curve to file along with confidence margins to a file
             for i,  item in enumerate(y2):
-                y2Scores.write(str(item) + "\t" + str(yfitLower[i]) + "\t" + str(yfitUpper[i]) + "\n")
+                y2Scores.write(str(item) + "\t" + str(lowerBar[i]) + "\t" + str(upperBar[i]) + "\n")
 
             y2Scores.close()
 
@@ -206,24 +212,33 @@ def process(file, name, outputPath):
             if not show_curve:
                 return 1
         
+            
+            
+            #used for creating plot bar height
+            dx = (max(X_vals) - min(X_vals))/100
 
+            upperBarHeight = 2*nSigma*fitError
+            
+            plt.bar(left=X_vals, 
+    height = upperBarHeight,  
+    width=dx, 
+    bottom = lowerBar, 
+    orientation = 'vertical', 
+    alpha=0.05, 
+    color = 'red',
+    edgecolor = None, label='+= 3σ error bars')
+            
 
             x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
             index = findIn(x_sam_val, X_vals)
-            plt.scatter(np.array([int(x_sam_val)]), np.array([y2[x_sam_val]]), c='black', label='Estimated 70% recall point', s = 18)
 
-            x_sam_val = find_nearest(yfitLower, max(yfitLower) * (rate / 100))
-            index = findIn(x_sam_val, X_vals)
-            plt.scatter(np.array([int(x_sam_val)]), np.array([yfitLower[x_sam_val]]), c='black', s = 18)
+            plt.scatter(np.array([int(x_sam_val)]), np.array([y2[x_sam_val]]), c='black', label='Estimated 70% recall point', s = 25)
+            plt.scatter(np.array([int(x_sam_val)]), np.array([lowerBar[x_sam_val]]), c='black', s = 25)
+            plt.scatter(np.array([int(x_sam_val)]), np.array([upperBar[x_sam_val]]), c='black', s = 25)
 
-            x_sam_val = find_nearest(yfitUpper, max(yfitUpper) * (rate / 100))
-            index = findIn(x_sam_val, X_vals)
-            plt.scatter(np.array([int(x_sam_val)]), np.array([yfitUpper[x_sam_val]]), c='black', s = 18)
+            plt.plot(X_vals,lowerBar,'--', label='+= 3σ', color="g")
 
-            plt.plot(X_vals,yfitLower,'--', label='Lower CI 95%', color="g")
-
-            
-            plt.plot(X_vals,yfitUpper,'--',  label='Upper CI 95%', color="r")
+            plt.plot(X_vals,upperBar,'--', color="g")
 
             plt.plot(X_vals, y2, label=u'Sample - ' + str(sampleRate))
 

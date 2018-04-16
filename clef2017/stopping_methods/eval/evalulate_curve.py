@@ -50,13 +50,24 @@ def eval(true_scores_file, curve_scores, filename):
             X_samps.append(float(c))
 
 
+    print(true_scores_file)
     for curveScore in open(curve_scores, 'r+'):
         vals = curveScore.split('\t')
-        y_p.append(float(vals[2]))
+
+        if interval == "_upper":
+            y_p.append(float(vals[2]))
+        elif interval == "_lower":
+            y_p.append(float(vals[1]))
+        else:
+            y_p.append(float(vals[0]))
+
+
+    
 
 
 
     y_p = np.array(y_p)
+
 
 
     x_sam_val = find_nearest(y_p, max(y_p) * (rate / 100))
@@ -71,12 +82,13 @@ def eval(true_scores_file, curve_scores, filename):
 
 
 
-opts, args = getopt.getopt(sys.argv[1:],"hc:t:s:r:c:o:")
+opts, args = getopt.getopt(sys.argv[1:],"hc:t:s:r:c:o:m:")
 dictResults = []
 mode = "lin"
 trueFilePath = 'None'
 scoresPath = "None"
 output = ""
+interval = ""
 
 for opt, arg in opts:
     if opt == '-h':
@@ -91,6 +103,11 @@ for opt, arg in opts:
         scoresPath = arg + "/"
     elif opt in ('-o'):
         output = arg
+    elif opt in ('-m'):
+        if arg == "upper" or arg == "lower":
+            interval = "_" + arg
+        else:
+            usage()
         
 
 print(trueFilePath)
@@ -100,6 +117,7 @@ print("Recalls:")
 curve_scores = []
 for filename in os.listdir(scoresPath):
     curve_scores.append(scoresPath + "curve_scores/" + filename)
+
 
 for i,filename in enumerate(os.listdir(scoresPath)):
     rSet = {}
@@ -111,6 +129,8 @@ for i,filename in enumerate(os.listdir(scoresPath)):
     if not os.path.exists(curve_scores[i]):
         continue
 
+
+    print(filename)
     true_scores_file = open(trueFilePath + filename , "r+")
     results = eval(true_scores_file, curve_scores[i], filename)
 
@@ -127,6 +147,8 @@ for i,filename in enumerate(os.listdir(scoresPath)):
 
 if output == "":
     output = mode + '_results_' + str(rate) + "_" + str(sample_rate)
+
+output += interval
 
 f = open(output  +".csv", "w")
 f.write("recall" + "," + "above " + str(rate) + "," + "effort" + "," "number of docs" + "," + "number of relevant" + "\n")

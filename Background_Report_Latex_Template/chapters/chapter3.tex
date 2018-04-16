@@ -95,11 +95,11 @@ We also introduce a new field. Topics sampled is the number of topics that were 
 
 This second set of results will use a mandatory drop out parameter for topics with less than 0.5\% of relevant documents.  The maximum number of topics for this dataset remains at 30.
 
-We also include a confidence interval evaluation for lower bounded range of a 95\% confidence interval. The key advantages of using a curve as  method of evaluating stopping criteria is being able to make use of this confidence interval in a real systematic review. In the context of a systematic reviewers at the data filtering stage, we could specify that the system is 95\% certain that 70\% of relevant documents have been found. At which point the reviewer can decide if its worth continuing to look at documents.
+We also include a confidence interval evaluation for lower bounded range of a $3\sigma$ confidence interval. The key advantages of using a curve as  method of evaluating stopping criteria is being able to make use of this confidence interval in a real systematic review. In the context of a systematic reviewers at the data filtering stage, we could specify that the system is 95\% certain that 70\% of relevant documents have been found. At which point the reviewer can decide if its worth continuing to look at documents.
 
 \begin{figure}[H]
 \center
-\includegraphics[width=12cm]{figures/cf_example.png}
+\includegraphics[width=13cm]{figures/cf_example.png}
 \caption{Visualisation of using a confidence interval for predicting a stopping point.}
 \end{figure}
 
@@ -112,13 +112,13 @@ We also include a confidence interval evaluation for lower bounded range of a 95
 
  \hline
  Submission & recall-upper-lower & reliability-upper-lower & effort-upper-lower & topics sampled  \\ 
- Test\_Data\_Sheffield-run-2 & 0.71 \, 0.67 \, 0.71, &	0.57 \, 0.53 \, 0.57	&	0.50 \, 0.48 \, 0.50 & 26 \\ 
- Waterloo A-rank-cost & 0.68 \, 0.67 \, 0.68, &	0.41 \, 0.33 \, 0.41	&	0.40 \, 0.40 \, 0.41 & 24 \\ 
- Waterloo B-rank-cost & 0.72 \, 0.71 \, 0.73, &	0.53 \, 0.53 \, 0.61	&	0.41 \, 0.41 \, 0.41 & 26 \\ 
- auth run-1 & 0.73 \, 0.73 \, 0.74, &	0.52 \, 0.52 \, 0.60	&	0.42 \, 0.42 \, 0.43 & 23 \\ 
- auth run-2 & 0.72 \, 0.72 \, 0.72, &	0.54 \, 0.52 \, 0.54	&	0.42 \, 0.42 \, 0.42 & 22 \\ 
- ntu run-1 & 0.61 \, 0.55 \, 0.60, &	0.26\, 0.25 \, 0.26	&	0.54 \, 0.52 \, 0.54 & 15 \\ 
- ucl full-text & 0.61 \, 0.29 \, 0.58, &	0.5 \, 0.125 \, 0.375	&	0.75 \, 0.52 \, 0.68 & 8 \\ 
+ Test\_Data\_Sheffield-run-2 & 0.70 \, 0.67 \, 0.75, &	0.56 \, 0.48 \, 0.64	&	0.47 \, 0.48 \, 0.51 & 25 \\ 
+ Waterloo A-rank-cost & 0.68 \, 0.62 \, 0.72, &	0.41 \, 0.125 \, 0.45	&	0.40 \, 0.40 \, 0.42 & 24 \\ 
+ Waterloo B-rank-cost & 0.72 \, 0.69 \, 0.758, &	0.53 \, 0.46 \, 0.80	&	0.41 \, 0.40 \, 0.42 & 26 \\ 
+ auth run-1 & 0.755 \, 0.70 \, 0.755, &	0.60 \, 0.43 \, 0.60	&	0.42 \, 0.44 \, 0.43 & 23 \\ 
+ auth run-2 & 0.725 \, 0.69 \, 0.757, &	0.54 \, 0.45 \, 0.63	&	0.42 \, 0.41 \, 0.43 & 22 \\ 
+ ntu run-1 & 0.60 \, 0.58 \, 0.61, &	0.21\, 0.14 \, 0.28	&	0.53 \, 0.52 \, 0.54 & 14 \\ 
+ ucl full-text & 0.57 \, 0.51 \, 0.60, &	0.33 \, 0.16 \, 0.33	&	0.75 \, 0.66 \, 0.72 & 6 \\ 
  \hline
 \end{tabular}
 }
@@ -227,7 +227,7 @@ We will provide comparisons of various ranking methods as well as the evaluation
 
 \subsection{Results}
 
-Results were generated using the eval script from the CLEF 2017/2018 task \cite{Kanoulas12017}. We calculated the top $N$ results over the CLEF 2017 training set. We include a random baseline as a measure of perspective.
+Results were generated using the eval script from the CLEF 2017/2018 task \cite{Kanoulas12017}. We calculated the top $N$ results over the CLEF 2017 training set. We include a random baseline as a measure of perspective. 
 
 
 \begin{table}[H]
@@ -271,12 +271,17 @@ Results were generated using the eval script from the CLEF 2017/2018 task \cite{
 \caption{Results for IR medline system. 25000 Returned documents ($N$) }
 \end{table}
 
+
+As we increase the number of documents we return, the recall naturally increases. When we return 25000 documents for each topic, we are able to obtain a total recall rate of over 58\%. However, the precision (ap, average precision) is very low, suggesting a significant amount of the documents are not useful.
+
 Improvements could certainly be made to this system:
 
 \begin{itemize}
   \item MeSH headings would be useful in expanding the range of the query to capture synonymous terms. 
   \item Tokenization could be optimized to capture phrases of different sizes.
+  \item Introducing a cost or stopping point to remove the amount of non-relevant documents. We can see for the 25000 documents set of results the last relevant document was around the 20000 point, meaning we could drop the last 5000 from our result set.
 \end{itemize}
+
 
 
 

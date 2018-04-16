@@ -11,13 +11,14 @@
 \contentsline {section}{\numberline {2.2}Stopping Criteria}{5}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Evaluation Metrics for Finding Stopping Points}{5}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Existing Stopping Methods}{6}{subsection.2.2.2}
-\contentsline {subsubsection}{Target}{6}{section*.7}
-\contentsline {chapter}{\numberline {3}Novel Work}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}Random Sample Method to Stopping}{7}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Curve Fitting}{8}{subsection.3.1.1}
-\contentsline {subsubsection}{Relevance Ranking}{9}{section*.8}
-\contentsline {subsection}{\numberline {3.1.2}Gaussian Process fitting}{11}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}Indexing and Querying Medline using Systematic Review Protocols}{12}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Acquiring Key Information from A Systematic Review Protocol}{12}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Indexing medline}{13}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Results}{13}{subsection.3.2.3}
+\contentsline {subsubsection}{Target}{7}{section*.7}
+\contentsline {subsubsection}{Knee Method}{7}{section*.8}
+\contentsline {chapter}{\numberline {3}Novel Work}{8}{chapter.3}
+\contentsline {section}{\numberline {3.1}Random Sample Method to Stopping}{8}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Curve Fitting}{9}{subsection.3.1.1}
+\contentsline {subsubsection}{Relevance Ranking}{10}{section*.9}
+\contentsline {subsection}{\numberline {3.1.2}Gaussian Process fitting}{12}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}Indexing and Querying Medline using Systematic Review Protocols}{13}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Acquiring Key Information from A Systematic Review Protocol}{13}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Indexing medline}{14}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Results}{14}{subsection.3.2.3}

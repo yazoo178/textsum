@@ -71,6 +71,21 @@ A stopping point is deemed to be acceptable if 70\% of the relevant documents ha
 
 \subsection{Existing Stopping Methods} \label{methods}
 
+There are different approaches can be experimented with in finding an optimum stopping point.  Consider a percentage cut-off method, where we use the score similarity score for deciding if its worth continuing to look down the rankings:
+
+\begin{equation}
+	  Difference(D_i, D_i+1) > C
+\end{equation}
+
+Where difference returns a score of how close document $D_i$ and $D_i+1$ are together and $C$ is a cut-off constant. We can expand this to an example:
+
+\begin{equation}
+	  (1 -(0.73 / 0.75)) * 100 > 0.015
+\end{equation}
+
+Here we are saying if the two documents' scores are above 1.5\% then we should stop looking down the rankings.
+
+
 \subsubsection{Target}
 
 The target method is a fairly straight forward approach to establishing a stopping point. It was first proposed by Cormack and Grossman \cite{Cormack2016}.
@@ -80,6 +95,10 @@ The target $T$ denotes how many documents we should randomly select from our ini
 While this approach is shown to acquire 95\% reliability, the effort needed is often significantly highly, often requiring us to look at huge volume of documents.
 
 We can evaluate how well this method does against an existing set of relevance rankings. We will use the Sheffield run data from the CLEF 2017 task \cite{Kanoulas12017}. We found that a $T$ parameter of 5 was the lowest we could go to still acquire a reliability of over 70\%. Overall we were able to obtain an average recall of 90\% by making an average effort of 58\%.
+
+\subsubsection{Knee Method}
+
+
 
 
 
