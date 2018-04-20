@@ -23,12 +23,11 @@ RAKE can be further optimized by specifying minimum term frequency rates to capt
 
 \section{Stopping Criteria} \label{stops}
 
-Stopping criteria a topic of being able to know when to stop looking at a set of documents. This could be useful in a decision making process. Consider having 100 relevant documents, where each document contains a binary value. If we looked at 1/3 of these documents and saw a trend of positive values, we could use this to infer the reliability of the remaining documents.
+Stopping criteria is about finding the optimum point in a set of documents. This could be useful in a decision making process. Consider having 100 relevant documents, where each document contains a binary value. If we looked at 1/3 of these documents and saw a trend of positive values, we could use this to infer the reliability of the remaining documents.
 
 Another use of stopping criteria is when filtering through potentially relevant documents. Consider a query that returns 10000 documents, of which only a small sub-set of these are relevant. Reviewers would need to filter through each of these 10000 documents to pull out the relevant ones. Or it could be that the reviewers are happy to hit a 90\% recall of relevant documents, and are happy to miss the remaining 10\% in exchange for time-saved.
 
 Two key methods have been proposed for finding stopping points so far, the target method \cite{Satopa11} and the knee method. \cite{Cormack2016}. Both these methods are discussed below \ref{methods}
-
 
 
 \subsection{Evaluation Metrics for Finding Stopping Points} \label{evalsstops}
@@ -100,7 +99,21 @@ We can evaluate how well this method does against an existing set of relevance r
 
 \subsubsection{Knee Method}
 
+A different stopping kethod proposed by \cite{Satopa11} is known as the knee method. This approach uses a curve to generate a 'knee', which is then used for predicting a stopping point. This approach is likely to be highly dependant on the quality of the initial rankings. This is because we need a curve that reaches a peak quickly, before flattening out.
 
+We use a vertical line panning the length of the ranking set and use it to calculate the distance from the ranking at each point. The point with the maximum distance is chosen as a suitable stopping point.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=13cm]{figures/knee.png}
+\caption{Example of using knee method to find a stopping point. Image inspired from \cite{Satopa11}}
+\end{figure}
+
+We can see in the above example the method has predicted we look at around 200 of the 1000 documents to achieve a suitable stopping point.
+
+This method also imposes an additional constraint for rankings of a large volume. 
+
+It was found that the knee method is a better approach for finding a stopping point than the Target method \cite{Cormack2016}. The recall was always found to be better and the reliability was found to be the same or higher for 6 out 8 of the test collections.
 
 
 

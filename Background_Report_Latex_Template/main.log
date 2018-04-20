@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  16 APR 2018 17:45
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  20 APR 2018 13:18
 entering extended mode
 **./main.tex
 (main.tex
@@ -1982,26 +1982,29 @@ py in managing aggressive behaviour
 Chapter 2.
 [4
 
-] [5]
-Overfull \hbox (1.7625pt too wide) in paragraph at lines 50--51
+]
+Overfull \hbox (1.7625pt too wide) in paragraph at lines 49--50
 []\TU/lmr/m/n/10.95 Naturally we could exclusively optimized each of the parame
 ters by either returning everything
  []
 
-[6]) (chapters/chapter3.tex [7]
+[5] [6]
+File: figures/knee.png Graphic file (type bmp)
+<figures/knee.png>
+ [7]) (chapters/chapter3.tex [8]
 Chapter 3.
-[8
+[9
 
 ]
 File: figures/curve_fit_example.png Graphic file (type bmp)
 <figures/curve_fit_example.png>
- [9]
+ [10]
 Overfull \hbox (0.2721pt too wide) in paragraph at lines 72--73
 \TU/lmr/m/n/10.95 Our results so far have been based on Test_-Data_-Sheffield-r
 un-2 [[]] of CLEF 2017. Naturally,
  []
 
-[10]
+[11]
 File: figures/cf_example.png Graphic file (type bmp)
 <figures/cf_example.png>
 
@@ -2009,10 +2012,10 @@ Overfull \hbox (0.55324pt too wide) in paragraph at lines 124--126
 [][]
  []
 
-[11]
+[12]
 File: figures/joined_graph.png Graphic file (type bmp)
 <figures/joined_graph.png>
- [12]
+ [13]
 Underfull \hbox (badness 10000) in paragraph at lines 206--207
 []\TU/lmr/m/n/10.95 endemic countries objective|ambulatory healthcare facilitie
 s|rapid diagnostic
@@ -2024,13 +2027,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 206--207
 s|diagnostic
  []
 
-[13] [14]
+[14] [15]
 Overfull \hbox (12.74413pt too wide) in paragraph at lines 280--281
 []\TU/lmr/m/n/10.95 MeSH headings would be useful in expanding the range of the
  query to capture synonymous
  []
 
-) (main.bbl [15]
+) (main.bbl [16]
 Underfull \hbox (badness 10000) in paragraph at lines 43--47
 []\TU/lmr/m/sc/10.95 Nunn, J.  \TU/lmr/m/n/10.95 cochranes.  []$[][][][] [] [] 
 [] [][][][][] [] [][][][][][][][] [] [][][] []
@@ -2043,7 +2046,7 @@ Underfull \hbox (badness 1629) in paragraph at lines 49--52
 [][][] []
  []
 
-) [16
+) [17
 
 ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 107.
@@ -2053,12 +2056,12 @@ Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 107.
 Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 107.
  ) 
 Here is how much of TeX's memory you used:
- 42123 strings out of 427836
- 975191 string characters out of 3148132
+ 42127 strings out of 427836
+ 975260 string characters out of 3148132
  1193350 words of memory out of 3000000
- 45575 multiletter control sequences out of 15000+200000
+ 45578 multiletter control sequences out of 15000+200000
  534891 words of font info for 61 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  62i,12n,96p,10429b,479s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.pdf (22 pages).
+Output written on main.pdf (23 pages).
