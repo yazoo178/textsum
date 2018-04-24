@@ -283,7 +283,15 @@ Improvements could certainly be made to this system:
 \end{itemize}
 
 
+\subsection{Conclusion}
 
+We found we were able to achieve responsible results with a little optimization techniques to the index and query data.
+
+We built an IR system using Apache Lucerne and compared three separate ranking methods. We found bm25 ranking gave the best results overall.
+
+We compared the performance of our system across different return thresholds, naturally finding as we increase the returned number of documents we get a higher recall. This comes at the expense of reduced precision.
+
+We suggested further improvement to our system, such as including a phrase model for more robust features for both index and query.
 
 
 
