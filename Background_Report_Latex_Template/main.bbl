@@ -50,12 +50,17 @@
 \newblock pico.
 \newblock \url{https://utas.libguides.com/SystematicReviews/FormulateQuestion}.
 
+\bibitem{pubmed}
+{\sc Pubmed}.
+\newblock pubmed.
+\newblock \url{https://www.ncbi.nlm.nih.gov/pubmed/}.
+
 \bibitem{rake}
 {\sc Rose, S., Engel, D., and Cramer, N.}
 \newblock Automatic keyword extraction from individual documents.
 
 \bibitem{Satopa11}
-{\sc Satopa, V., Albrecht, J., Irwin, D., and Raghavan, B.}
+{\sc Satopaa, V., Albrecht, J., Irwin, D., and Raghavan, B.}
 \newblock Finding a “kneedle” in a haystack: Detecting knee points in
   system behavior.
 

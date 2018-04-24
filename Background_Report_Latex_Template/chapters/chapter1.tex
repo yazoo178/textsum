@@ -2,62 +2,6 @@
 
 Medical literature poses interesting challenges for Natural Language Processing (NLP) researchers. The sheer volume of medical data makes it difficult for humans to process efficiently. One key task is the creation of systematic reviews. Systematic reviews are transparent reviews that aim to pull together and critically analyse relevant literature to a topical question. The process of creating a systematic review is rigorous and time consuming with varying degrees of complexity in-between steps. This report will look at the existing work done so far on using NLP as part of the systematic review process as well as the novel work by myself.
 
-\section{Steps of a Systematic Review}
-
-It is useful for us to break down the steps involved in creating a systematic review into subtasks. This way we can observe what techniques can be applied during the relevant sub tasks to improve the efficiency of the process. The following definitions are derived task simplifactions from the cochrane tutorial on systematic reviews: \cite{cochranes}.
-
-\begin{enumerate}
-  \item Question definition.
-  \item Relevant literature search.
-  \item Data Filtering.
-  \item Data Extraction.
-  \item Analysis and Data combination.
-\end{enumerate}
-
-\subsection{Question Definition}
-
-One of the best known techniques for formulating a systematic review question is known as the PICO strategy \cite{pico}. This technique focuses on exposing 4 pieces of information in the systematic review question: patient population, intervention or exposure, comparison or control and outcome.
-
-Example: (credit goes to \cite{pico})
-
-"Is animal-assisted therapy more effective than music therapy in managing aggressive behaviour in elderly people with dementia?"
-
-\begin{center}
-\begin{tabular}{ |c|c| } 
- \hline
- P & elderly patients with dementia \\ 
- I & animal-assisted therapy \\ 
- C & music therapy \\ 
- O & aggressive behaviour \\ 
- \hline
-\end{tabular}
-\end{center}
-
-A potential point of interest would be attempting to generate these questions automatically given some literature context.
-
-\subsection{Relevant literature search}
-
-After formulating a question, systematic reviews need to search for the relevant literature that surrounds this question.
-
-Large medical database-such as pubmed contain relevant studies that can be used to create the review. These databases are typically very large and require concise queries to efficiently retrieve data.
-
-Naturally this can be modelled as an information retrieval problem. We have a large number of documents and we wish to retrieve the most relevant ones. One task for the 2017 CLEF conference was to produce a ranking of the most releavent documents for topics \cite{Kanoulas12017}. Many techniques have been proposed for ranking of relevant documents, with varying degrees of performance \cite{Alharbi2017} \cite{Gordon2017} \cite{Eunkyung2017}.
-
-An important aspect of the relevant literature search step is the construction of the query. Query creators often apply filters (also known as hedges) to increase the effectiveness or/and the efficiency of the searching. Two key attributes for the query are the precision and the sensitivity (aka recall). By including synonymous phrases e.g: quality adjusted life or quality of well-being or disability adjusted life the sensitivity can be increased, but as expense of the precision. The creation of this query is a task that could potentially have some aspects of NLP applied to it.
-
-
-
-\subsection{Data Filtering}
-
-The data filter stage involves reducing the amount of documents returned by the initial query down to a smaller subset of relevant document. This is can also be referred to as the abstract screening phrase \cite{Kanoulas12017}.
-
-The length of this stage is highly dependant on how many documents were returned by the initial query, often in the excess of 5000 studies for a single query. In response to this, stopping criteria methods have been proposed that aim to optimize two key parameters; the effort and the recall. That is to say we want to get as many relevant documents as possible, whilst looking at the fewest. Examples of approaches include the knee method \cite{Satopa11} and the target method \cite{Cormack2016}. Other techniques could be applied and evaluated such as curve fitting.
-
-\subsection{Data Extraction}
-
-The data extraction phase involves pulling the relevant information from the filtered subset of studies. Examples of important information includes how many people took part in the study and what the results were.
-
-Being able to extract the relevant information from studies presents itself as an information extraction problem. The task to automate the process of extracting relevant information would reduce time and complexities of manually reviewing studies \cite{Siddhartha2015}.
 
 
 
