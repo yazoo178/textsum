@@ -23,4 +23,5 @@
 \contentsline {subsection}{\numberline {4.2.1}Acquiring Key Information from A Systematic Review Protocol}{15}{subsection.4.2.1}
 \contentsline {subsection}{\numberline {4.2.2}Indexing medline}{16}{subsection.4.2.2}
 \contentsline {subsection}{\numberline {4.2.3}Results}{16}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Conclusion}{17}{subsection.4.2.4}
 \contentsline {chapter}{\numberline {5}Doctorial Development Programme}{18}{chapter.5}
