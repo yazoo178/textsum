@@ -38,7 +38,7 @@ Our first approach uses a simple curve fit against a sample set along with a non
 F(x) = n - a\exp^{-kx}
 \end{equation}
 
-Where $a$, $k$ and $n$ are learnt weights and $x$ is an associated return rate for a document. We generate the curve using the least squares algorithm \cite{leastsqures}. 
+Where $a$, $k$ and $n$ are learnt weights and $x$ is an associated return rate for a document. We generate the curve using the non-linear least squares algorithm \cite{leastsqures}. 
 
 We can visualise the curve along with the confidence intervals. The Y axis is the predicted number of relevant documents for the topic. X axis shows the true number of documents returned for the query. 
 
