@@ -39,6 +39,12 @@
   classification in systematic reviews: Sysreview at clef ehealth 2017.
 \newblock {\em CLEF 2017\/} (2017).
 
+\bibitem{Manheimer2012}
+{\sc Manheimer, E., Cheng, K., Wieland, L.~S., Min, L.~S., Shen, X., and Lao,
+  L.}
+\newblock Acupuncture for treatment of irritable bowel syndrome.
+\newblock {\em John Wiley and Sons, Ltd\/} (2012).
+
 \bibitem{cochranes}
 {\sc Nunn, J.}
 \newblock cochranes.
@@ -63,5 +69,11 @@
 {\sc Satopaa, V., Albrecht, J., Irwin, D., and Raghavan, B.}
 \newblock Finding a “kneedle” in a haystack: Detecting knee points in
   system behavior.
+
+\bibitem{leastsqures}
+{\sc scipy}.
+\newblock leastsqures.
+\newblock
+  \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html#scipy.optimize.least_squares}.
 
 \end{thebibliography}

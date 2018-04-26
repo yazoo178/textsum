@@ -153,8 +153,6 @@ The target $T$ denotes how many documents we should randomly select from our ini
 
 While this approach is shown to acquire 95\% reliability, the effort needed is often significantly highly, often requiring us to look at huge volume of documents.
 
-We can evaluate how well this method does against an existing set of relevance rankings. We will use the Sheffield run data from the CLEF 2017 task \cite{Kanoulas12017}. We found that a $T$ parameter of 5 was the lowest we could go to still acquire a reliability of over 70\%. Overall we were able to obtain an average recall of 90\% by making an average effort of 58\%.
-
 \subsubsection{Knee Method}
 
 A different stopping kethod proposed by \cite{Satopa11} is known as the knee method. This approach uses a curve to generate a 'knee', which is then used for predicting a stopping point. This approach is likely to be highly dependant on the quality of the initial rankings. This is because we need a curve that reaches a peak quickly, before flattening out.

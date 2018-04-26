@@ -2,8 +2,9 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Example of using knee method to find a stopping point. Image inspired from \cite {Satopa11}}}{7}{figure.2.1}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Tree diagram example, all credit for diagram goes here \cite {Manheimer2012}}}{10}{figure.3.1}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of fitting a curve for a topic using sampling}}{11}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point.}}{13}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp. We can see the gp is significantly over fitting to the data.}}{14}{figure.4.3}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of fitting a curve for a topic using sampling}}{12}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point.}}{14}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp. We can see the gp is significantly over fitting to the data.}}{15}{figure.4.3}
 \addvspace {10\p@ }
