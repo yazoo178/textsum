@@ -2,7 +2,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Comparison of different sample sizes against recall and effort. Ranking Method: Test\_Data\_Sheffield-run-2 \cite {Alharbi2017}}}{13}{table.4.1}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Comparison of different sample intervals against recall and effort. Ranking Method: Test\_Data\_Sheffield-run-2 \cite {Alharbi2017}}}{12}{table.4.1}
 \contentsline {table}{\numberline {4.2}{\ignorespaces Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. No topic drop-out}}{13}{table.4.2}
 \contentsline {table}{\numberline {4.3}{\ignorespaces Comparison of different of sample method using curve fitting for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{14}{table.4.3}
 \contentsline {table}{\numberline {4.4}{\ignorespaces Comparison of different of sample method using gp for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{15}{table.4.4}

@@ -2,6 +2,7 @@
 
 Systematic reviews have many different stages that propose themselves as a candidate for automation. This section is going to look at the techniques that have been applied for some of these stages in previous literature.
 
+
 \section{Steps of a Systematic Review}
 
 It is useful for us to break down the steps involved in creating a systematic review into subtasks. This way we can observe what techniques can be applied during the relevant sub tasks to improve the efficiency of the process. The following definitions are derived task simplifactions from the cochrane tutorial on systematic reviews: \cite{cochranes}.
@@ -44,7 +45,6 @@ Large medical database-such as Pubmed \cite{pubmed} contain relevant studies tha
 Naturally this can be modelled as an information retrieval problem. We have a large number of documents and we wish to retrieve the most relevant ones. One task for the 2017 CLEF conference was to produce a ranking of the most relevant documents for topics \cite{Kanoulas12017}. Many techniques have been proposed for ranking of relevant documents, with varying degrees of performance \cite{Alharbi2017} \cite{Gordon2017} \cite{Eunkyung2017}.
 
 An important aspect of the relevant literature search step is the construction of the query. Query creators often apply filters (also known as hedges) to increase the effectiveness or/and the efficiency of the searching. Two key attributes for the query are the precision and the sensitivity (aka recall). By including synonymous phrases e.g: quality adjusted life or quality of well-being or disability adjusted life the sensitivity can be increased, but as expense of the precision. The creation of this query is a task that could potentially have some aspects of NLP applied to it.
-
 
 
 \subsection{Data Filtering}
@@ -170,6 +170,7 @@ We can see in the above example the method has predicted we look at around 200 o
 This method also imposes an additional constraint for rankings of a large volume. 
 
 It was found that the knee method is a better approach for finding a stopping point than the Target method \cite{Cormack2016}. The recall was always found to be better and the reliability was found to be the same or higher for 6 out 8 of the test collections.
+
 
 
 

@@ -1,17 +1,17 @@
 \begin{thebibliography}{10}
 
-\bibitem{medline}
-
-
-\bibitem{nlm}
-
-
 \bibitem{Alharbi2017}
 {\sc Alharbi, A., and Stevenson, M.}
 \newblock Ranking abstracts to identify relevant evidence for systematic
   reviews: The university of sheffield’s approach to clef ehealth 2017 task
   2.
 \newblock {\em CLEF 2017\/} (2017).
+
+\bibitem{CLEFLINK}
+{\sc CLEF}.
+\newblock Clef.
+\newblock
+  https://sites.google.com/view/clef-ehealth-2018/task-2-technologically-assisted-reviews-in-empirical-medicine.
 
 \bibitem{Cormack2016}
 {\sc Cormack, G.~V., and Grossman, M.~R.}
@@ -44,6 +44,17 @@
   L.}
 \newblock Acupuncture for treatment of irritable bowel syndrome.
 \newblock {\em John Wiley and Sons, Ltd\/} (2012).
+
+\bibitem{medline}
+{\sc medline}.
+\newblock medline.
+\newblock https://www.nlm.nih.gov/bsd/pmresources.html.
+
+\bibitem{nlm}
+{\sc nlm}.
+\newblock nlm.
+\newblock
+  https://www.nlm.nih.gov/bsd/disted/meshtutorial/principlesofmedlinesubjectindexing/findingterms.
 
 \bibitem{cochranes}
 {\sc Nunn, J.}

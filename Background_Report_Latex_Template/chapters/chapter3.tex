@@ -4,9 +4,9 @@ In this section the work completed so far will be presented. Two main areas of t
 
 \section{Random Sample Method to Stopping}
 
-As approach to determining when to stop looking at document abstracts returned by the query we are proposing a new sampling method. This approach assumes we have optimum ranking algorithm for returning documents for a query.
+As an approach to determining when to stop looking at document abstracts returned by the query we are proposing a new sampling method. This approach assumes we have sensible ranking algorithm for returning documents for a query.
 
-The first step of this method is to randomly sample a returned set of documents into a subsets. 
+The first step of this method is to generate a sample set. We will use an interval method for generating our set, i.e select every $N$th document 
 
 \begin{equation}
 U = \frac{|D|}{S}
@@ -16,6 +16,7 @@ Where $U$ is the computed randomised subset, $D$ is the document collection and 
 
 We then use this subset $U$ to create a model / baseline for our topic as a way of predicting how many documents one would need to look at to hit a threshold. The intuition behind this approach is that the rate of which relevant documents occur should be relatively similar when the number of returned documents in the same.
 
+\iffalse
 A limitation of this sampling method is that for topics with very few documents it is easy for a sample to miss many of them. This creates a subset set bias, where one set contains a larger percentage of relevant documents. Consider a query that returns 10000 candidate documents of which only 10 have been pre-determined to be relevant. Its not too unlikely that a randomly sampled subset would contain 0 relevant documents. We can use the following equation to tell us how much information we can take from a pre-evaluated topic:
 
 \begin{equation}
@@ -27,12 +28,12 @@ Where $T_i$ is a given topic and $rel$ computes the number of relevant documents
 \begin{equation}
 Usefullness = \frac{\sum{I}}{|T|}
 \end{equation}
-
+\fi
 
 
 \subsection{Curve Fitting}
 
-Our first approach uses a simple curve fit against a sample set along with a non-linear function. $f(x)$
+Our first approach uses a simple curve fit against a sample set along with a non-linear function.
 
 \begin{equation}
 F(x) = n - a\exp^{-kx}
@@ -59,17 +60,22 @@ We can visualise the curve along with the confidence intervals. The Y axis is th
  5 & 0.481 & 0.33	&	0.315 \\ 
  \hline
 \end{tabular}
-\caption{Comparison of different sample sizes against recall and effort. Ranking Method: Test\_Data\_Sheffield-run-2 \cite{Alharbi2017}}
+\caption{Comparison of different sample intervals against recall and effort. Ranking Method: Test\_Data\_Sheffield-run-2 \cite{Alharbi2017}}
 
 \end{table}
 
-The first sample size of 1 is included to show how the effort metric is effected. For us to use sample everything, we would need to look at everything, as such the effort averaged out at 1. In this example we were only concerned in achieving 70\% recall, as such even when sampling everything we would really obtain 100\% recall at the expense of 100\% effort.
+The first sample size of 1 is included to show how the effort metric is affected. For us to use sample everything, we would need to look at everything, as such the effort averaged out at 1. In this example we were only concerned in achieving 70\% recall, as such even when sampling everything we would really obtain 100\% recall at the expense of 100\% effort.
 
-Looking at every 3rd document and then producing a prediction curve will reduce our effort. We are still required to look at at 1/3 of documents, as such the effort will always be above 0.33. 
+Looking at every 3rd document and then producing a prediction curve will reduce our effort. We are still required to look at 1/3 of documents, as such the effort will always be above 0.33. 
 
 \subsubsection{Relevance Ranking}
 
-Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2017} of CLEF 2017. Naturally, the reliability of our curve is heavily based on how good the initial rankings are for each topic. We can compare different ranking methods for generating our stopping curve. By looking at the CLEF 2017 technology assisted review task \cite{Kanoulas12017} we can determine the best candidates to use.
+Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2017} of CLEF 2017 Technology Assisted Reviews in Empirical Medicine \cite{CLEFLINK}. Naturally, the reliability of our curve is heavily based on how good the initial rankings are for each topic. We can compare different ranking methods for generating our stopping curve. By looking at the CLEF 2017 technology assisted review task \cite{Kanoulas12017} we can determine the best candidates to use. All CLEF 2017 submissions follow a standard format that we use to represent the ranks of the documents:
+
+\begin{tcolorbox}
+CD010775 NF 19307324 1 0.27152011529138564 Test-Data-Sheffield-run-2 
+\end{tcolorbox}
+
 
 We also introduce a new column: topics sampled is the number of topics that were evaluated using the curve. This is included as some of the ranking methods do not produce enough relevant documents to generate a suitable curve. 
 
@@ -93,7 +99,7 @@ We also introduce a new column: topics sampled is the number of topics that were
 \end{table}
 
 
-This second set of results will use a mandatory drop out parameter for topics with less than 0.5\% of relevant documents.  The maximum number of topics for this dataset remains at 30.
+This second set of results will use a mandatory cut-off parameter for topics with less than 0.5\% of relevant documents.  The maximum number of topics for this dataset remains at 30.
 
 We also include a confidence interval evaluation for lower bounded range of a $3\sigma$ confidence interval. The key advantages of using a curve as  method of evaluating stopping criteria is being able to make use of this confidence interval in a real systematic review. In the context of a systematic reviewers at the data filtering stage, we could specify that the system is 95\% certain that 70\% of relevant documents have been found. At which point the reviewer can decide if its worth continuing to look at documents.
 
@@ -106,7 +112,7 @@ We also include a confidence interval evaluation for lower bounded range of a $3
 
 
 \begin{table}[H]
-\scalebox{0.8}{
+\scalebox{1}{
 \centering
 \begin{tabular}{|c|c|c|c|c|} 
 
@@ -131,7 +137,7 @@ We have deliberately compared two of the better participant rankings (Waterloo a
 
 \subsection{Gaussian Process fitting}
 
-As an alternate approach to fitting a simple curve, we can apply a GP.
+As an alternate approach to fitting a simple curve, we can apply a Gaussian Process (GP).
 
 We will apply a constant kernel plus a squared-exponential kernel. One of the key challenges when applying a Gaussian Process was the amount of over-fitting.  
 
@@ -163,7 +169,7 @@ We will apply a constant kernel plus a squared-exponential kernel. One of the ke
  ntu run-1 & 0.67 \, 0.67, &	0.40 \, 0.40	&	0.64 \, 0.64 & 22 \\ 
  
  
- ucl full-text & 0.72 \, 0.72, &	0.52 \, 0.56	&	0.82 \, 0.82 & 25 \\ 
+ ucl full-text & 0.62 \, 0.62, &	0.52 \, 0.56	&	0.82 \, 0.82 & 25 \\ 
  \hline
 \end{tabular}
 }
@@ -209,15 +215,16 @@ We can evaluate how well this method does against an existing set of relevance r
 So far, we found using a GP was not an appropriate choice due to the level of over-fitting. Further work is needed in determining an efficient kernel for our data.
 
 
-\section{Indexing and Querying Medline using Systematic Review Protocols}
+\section{Indexing and Querying Medline with Limited Information}
 
-Being able to produce an efficient index of Medline is something highly desirable in the field of medicial research. A more efficient index will produce more concise results when given a query. This could potentially save time in filtering through many non-relevant studies and providing a more concise data-set for reviewers to observe. 
+
+CLEF 2018 \cite{CLEFLINK} presents an appropriate sub-task for using a limited amount of information to retrieve relevant documents. Normally, reviewers are require to construct complex Boolean queries to retrieve data from Medline. The objective of CLEF 2018 Sub-Task 1: No Boolean Search \cite{CLEFLINK} is to search effectively and efficiently bypassing the construction of the Boolean query.
 
 \subsection{Acquiring Key Information from A Systematic Review Protocol}
 
 A systematic review protocol is created before the systematic review process is started. A systematic review protocol describes the rationale, hypothesis, and planned methods of the review. The Medline query is created manually with the help of the protocol. Here we are looking to generate a suitable query/relevant information from the protocol to then automatically query Medline.
 
-We will use RAKE \cite{rake} to extraction key-words from a protocol. The minimum word occurrence count is set to 1, as the protocols are typically small. We used a pubmed stop list as the phrase splitting parameter. Example shown below:
+We used RAKE \cite{rake} to extraction key-words from a protocol. The minimum word occurrence count is set to 1, as the protocols are typically small. We used a pubmed stop list as the phrase splitting parameter. Example shown below:
 
 \begin{tcolorbox}
 
@@ -230,6 +237,8 @@ Objective: To assess the diagnostic accuracy of RDTs for detecting clinical P. f
 \end{tcolorbox}
 
  
+ 
+ 
 \begin{tcolorbox}
 
 endemic countries objective|ambulatory healthcare facilities|rapid diagnostic tests|falciparum parasitaemia detectable|malaria endemic areas|diagnostic accuracy|falciparum malaria
@@ -238,7 +247,7 @@ endemic countries objective|ambulatory healthcare facilities|rapid diagnostic te
 
 The | symbol represents a separation between a phrase. The protcols are pre-processed as follows: Reference removal, lowercase, words less than $N$ length removed, pubmed stoplist. We decided to not perform any stemming/additional manipulation at this stage, due to uncertainty of query format. The resulting content is stored in a separate file appended with '.kwq' (key-word query).
 
-The key-word-query receives some final pre-processing prior to being loaded into our IR system. We used a Lancaster stemmer to reduce words down to a base form. The result is as follows:
+The key-word-query receives some final pre-processing prior to being loaded into our information retrieval (IR) system. We used a Lancaster stemmer to reduce words down to a base form. The result is as follows:
 
 \begin{tcolorbox}
 
