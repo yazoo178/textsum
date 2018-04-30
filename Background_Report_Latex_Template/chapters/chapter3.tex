@@ -41,6 +41,8 @@ F(x) = n - a\exp^{-kx}
 
 Where $a$, $k$ and $n$ are learnt weights and $x$ is an associated return rate for a document. We generate the curve using the non-linear least squares algorithm \cite{leastsqures}. 
 
+
+\iffalse
 We can visualise the curve along with the confidence intervals. The Y axis is the predicted number of relevant documents for the topic. X axis shows the true number of documents returned for the query. 
 
 \begin{figure}[H]
@@ -64,6 +66,8 @@ We can visualise the curve along with the confidence intervals. The Y axis is th
 
 \end{table}
 
+\fi
+
 The first sample size of 1 is included to show how the effort metric is affected. For us to use sample everything, we would need to look at everything, as such the effort averaged out at 1. In this example we were only concerned in achieving 70\% recall, as such even when sampling everything we would really obtain 100\% recall at the expense of 100\% effort.
 
 Looking at every 3rd document and then producing a prediction curve will reduce our effort. We are still required to look at 1/3 of documents, as such the effort will always be above 0.33. 
@@ -78,6 +82,7 @@ CD010775 NF 19307324 1 0.27152011529138564 Test-Data-Sheffield-run-2
 
 
 We also introduce a new column: topics sampled is the number of topics that were evaluated using the curve. This is included as some of the ranking methods do not produce enough relevant documents to generate a suitable curve. 
+
 
 \begin{table}[H]
 \centering
@@ -133,6 +138,30 @@ We also include a confidence interval evaluation for lower bounded range of a $3
 \end{table}
 
 We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is. Some of the ranking methods struggle to produce curves and when combined with a drop-out parameter produce become not worth considering in our evaluation.
+
+Finally we look at the oracle scores for each run. These are the best possible scores we can achieve for the given rankings. We will assume we are satisfied with 70\% recall. Results are taken as averages over all topics.
+
+\begin{table}[H]
+
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+\hline
+ Submission & recall & reliability & effort  \\ 
+ Test\_Data\_Sheffield-run-2 & 0.7 &	1.0	&	0.11 \\ 
+ Waterloo A-rank-cost & 0.7 &	1.0	&	0.07 \\ 
+ Waterloo B-rank-cost & 0.7 &	1.0	&	0.06 \\ 
+ auth run-1 & 0.7 &	1.0	&	0.08 \\ 
+ auth run-2 & 0.7 &	1.0	&	0.09 \\ 
+ ntu run-1 & 0.7 &	1.0	&	0.4 \\ 
+ ucl full-text & 0.7 &	1.0	&	0.67 \\ 
+ \hline
+\end{tabular}
+
+\caption{Lowest effort possible to find 70\% of relevant documents. }
+
+\end{table}
+
+
 
 
 \subsection{Gaussian Process fitting}
