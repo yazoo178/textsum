@@ -59,6 +59,43 @@ def find_nearest(array,value):
 
 
 
+#a topic failed to run
+def onfail(file, name, outputPath):
+
+    file.seek(0)
+    c = 0
+    scores = []
+    X_samps = []
+
+    #get a file name
+    fileWithOutPath = os.path.basename(file.name).split('.')[0]
+
+    for line in file:
+        c = c + sampleRate
+        tmp = []
+        for val in re.split(r'\t+', line):
+        
+            if val == "\n":
+                continue
+        #if float(line) not in scores:
+            tmp.append(float(val) * sampleRate)
+
+        scores.append(np.array(tmp)) # y-axis
+        X_samps.append(float(c))     # x-axis
+
+    last = scores[-1]
+    maxVal = sum(last)
+
+
+    #create curve file
+    y2Scores = open(outputPath + fileWithOutPath + '.txt', 'w')
+
+    for x in range(0, len(scores)):
+        y2Scores.write(str(maxVal) + "\t" + str(maxVal) + "\t" + str(maxVal) + "\n")
+
+    y2Scores.close()
+    return 1
+
 
 def process(file, name, outputPath):
 
@@ -131,8 +168,9 @@ def process(file, name, outputPath):
             #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
 
             if float(max(y2) / totalDocs) < jump_skip:
-                print("Skipped topic: " + fileWithOutPath)
-                return 0
+                #print("Skipped topic: " + fileWithOutPath)
+                #return 0
+                pass
             
             interval = sigma * 1.91
             lower = y2 - interval
@@ -173,8 +211,9 @@ def process(file, name, outputPath):
             y2 = other_func(X_vals, a, k, n)
 
             if float(max(y2) / totalDocs) < jump_skip:
-                print("Skipped topic: " + fileWithOutPath)
-                return 0
+                #print("Skipped topic: " + fileWithOutPath)
+                #return 0
+                pass
 
             sigma = np.sqrt([pcov[0,0], pcov[1,1], pcov[2,2]])
 
@@ -315,6 +354,7 @@ with open(qrel, encoding='utf-8') as content:
 
 total = 0
 sucess = 0
+fail = 0
 for filename in os.listdir(int_scores_folder):
 
     #its a folder skip over
@@ -326,10 +366,12 @@ for filename in os.listdir(int_scores_folder):
     try:
         total += process(file, filename, int_scores_folder + "curve_scores/")
     except RuntimeError:
+        print("Failed to generate for: "+ filename)
+        fail += onfail(file, filename, int_scores_folder + "curve_scores/")
         pass
    
 print("Topics created: " + str(total))
-
+print("Topics failed: " + str(fail))
     
 
 

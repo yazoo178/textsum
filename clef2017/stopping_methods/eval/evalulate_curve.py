@@ -49,8 +49,6 @@ def eval(true_scores_file, curve_scores, filename):
             scores.append(int(val))
             X_samps.append(float(c))
 
-
-    print(true_scores_file)
     for curveScore in open(curve_scores, 'r+'):
         vals = curveScore.split('\t')
 
@@ -71,11 +69,17 @@ def eval(true_scores_file, curve_scores, filename):
 
 
     x_sam_val = find_nearest(y_p, max(y_p) * (rate / 100))
+    x_sam_val = len(scores) if x_sam_val == 0 else x_sam_val
+
     x_val_true = findIn(int(round(max(scores) * (rate / 100))), scores)
 
     effort =  (((len(scores) - x_sam_val)/ sample_rate) + x_sam_val) / len(scores) 
 
-    recall = (scores[x_sam_val] / max(scores))
+    #we had to look at everything
+    if x_sam_val >= len(scores):
+        recall = 1
+    else:
+        recall = (scores[x_sam_val] / max(scores))
     return [recall, effort, len(scores), max(scores)]
 
 

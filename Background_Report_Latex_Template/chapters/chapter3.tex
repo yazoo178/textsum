@@ -90,13 +90,13 @@ We also introduce a new column: topics sampled is the number of topics that were
 
  \hline
  Submission & recall & reliability & effort & topics sampled  \\ 
- Test\_Data\_Sheffield-run-2 & 0.66 &	0.5	&	0.48 & 30 \\ 
- Waterloo A-rank-cost & 0.65 & 0.41	&	0.39 & 29 \\ 
+ Test\_Data\_Sheffield-run-2 & 0.68 &	0.53	&	0.50 & 30 \\ 
+ Waterloo A-rank-cost & 0.70 & 0.46	&	0.44 & 30 \\ 
  Waterloo B-rank-cost & 0.70 & 0.46	&	0.40 & 30 \\ 
- auth run-1 & 0.71 & 0.5	&	0.41 & 30 \\ 
- auth run-2 & 0.67 & 0.46	&	0.40 & 30 \\ 
- ntu run-1 & 0.56 & 0.18	&	0.54 & 22 \\ 
- ucl full-text & 0.55 & 0.36	&	0.70 & 11 \\ 
+ auth run-1 & 0.74 & 0.53	&	0.43 & 30 \\ 
+ auth run-2 & 0.70 & 0.50	&	0.43 & 30 \\ 
+ ntu run-1 & 0.71 & 0.43	&	0.68 & 30 \\ 
+ ucl full-text & 0.86 & 0.8	&	0.91 & 30 \\ 
  \hline
 \end{tabular}
 \caption{Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. No topic drop-out}
@@ -123,13 +123,13 @@ We also include a confidence interval evaluation for lower bounded range of a $3
 
  \hline
  Submission & recall-lower & reliability-lower & effort-lower & topics sampled  \\ 
- Test\_Data\_Sheffield-run-2 & 0.70 \, 0.75, &	0.56 \, 0.64	&	0.47 \, 0.51 & 25 \\ 
- Waterloo A-rank-cost & 0.68 \, 0.72, &	0.41 \, 0.45	&	0.40 \, 0.42 & 24 \\ 
- Waterloo B-rank-cost & 0.72 \, 0.758, &	0.53\, 0.80	&	0.41\, 0.42 & 26 \\ 
- auth run-1 & 0.755 \, 0.755, &	0.60 \, 0.60	&	0.42 \, 0.43 & 23 \\ 
- auth run-2 & 0.725 \, 0.757, &	0.54 \, 0.63	&	0.42 \, 0.43 & 22 \\ 
- ntu run-1 & 0.60 \, 0.61, &	0.21 \, 0.28	&	0.53 \, 0.54 & 14 \\ 
- ucl full-text & 0.57 \, 0.60, &	0.33 \, 0.33	&	0.75 \, 0.72 & 6 \\ 
+ Test\_Data\_Sheffield-run-2 & 0.69 \, 0.74, &	0.52 \, 0.60	&	0.48 \, 0.51 & 23 \\ 
+ Waterloo A-rank-cost & 0.71 \, 0.73, &	0.47 \, 0.47	&	0.43 \, 0.44 & 23 \\ 
+ Waterloo B-rank-cost & 0.71 \, 0.75, &	0.52\, 0.82	&	0.41\, 0.43 & 23 \\ 
+ auth run-1 & 0.72 \, 0.74, &	0.52 \, 0.60	&	0.41 \, 0.42 & 23 \\ 
+ auth run-2 & 0.70 \, 0.72, &	0.52 \, 0.60	&	0.42 \, 0.43 & 23 \\ 
+ ntu run-1 & 0.76 \, 0.74, &	0.56 \, 0.52	&	0.72 \, 0.70 & 23 \\ 
+ ucl full-text & 0.86 \, 0.94, &	0.82 \, 0.86	&	0.91 \, 0.95 & 23 \\ 
  \hline
 \end{tabular}
 }
@@ -137,7 +137,9 @@ We also include a confidence interval evaluation for lower bounded range of a $3
 
 \end{table}
 
-We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is. Some of the ranking methods struggle to produce curves and when combined with a drop-out parameter produce become not worth considering in our evaluation.
+We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is. 
+
+Some of the ranking methods struggle to produce curves and when combined with a cut-of parameter produce become not worth considering in our evaluation. In this situation we simply returned everything for the given topic, resulting in 100\% recall at the expense of 100\% effort.
 
 Finally we look at the oracle scores for each run. These are the best possible scores we can achieve for the given rankings. We will assume we are satisfied with 70\% recall. Results are taken as averages over all topics.
 

@@ -35,7 +35,7 @@ run_file = ''
 target = ''
 cutoff = ''
 approach = "undefined"
-opts, args = getopt.getopt(sys.argv[1:],"hk:c:o:q:")
+opts, args = getopt.getopt(sys.argv[1:],"hk:c:o:q:m:")
 for opt, arg in opts:
     if opt == '-h':
         usage()

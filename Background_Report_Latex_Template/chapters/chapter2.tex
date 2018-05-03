@@ -151,6 +151,40 @@ The target method is an approach that can guarantee a certain a certain level of
 
 The target $T$ denotes how many documents we should randomly select from our initial query. A larger value of $T$ will increase the effort required as we are more likely to select a document towards the end of the query set. Documents are looked at until the target point $T$ has been reached.
 
+We first compute a random target set of relevant documents. We then calculate the last document in the target set and mark that as our target point:
+
+\begin{equation}
+	  \underset{last}{d} = \underset{d \in{T}}{argmax relrank(d)}
+\end{equation}
+
+It must hold that $d$ is in the target set.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=13cm]{figures/target_method.png}
+\caption{Visualisation of target method last relevant document selection. $C$ is number of documents in collection.}
+\end{figure}
+
+Increasing our target set size is likely to increase the probability the last document being towards the end of the document collection.
+
+We can calculate the recall of the point by looking at the relevance rank of the last document:
+
+\begin{equation}
+	  recall = \frac{relrank(\underset{last}{d})}{R}
+\end{equation}
+
+Where $R$ is the number of relevant documents.
+
+
+For our method to be deemed reliable we must achieve 70\% recall with a 95\% average over all topics.
+
+\begin{equation}
+	  P(\frac{relrank(\underset{last}{d})}{R} \geqslant 0.7) \geqslant 0.95
+\end{equation}
+
+
+
+
 While this approach is shown to acquire 95\% reliability, the effort needed is often significantly highly, often requiring us to look at huge volume of documents.
 
 \subsubsection{Knee Method}

@@ -172,11 +172,13 @@ def calcRecallForTopN(N, testFiles, records):
     #recallScores =  [recallScores[x] / N for x in recallScores]
     return recallScores
 
-opts, args = getopt.getopt(sys.argv[1:],"hk:t:o:q:s:")
+opts, args = getopt.getopt(sys.argv[1:],"hk:t:o:q:s:j:")
 fileName = "Output/" + "Test_Data_Sheffield-run-2"
 output = ""
 qrel = "qrel/qrel_abs_test"
 sample = 3
+jump_skip = 1.0
+
 
 for opt, arg in opts:
     if opt == '-h':
@@ -189,6 +191,9 @@ for opt, arg in opts:
         qrel = arg
     elif opt in ('-s'):
         sample = int(arg)
+    elif opt in ("-j"):
+        print(arg)
+        jump_skip = float(arg)
 
 
 #generate an output folder name from the file supplied
@@ -208,7 +213,13 @@ if not os.path.exists(dir):
 
 for score in scores:
 
-    f= open(dir + "/" + score + ".txt","w+")
+    if len([x for x in np.array(scores[score]).flatten() if x == 1]) / len(records[score].docsReturned) < jump_skip:
+        print("skipped:" + score)
+        continue
+        
+
+
+    f= open(dir + "/" + score + ".txt","w")
     vals = list(scores[score])
     
     # ----------------------------------------------------------------------
