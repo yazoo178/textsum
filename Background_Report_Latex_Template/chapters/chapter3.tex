@@ -1,6 +1,62 @@
-\chapter{Novel Work}
+\chapter{Novel Work} \label{novelw}
 
 In this section the work completed so far will be presented. Two main areas of the systematic review process has been focused on. Stopping criteria and indexing/querying pubmed.
+
+
+\section{Baseline Approaches to Stopping} \label{baselineapp}
+
+As discussed in \ref{methods} there are many baseline approaches we can take for finding a suitable stopping point. Most approaches are heavily dependant on the initial rankings of the document collection, and assume more relevant documents feature towards the start of the collection.
+
+\subsection{Percentage cut-off}
+
+One approach is we can simply take a cut of the document collection and evaluate how many relevant documents we have retrieved. Assuming we are satisfied with 95\% reliability, this could be a suitable method.
+
+\begin{table}[H]
+
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+\hline
+ \% of Documents & recall & reliability & effort  \\ 
+ 10\% & 0.49 &	0.1	&	0.16 \\ 
+ 25\% & 0.74 &	0.25	&	0.66 \\ 
+ 50\% & 0.91 &	0.5	&	0.93 \\ 
+ 75\% & 0.98 &	0.75	&	1.0 \\ 
+ 90\% & 0.99 &	0.9	&	1.0 \\ 
+ \hline
+\end{tabular}
+
+\caption{Percentage cut-off rates for Test\_Data\_Sheffield-run-2}
+
+\end{table}
+
+By looking at half of the rankings we achieve a reliability of 0.93. 
+
+
+\subsection{Similarity score cut-off}
+
+Many document rankings will feature a similarity score between the document and the query. As we descend down the rankings, the score decreases in value as documents become less relevant.
+
+We can make use of the similarity score to derive a stopping point. This method works by looking at documents $d_i$ and $d_i+1$ and determining if the difference between the similarity scores has become too large. This method will work on the basis that documents that are no longer relevant will have a sudden drop in score such that we can identify this as our stopping point.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+\hline
+ $dif(d_i, d_i+1)$ & recall & reliability & effort  \\ 
+ 0.01\% & 0.025 &	0.0023	&	0 \\ 
+ 0.05\% & 0.12 &	0.1	&	0.1 \\ 
+ 1\% & 0.359 &	0.333	&	0.333 \\ 
+ 2\% & 0.88 &	0.86	&	0.86 \\ 
+ 5\% & 1 &	0.99	&	1.0 \\ 
+ \hline
+\end{tabular}
+
+\caption{Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores.}
+\end{table}
+
+These results are highly sensitive to the similarity score and show it's difficult to use this score as an affective measure for stopping. We found similarity scores rarely have sudden drops in values, making it difficult to use this method to identify a stopping point.
+
 
 \section{Random Sample Method to Stopping}
 
@@ -244,6 +300,8 @@ We can evaluate how well this method does against an existing set of relevance r
 \subsection{Gaussian Process Conclusion}
 
 So far, we found using a GP was not an appropriate choice due to the level of over-fitting. Further work is needed in determining an efficient kernel for our data.
+
+
 
 
 \section{Indexing and Querying Medline with Limited Information}

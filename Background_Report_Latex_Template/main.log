@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  3 MAY 2018 13:41
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  4 MAY 2018 12:36
 entering extended mode
 **./main.tex
 (main.tex
@@ -1806,6 +1806,15 @@ Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
 
 LaTeX Warning: Label `lit' multiply defined.
 
+
+LaTeX Warning: Label `rq' multiply defined.
+
+
+LaTeX Warning: Label `dm' multiply defined.
+
+
+LaTeX Warning: Label `ie' multiply defined.
+
 )
 \openout1 = `main.aux'.
 
@@ -1965,23 +1974,29 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 3.
 ("C:\Users\william\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd
 "
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
+) [3
+
+])
 \tf@toc=\write7
 \openout7 = `main.toc'.
 
- [3
-
-] (main.lof)
+ [4] (main.lof)
 \tf@lof=\write8
 \openout8 = `main.lof'.
 
- [4
+ [5
 
-] (main.lot)
+] (main.lot
+Overfull \hbox (6.63522pt too wide) in paragraph at lines 6--6
+ [][] [][]\TU/lmr/m/n/10.95 Similarity cut-off comparison for stopping for Test
+_-Data_-Sheffield-run-2. Using 
+ []
+
+)
 \tf@lot=\write9
 \openout9 = `main.lot'.
 
- [5
+ [6
 
 ] (chapters/chapter1.tex
 Chapter 1.
@@ -2022,9 +2037,9 @@ relevance rank of the last document:
 [7]
 File: figures/knee.png Graphic file (type bmp)
 <figures/knee.png>
-) (chapters/Research.tex [8]
+ [8]) (chapters/Research.tex [9]
 Chapter 3.
-[9
+[10
 
 ]
 File: figures/tree.png Graphic file (type bmp)
@@ -2034,75 +2049,98 @@ Overfull \hbox (14.39662pt too wide) in paragraph at lines 21--22
  [] 
  []
 
-) (chapters/chapter3.tex [10]
+) (chapters/chapter3.tex [11]
 Chapter 4.
-[11
 
-]
-Overfull \hbox (1.2357pt too wide) in paragraph at lines 77--78
+Overfull \hbox (2.9232pt too wide) in paragraph at lines 8--9
+\TU/lmr/m/n/10.95 stopping point. Most approaches are heavily dependant on the 
+initial rankings of the document
+ []
+
+
+Overfull \hbox (11.3977pt too wide) in paragraph at lines 8--9
+\TU/lmr/m/n/10.95 collection, and assume more relevant documents feature toward
+s the start of the collection. 
+ []
+
+[12
+
+] [13]
+Overfull \hbox (1.2357pt too wide) in paragraph at lines 133--134
 \TU/lmr/m/n/10.95 Our results so far have been based on Test_-Data_-Sheffield-r
 un-2 [[]] of CLEF 2017 Technology
  []
 
-[12]
+[14]
 File: figures/cf_example.png Graphic file (type bmp)
 <figures/cf_example.png>
 
-Overfull \hbox (11.71185pt too wide) in paragraph at lines 135--137
+Overfull \hbox (11.71185pt too wide) in paragraph at lines 191--193
 [][]
  []
 
-[13]
-Overfull \hbox (7.35718pt too wide) in paragraph at lines 171--172
+[15]
+Overfull \hbox (7.35718pt too wide) in paragraph at lines 227--228
 \TU/lmr/m/n/10.95 As an alternate approach to fitting a simple curve, we can ap
 ply a Gaussian Process (GP). 
  []
 
-
-Overfull \hbox (11.71185pt too wide) in paragraph at lines 206--208
+[16]
+Overfull \hbox (11.71185pt too wide) in paragraph at lines 262--264
 [][]
  []
 
-[14]
 File: figures/joined_graph.png Graphic file (type bmp)
 <figures/joined_graph.png>
- [15]
-Overfull \hbox (26.33643pt too wide) in paragraph at lines 249--249
+[17]
+Overfull \hbox (26.33643pt too wide) in paragraph at lines 307--307
 []\TU/lmr/bx/n/14.4 Indexing and Querying Medline with Limited Information 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 275--276
+Underfull \hbox (badness 10000) in paragraph at lines 333--334
 []\TU/lmr/m/n/10.95 endemic countries objective|ambulatory healthcare facilitie
 s|rapid diagnostic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 275--276
+Underfull \hbox (badness 10000) in paragraph at lines 333--334
 \TU/lmr/m/n/10.95 tests|falciparum parasitaemia detectable|malaria endemic area
 s|diagnostic
  []
 
-[16]
-Overfull \hbox (9.85452pt too wide) in paragraph at lines 281--282
+[18]
+Overfull \hbox (9.85452pt too wide) in paragraph at lines 339--340
 []\TU/lmr/m/n/10.95 The key-word-query receives some final pre-processing prior
  to being loaded into our information
  []
 
-
-Overfull \hbox (18.4838pt too wide) in paragraph at lines 318--320
+[19]
+Overfull \hbox (18.4838pt too wide) in paragraph at lines 376--378
 [][]
  []
 
-[17]
-Overfull \hbox (12.74413pt too wide) in paragraph at lines 328--329
+
+Overfull \hbox (12.74413pt too wide) in paragraph at lines 386--387
 []\TU/lmr/m/n/10.95 MeSH headings would be useful in expanding the range of the
  query to capture synonymous
  []
 
-) (chapters/DDP.tex [18]
+) (chapters/Future.tex [20] [21]
 Chapter 5.
-) (main.bbl [19
+[22
+
+]
+File: figures/tree.png Graphic file (type bmp)
+<figures/tree.png>
+
+Overfull \hbox (14.39662pt too wide) in paragraph at lines 21--22
+ [] 
+ []
+
+) (chapters/DDP.tex [23]
+Chapter 6.
+) (main.bbl [24
 
 ]
 Overfull \hbox (168.94678pt too wide) in paragraph at lines 11--15
@@ -2130,26 +2168,26 @@ Underfull \hbox (badness 1629) in paragraph at lines 66--69
 [][][] []
  []
 
-[20
+[25
 
-]) [21]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 109.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 109.
+]) [26]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 111.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 111.
  (main.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 109.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 109.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 111.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 111.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 42435 strings out of 427836
- 978563 string characters out of 3148132
- 1196035 words of memory out of 3000000
- 45861 multiletter control sequences out of 15000+200000
+ 42442 strings out of 427836
+ 978652 string characters out of 3148132
+ 1197708 words of memory out of 3000000
+ 45865 multiletter control sequences out of 15000+200000
  536544 words of font info for 69 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  62i,12n,96p,10429b,479s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.pdf (27 pages).
+Output written on main.pdf (33 pages).

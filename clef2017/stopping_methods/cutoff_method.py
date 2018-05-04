@@ -50,7 +50,7 @@ def eval(scoreCounts, judgements, cutoffs, rankedDocsDoL):
     averageEffort = totalEffort / len(rankedDocsDoL)
     relieability = relieability / len(rankedDocsDoL)
 
-    print("Recall:{0} \t Effort:{1} \t Reliablity:{2}".format(averageRecall, averageEffort, relieability))
+    return("Recall:{0} \t Effort:{1} \t Reliablity:{2}".format(averageRecall, averageEffort, relieability))
 
 
 
@@ -145,66 +145,75 @@ for line in f:
     # Store in list of ranked documents
     rankedDocsDoL[topic].append({'pid' : pid, 'score' : score})
 
-# Run target method for each topic
-recall_stats = {}
-effort_stats = {}
+
+
+def run():
+    recall_stats = {}
+    effort_stats = {}
 
 
 
-cutoffs = {}
+    cutoffs = {}
 
 
-for topic in rankedDocsDoL:
-    lastScore = 0
-    minDocs = int(float(len(rankedDocsDoL[topic])) * min)
+    for topic in rankedDocsDoL:
+        lastScore = 0
+        minDocs = int(float(len(rankedDocsDoL[topic])) * min)
 
-    for x, study in enumerate(rankedDocsDoL[topic]):
-        score = study['score']
+        for x, study in enumerate(rankedDocsDoL[topic]):
+            score = study['score']
 
 
-        #always look at one document
-        if x == 0:
+            #always look at one document
+            if x == 0:
+                lastScore = score
+                continue
+
+            #if our simularity score has reached 0 then end
+            if float(lastScore) == 0.0:
+                cutoffs[topic] = len(rankedDocsDoL[topic])
+                break
+
+            #calculate the dif between current score and last score
+            dif = 1.0 - (float(score) / float(lastScore))
+
+
+            #if difference is greater than cut off then break. 
+            if dif >= cutoff and x >= minDocs:
+                cutoffs[topic] = x
+                break
+
+            if x + 1 == len(rankedDocsDoL[topic]):
+                cutoffs[topic] = len(rankedDocsDoL[topic])
+                break
+
             lastScore = score
-            continue
-
-        #if our simularity score has reached 0 then end
-        if float(lastScore) == 0.0:
-            cutoffs[topic] = len(rankedDocsDoL[topic])
-            break
-
-        #calculate the dif between current score and last score
-        dif = 1.0 - (float(score) / float(lastScore))
-
-
-        #if difference is greater than cut off then break. 
-        if dif >= cutoff and x >= minDocs:
-            cutoffs[topic] = x
-            break
-
-        if x + 1 == len(rankedDocsDoL[topic]):
-            cutoffs[topic] = len(rankedDocsDoL[topic])
-            break
-
-        lastScore = score
         
         
-print(len(cutoffs))
-scoreCounts = {}
+    print(len(cutoffs))
+    scoreCounts = {}
 
-for cut in cutoffs:
-    subset = rankedDocsDoL[cut][0:cutoffs[cut]]
-    scoreCounts[cut] = 0
+    for cut in cutoffs:
+        subset = rankedDocsDoL[cut][0:cutoffs[cut]]
+        scoreCounts[cut] = 0
 
-    for doc in subset:
-        docId = doc['pid']
+        for doc in subset:
+            docId = doc['pid']
 
-        if doc['pid'] in judgements[cut]:
-            scoreCounts[cut] +=1
-
-
-
-eval(scoreCounts, judgements, cutoffs, rankedDocsDoL)
+            if doc['pid'] in judgements[cut]:
+                scoreCounts[cut] +=1
 
 
+    score = eval(scoreCounts, judgements, cutoffs, rankedDocsDoL)
+    return score
+
+
+results = open('output_cutoff_sim.txt', "w")
+for x in range(1, int(cutoff * 10000) + 1):
+    cutoff = (x / 10000)
+    scores = run()
+    results.write(scores + "\n")
+    results.flush()
+    
 
 

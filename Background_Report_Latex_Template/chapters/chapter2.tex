@@ -183,6 +183,15 @@ For our method to be deemed reliable we must achieve 70\% recall with a 95\% ave
 \end{equation}
 
 
+Assuming we have a large number of relevant documents $R$ we need to determine cut-off $c$
+
+\begin{equation}
+	  P(R - relrank(\underset{last}{d}) > cR) = 0.05
+\end{equation}
+
+Which translates to the probability of the remaining relevant documents being higher than the cut-off point should be 0.05.
+
+
 
 
 While this approach is shown to acquire 95\% reliability, the effort needed is often significantly highly, often requiring us to look at huge volume of documents.
