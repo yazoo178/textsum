@@ -32,7 +32,5 @@
 \contentsline {subsection}{\numberline {4.3.2}Indexing medline}{19}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}Results}{20}{subsection.4.3.3}
 \contentsline {subsection}{\numberline {4.3.4}Medline automatic query Conclusion}{20}{subsection.4.3.4}
-\contentsline {chapter}{\numberline {5}Research Questions}{22}{chapter.5}
-\contentsline {section}{\numberline {5.1}Automated Decision Making of Relevant Studies}{22}{section.5.1}
-\contentsline {section}{\numberline {5.2}Information Extraction From Studies}{23}{section.5.2}
-\contentsline {chapter}{\numberline {6}Doctorial Development Programme}{24}{chapter.6}
+\contentsline {chapter}{\numberline {5}Future Work}{22}{chapter.5}
+\contentsline {chapter}{\numberline {6}Doctorial Development Programme}{23}{chapter.6}
