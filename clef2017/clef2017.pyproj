@@ -5,14 +5,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2c02eb12-ef7d-44e0-a0e9-3e712b65fa37}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>stopping_methods\cutoff_method.py</StartupFile>
+    <StartupFile>stopping_methods\other_methods.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
-    <CommandLineArguments>-q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test -o C:\Users\william\Documents\TextSum\clef2017\participant-runs\Sheffield\Test_Data_Sheffield-run-2 -c 1.0 -m 0</CommandLineArguments>
+    <CommandLineArguments>-s 3 -i C:\Users\william\Documents\TextSum\clef2017\stopping_methods\B-rank-normal_int_scores_2 -q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test -m gp -c t -s 2</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -51,6 +51,9 @@
     <Compile Include="stopping_methods\gpTest.py" />
     <Compile Include="stopping_methods\gp_method.py" />
     <Compile Include="stopping_methods\intergrated_recall_rates.py" />
+    <Compile Include="stopping_methods\other_methods.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stopping_methods\plot_gpr_co2.py" />
     <Compile Include="stopping_methods\prob_method.py" />
     <Compile Include="stopping_methods\target_method.py" />

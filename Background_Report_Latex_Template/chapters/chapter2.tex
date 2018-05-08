@@ -191,10 +191,34 @@ Assuming we have a large number of relevant documents $R$ we need to determine c
 
 Which translates to the probability of the remaining relevant documents being higher than the cut-off point should be 0.05.
 
+For this to hold, $cR$ documents must be absent from $T$. This occurs with the probability:
 
 
+\begin{equation}
+	  (1 - \frac{10}{R}) ^cR = 0.05
+\end{equation}
 
-While this approach is shown to acquire 95\% reliability, the effort needed is often significantly highly, often requiring us to look at huge volume of documents.
+Which can become:
+
+\begin{equation}
+	  c = \frac{log(0.05)}{R log(1 - \frac{10}{R})}
+\end{equation}
+
+
+In cases where $R$ has more than 10 relevant documents it follows:
+
+
+\begin{equation}
+	  c < \lim_{R \to \infty} \frac{log(0.05)}{R log (1 - \frac{10}{R})} = 0.299573 < 0.3
+\end{equation}
+
+Finally we have:
+
+\begin{equation}
+	 R \leq 10 \cup P(\frac{relrank(\underset{last}{d})}{R} \geq 0.7) 	\geq 0.95
+\end{equation}
+
+Overall, while the target method is shown to acquire 95\% reliability, the effort needed is often significantly highly, often requiring us to look at huge volume of documents.
 
 \subsubsection{Knee Method}
 
