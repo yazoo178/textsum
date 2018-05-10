@@ -33,4 +33,5 @@
 \contentsline {subsection}{\numberline {4.3.3}Results}{20}{subsection.4.3.3}
 \contentsline {subsection}{\numberline {4.3.4}Medline automatic query Conclusion}{20}{subsection.4.3.4}
 \contentsline {chapter}{\numberline {5}Future Work}{22}{chapter.5}
-\contentsline {chapter}{\numberline {6}Doctorial Development Programme}{23}{chapter.6}
+\contentsline {section}{\numberline {5.1}Gnatt Chart}{23}{section.5.1}
+\contentsline {chapter}{\numberline {6}Doctorial Development Programme}{24}{chapter.6}
