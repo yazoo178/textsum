@@ -16,6 +16,7 @@
 \contentsline {chapter}{\numberline {3}Research Questions}{10}{chapter.3}
 \contentsline {section}{\numberline {3.1}Automated Decision Making of Relevant Studies}{10}{section.3.1}
 \contentsline {section}{\numberline {3.2}Information Extraction From Studies}{11}{section.3.2}
+\contentsline {section}{\numberline {3.3}Stopping Methods}{11}{section.3.3}
 \contentsline {chapter}{\numberline {4}Novel Work}{12}{chapter.4}
 \contentsline {section}{\numberline {4.1}Baseline Approaches to Stopping}{12}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Percentage cut-off}{12}{subsection.4.1.1}
@@ -23,15 +24,15 @@
 \contentsline {section}{\numberline {4.2}Random Sample Method to Stopping}{13}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Curve Fitting}{14}{subsection.4.2.1}
 \contentsline {subsubsection}{Relevance Ranking}{14}{section*.9}
-\contentsline {subsection}{\numberline {4.2.2}Gaussian Process fitting}{16}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Conclusion on Curve fitting and GP}{17}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.2}Gaussian Process fitting}{17}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Conclusion on Curve fitting and GP}{18}{subsection.4.2.3}
 \contentsline {subsubsection}{Comparing with Target Method}{18}{section*.10}
-\contentsline {subsection}{\numberline {4.2.4}Gaussian Process Conclusion}{18}{subsection.4.2.4}
-\contentsline {section}{\numberline {4.3}Indexing and Querying Medline with Limited Information}{18}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Acquiring Key Information from A Systematic Review Protocol}{18}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Indexing medline}{19}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.2.4}Gaussian Process Conclusion}{19}{subsection.4.2.4}
+\contentsline {section}{\numberline {4.3}Indexing and Querying Medline with Limited Information}{19}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Acquiring Key Information from A Systematic Review Protocol}{19}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Indexing medline}{20}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}Results}{20}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}Medline automatic query Conclusion}{20}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.4}Medline automatic query Conclusion}{21}{subsection.4.3.4}
 \contentsline {chapter}{\numberline {5}Future Work}{22}{chapter.5}
 \contentsline {section}{\numberline {5.1}Gnatt Chart}{23}{section.5.1}
 \contentsline {chapter}{\numberline {6}Doctorial Development Programme}{24}{chapter.6}

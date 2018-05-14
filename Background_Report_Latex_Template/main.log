@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  9 MAY 2018 14:14
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  14 MAY 2018 17:20
 entering extended mode
 **./main.tex
 (main.tex
@@ -2011,30 +2011,38 @@ py in managing aggressive behaviour
 [2
 
 ] [3] [4]
+Overfull \hbox (6.4211pt too wide) in paragraph at lines 97--98
+[]\TU/lmr/m/n/10.95 Where $\OML/cmm/m/it/10.95 R$ \TU/lmr/m/n/10.95 is the set 
+of relevant documents found and $\OML/cmm/m/it/10.95 D$ \TU/lmr/m/n/10.95 is th
+e set of all relevant documents. 
+ []
+
+
 Overfull \hbox (1.7625pt too wide) in paragraph at lines 107--108
 []\TU/lmr/m/n/10.95 Naturally we could exclusively optimized each of the parame
 ters by either returning everything
  []
 
-[5] [6]
+[5]
 File: figures/target_method.png Graphic file (type bmp)
 <figures/target_method.png>
-
-Overfull \hbox (21.22865pt too wide) in paragraph at lines 170--171
+ [6]
+Overfull \hbox (21.22865pt too wide) in paragraph at lines 154--155
 []\TU/lmr/m/n/10.95 We can calculate the recall of the point by looking at the 
 relevance rank of the last document: 
  []
 
-[7]
-Overfull \hbox (1.56497pt too wide) in paragraph at lines 194--195
+
+Overfull \hbox (1.56497pt too wide) in paragraph at lines 178--179
 []\TU/lmr/m/n/10.95 For this to hold, $\OML/cmm/m/it/10.95 cR$ \TU/lmr/m/n/10.9
 5 documents must be absent from $\OML/cmm/m/it/10.95 T$\TU/lmr/m/n/10.95 . This
  occurs with the probability: 
  []
 
+[7]
 File: figures/knee.png Graphic file (type bmp)
 <figures/knee.png>
-[8]) (chapters/Research.tex [9]
+ [8]) (chapters/Research.tex [9]
 Chapter 3.
 [10
 
@@ -2044,6 +2052,12 @@ File: figures/tree.png Graphic file (type bmp)
 
 Overfull \hbox (14.39662pt too wide) in paragraph at lines 21--22
  [] 
+ []
+
+
+Overfull \hbox (8.87698pt too wide) in paragraph at lines 33--34
+\TU/lmr/m/n/10.95 We can investigate further methods finding stopping points in
+ systematic review rankings. 
  []
 
 ) (chapters/chapter3.tex [11]
@@ -2063,7 +2077,7 @@ s the start of the collection.
 [12
 
 ] [13]
-Overfull \hbox (1.2357pt too wide) in paragraph at lines 133--134
+Overfull \hbox (1.2357pt too wide) in paragraph at lines 146--147
 \TU/lmr/m/n/10.95 Our results so far have been based on Test_-Data_-Sheffield-r
 un-2 [[]] of CLEF 2017 Technology
  []
@@ -2071,59 +2085,59 @@ un-2 [[]] of CLEF 2017 Technology
 [14]
 File: figures/cf_example.png Graphic file (type bmp)
 <figures/cf_example.png>
-
-Overfull \hbox (11.71185pt too wide) in paragraph at lines 191--193
+ [15]
+Overfull \hbox (11.71185pt too wide) in paragraph at lines 204--206
 [][]
  []
 
-[15]
-Overfull \hbox (7.35718pt too wide) in paragraph at lines 227--228
+[16]
+Overfull \hbox (7.35718pt too wide) in paragraph at lines 240--241
 \TU/lmr/m/n/10.95 As an alternate approach to fitting a simple curve, we can ap
 ply a Gaussian Process (GP). 
  []
 
-[16]
-Overfull \hbox (11.71185pt too wide) in paragraph at lines 262--264
+
+Overfull \hbox (11.71185pt too wide) in paragraph at lines 275--277
 [][]
  []
 
 File: figures/joined_graph.png Graphic file (type bmp)
 <figures/joined_graph.png>
-[17]
-Overfull \hbox (26.33643pt too wide) in paragraph at lines 307--307
+[17] [18]
+Overfull \hbox (26.33643pt too wide) in paragraph at lines 320--320
 []\TU/lmr/bx/n/14.4 Indexing and Querying Medline with Limited Information 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--334
+Underfull \hbox (badness 10000) in paragraph at lines 346--347
 []\TU/lmr/m/n/10.95 endemic countries objective|ambulatory healthcare facilitie
 s|rapid diagnostic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--334
+Underfull \hbox (badness 10000) in paragraph at lines 346--347
 \TU/lmr/m/n/10.95 tests|falciparum parasitaemia detectable|malaria endemic area
 s|diagnostic
  []
 
-[18]
-Overfull \hbox (9.85452pt too wide) in paragraph at lines 339--340
+[19]
+Overfull \hbox (9.85452pt too wide) in paragraph at lines 352--353
 []\TU/lmr/m/n/10.95 The key-word-query receives some final pre-processing prior
  to being loaded into our information
  []
 
-[19]
-Overfull \hbox (18.4838pt too wide) in paragraph at lines 376--378
+
+Overfull \hbox (18.4838pt too wide) in paragraph at lines 389--391
 [][]
  []
 
-
-Overfull \hbox (12.74413pt too wide) in paragraph at lines 386--387
+[20]
+Overfull \hbox (12.74413pt too wide) in paragraph at lines 399--400
 []\TU/lmr/m/n/10.95 MeSH headings would be useful in expanding the range of the
  query to capture synonymous
  []
 
-) (chapters/Future.tex [20] [21]
+) (chapters/Future.tex [21]
 Chapter 5.
 File: figures/gnatt.png Graphic file (type bmp)
 <figures/gnatt.png>
@@ -2146,19 +2160,19 @@ cine.
  []
 
 
-Overfull \hbox (115.2699pt too wide) in paragraph at lines 54--58
+Overfull \hbox (115.2699pt too wide) in paragraph at lines 59--63
 []\TU/lmr/m/sc/10.95 nlm\TU/lmr/m/n/10.95 .  nlm.  https://www.nlm.nih.gov/bsd/
 disted/meshtutorial/principlesofmedlinesubjectindexing/findingterms. 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--64
+Underfull \hbox (badness 10000) in paragraph at lines 65--69
 []\TU/lmr/m/sc/10.95 Nunn, J.  \TU/lmr/m/n/10.95 cochranes.  []$[][][][] [] [] 
 [] [][][][][] [] [][][][][][][][] [] [][][] []
  []
 
 
-Underfull \hbox (badness 1629) in paragraph at lines 66--69
+Underfull \hbox (badness 1629) in paragraph at lines 71--74
 []\TU/lmr/m/sc/10.95 of Tasmania, U.  \TU/lmr/m/n/10.95 pico.  []$[][][][][] []
  [] [] [][][][] [] [][][][][][][][][] [] [][][] [] [][][][][][][][][][][][][][]
 [][][] []
@@ -2178,10 +2192,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 42447 strings out of 427836
- 978729 string characters out of 3148132
- 1197588 words of memory out of 3000000
- 45869 multiletter control sequences out of 15000+200000
+ 42452 strings out of 427836
+ 978777 string characters out of 3148132
+ 1196869 words of memory out of 3000000
+ 45874 multiletter control sequences out of 15000+200000
  536544 words of font info for 69 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  62i,12n,96p,10429b,479s stack positions out of 5000i,500n,10000p,200000b,50000s

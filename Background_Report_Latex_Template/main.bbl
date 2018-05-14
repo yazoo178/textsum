@@ -23,6 +23,11 @@
   participation in clef ehealth 2017.
 \newblock {\em CLEF 2017\/} (2017).
 
+\bibitem{Gough2012}
+{\sc Gough, D., Oliver, S., and Thomas, J.}
+\newblock {\em An Introduction to Systematic Reviews}.
+\newblock Sage, London, 2012.
+
 \bibitem{Siddhartha2015}
 {\sc Jonnalagadd, S.~R., Goyal, P., and Huffman, M.~D.}
 \newblock Automating data extraction in systematic reviews: a systematic
@@ -66,6 +71,12 @@
 {\sc of~Tasmania, U.}
 \newblock pico.
 \newblock \url{https://utas.libguides.com/SystematicReviews/FormulateQuestion}.
+
+\bibitem{O’Mara-Eves2015}
+{\sc O'Mara-Eves, A., Thomas, J., McNaught, J., Miwa, M., and Ananiadou, S.}
+\newblock Using text mining for study identification in systematic reviews: a
+  systematic review of current approaches.
+\newblock {\em Systematic Reviews 4}, 1 (Jan 2015), 5.
 
 \bibitem{pubmed}
 {\sc Pubmed}.

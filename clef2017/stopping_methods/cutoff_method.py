@@ -5,24 +5,12 @@ import numpy as np
 import sys, getopt
 import random
 
-# Script to implement Cormack and Grossman (2016) method for determining
-# when to stop examining documents for systematic reviews 
-# reviews
-# Script also extended to implememts "cutoff" method which estimates total 
-# number of relevant document (based on percentage of sampled documents that 
-# are relevant and number of documents yet to be examined)
-#
-# Author: Mark Stevenson
-# Last updated: 25/3/2018
-#
-# Usage: target_method.py -o output -q qrels
 
 CONFIDENCE = 0.05  # Confidence level if using flexible cutoffs
 
 
 def usage():
     print("target_method.py -k INT -c THRESHOLD -o <run_file> -q <qrel_file>\n")
-    print("-k option uses simple target method (Cormack and Grossman, 2016)")
     print("\te.g. target_method.py -k 10 continues until 10 relevant documents have been found\n")
     print("-c option uses flexible threshold")
     print("\te.g. target_method.py -c 0.1 continues until estimated that fewer than 10% of relevant documents remain\n")
@@ -190,7 +178,6 @@ def run():
             lastScore = score
         
         
-    print(len(cutoffs))
     scoreCounts = {}
 
     for cut in cutoffs:
@@ -209,6 +196,9 @@ def run():
 
 
 results = open('output_cutoff_sim.txt', "w")
+scores = run()
+print(scores)
+exit()
 for x in range(1, int(cutoff * 10000) + 1):
     cutoff = (x / 10000)
     scores = run()
