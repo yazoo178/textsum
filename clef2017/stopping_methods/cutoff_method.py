@@ -10,11 +10,6 @@ CONFIDENCE = 0.05  # Confidence level if using flexible cutoffs
 
 
 def usage():
-    print("target_method.py -k INT -c THRESHOLD -o <run_file> -q <qrel_file>\n")
-    print("\te.g. target_method.py -k 10 continues until 10 relevant documents have been found\n")
-    print("-c option uses flexible threshold")
-    print("\te.g. target_method.py -c 0.1 continues until estimated that fewer than 10% of relevant documents remain\n")
-    print("If both options defined in command line then last one mentioned gets used")
     sys.exit()
 
 
@@ -38,7 +33,7 @@ def eval(scoreCounts, judgements, cutoffs, rankedDocsDoL):
     averageEffort = totalEffort / len(rankedDocsDoL)
     relieability = relieability / len(rankedDocsDoL)
 
-    return("Recall:{0} \t Effort:{1} \t Reliablity:{2}".format(averageRecall, averageEffort, relieability))
+    return("{0}\t{1}\t{2}".format(averageRecall, relieability, averageEffort))
 
 
 
@@ -52,7 +47,9 @@ target = ''
 cutoff = ''
 approach = "undefined"
 min = 1
-opts, args = getopt.getopt(sys.argv[1:],"hk:c:o:q:m:")
+starPoint = None
+
+opts, args = getopt.getopt(sys.argv[1:],"hk:c:o:q:m:s:")
 for opt, arg in opts:
     if opt == '-h':
         usage()
@@ -66,6 +63,11 @@ for opt, arg in opts:
     elif opt in ("-c"):
         cutoff = float(arg)
         approach = "cutoff"
+    elif opt in ("-s"):
+        starPoint = int(arg) - 1
+        if starPoint < 0:
+            exit("starting point must be > 1")
+        
 
 
 # Check arguments were parsed without problem and work out which
@@ -74,12 +76,14 @@ if(run_file == '' or qrel_file == '' or approach == "undefined"):
     usage()
 
 # Print out info about which approach being run
-print("Run file is ", run_file)
-print("Qrel file is ", qrel_file)
+#print("Run file is ", run_file)
+#print("Qrel file is ", qrel_file)
 if approach == "target": 
-    print("Using target method (target of {t})".format(t = target))
+    pass
+    #print("Using target method (target of {t})".format(t = target))
 elif approach == "cutoff":
-    print("Using flexible cutoff method (cutoff of {c}, p < {p})".format(c = cutoff, p = CONFIDENCE))
+    pass
+   # print("Using flexible cutoff method (cutoff of {c}, p < {p})".format(c = cutoff, p = CONFIDENCE))
 
 
 # Read through qrels to create dict containing rel judgements
@@ -146,36 +150,55 @@ def run():
 
     for topic in rankedDocsDoL:
         lastScore = 0
+
+        #min docus to look at for this topic
         minDocs = int(float(len(rankedDocsDoL[topic])) * min)
+
+        
+
 
         for x, study in enumerate(rankedDocsDoL[topic]):
             score = study['score']
 
+            if cutoff == 0:
+                if x >= minDocs:
+                    cutoffs[topic] = x
+                    break
 
-            #always look at one document
-            if x == 0:
+            else:
+                #always look at one document
+                if x == 0:
+                    lastScore = score
+                    continue
+
+                #if our simularity score has reached 0 then end
+                if float(lastScore) == 0.0:
+                    cutoffs[topic] = len(rankedDocsDoL[topic])
+                    break
+
+                if starPoint is not None:
+                    topDoc = (float(rankedDocsDoL[topic][starPoint]['score']))
+                    decrase = topDoc - float(lastScore)
+                    dif  = decrase / topDoc 
+
+                    
+
+                else:
+                    #calculate the dif between current score and last score
+                    decrase = (float(lastScore)  - float(score))
+                    dif  = decrase / (float(lastScore))
+
+
+                #if difference is greater than cut off then break. 
+                if dif >= cutoff and x >= minDocs:
+                    cutoffs[topic] = x
+                    break
+
+                if x + 1 == len(rankedDocsDoL[topic]):
+                    cutoffs[topic] = len(rankedDocsDoL[topic])
+                    break
+
                 lastScore = score
-                continue
-
-            #if our simularity score has reached 0 then end
-            if float(lastScore) == 0.0:
-                cutoffs[topic] = len(rankedDocsDoL[topic])
-                break
-
-            #calculate the dif between current score and last score
-            dif = 1.0 - (float(score) / float(lastScore))
-
-
-            #if difference is greater than cut off then break. 
-            if dif >= cutoff and x >= minDocs:
-                cutoffs[topic] = x
-                break
-
-            if x + 1 == len(rankedDocsDoL[topic]):
-                cutoffs[topic] = len(rankedDocsDoL[topic])
-                break
-
-            lastScore = score
         
         
     scoreCounts = {}

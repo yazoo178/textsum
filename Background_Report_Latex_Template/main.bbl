@@ -7,6 +7,11 @@
   2.
 \newblock {\em CLEF 2017\/} (2017).
 
+\bibitem{Anagnostou2017clef}
+{\sc Anagnostou, A., Lagopoulos, A., Tsoumakas, G., and Vlahavas, I.}
+\newblock A cost-effective hybrid ltr approach for document ranking.
+\newblock {\em Working Notes of CLEF\/} (2017).
+
 \bibitem{CLEFLINK}
 {\sc CLEF}.
 \newblock Clef.
@@ -17,26 +22,52 @@
 {\sc Cormack, G.~V., and Grossman, M.~R.}
 \newblock Engineering quality and reliability in technology-assisted review.
 
-\bibitem{Gordon2017}
+\bibitem{cormack2017technology}
 {\sc Cormack, G.~V., and Grossman, M.~R.}
 \newblock Technology-assisted review in empirical medicine: Waterloo
   participation in clef ehealth 2017.
-\newblock {\em CLEF 2017\/} (2017).
+\newblock {\em Working Notes of CLEF\/} (2017), 11--14.
 
 \bibitem{Gough2012}
 {\sc Gough, D., Oliver, S., and Thomas, J.}
 \newblock {\em An Introduction to Systematic Reviews}.
 \newblock Sage, London, 2012.
 
+\bibitem{HUAN2013}
+{\sc Huang, K.-C., Chiang, I.-J., Xiao, F., Liao, C.-C., Liu, C. C.-H., and
+  Wong, J.-M.}
+\newblock Pico element detection in medical text without metadata: Are first
+  sentences enough?
+\newblock {\em Journal of Biomedical Informatics 46}, 5 (2013), 940 -- 946.
+
+\bibitem{Huang2011}
+{\sc Huang, K.-C., Liu, C., Yang, S.-S., Xiao, F., Wong, J.-M., Liao, C.-C.,
+  and Chiang, I.-J.}
+\newblock Classification of pico elements by text features systematically
+  extracted from pubmed abstracts.
+\newblock 279--283.
+
 \bibitem{Siddhartha2015}
 {\sc Jonnalagadd, S.~R., Goyal, P., and Huffman, M.~D.}
 \newblock Automating data extraction in systematic reviews: a systematic
   review.
 
+\bibitem{Jonnalagadda2015}
+{\sc Jonnalagadda, S.~R., Goyal, P., and Huffman, M.~D.}
+\newblock Automating data extraction in systematic reviews: a systematic
+  review.
+\newblock {\em Systematic Reviews 4}, 1 (Jun 2015), 78.
+
 \bibitem{Kanoulas12017}
 {\sc Kanoulas, E., Li1, D., Azzopardi, L., and Spijker, R.}
 \newblock Clef 2017 technologically assisted reviews in empirical medicine
   overview.
+
+\bibitem{lee2017clef}
+{\sc Lee, G.}
+\newblock Medical document classification for systematic reviews using
+  convolutional neural networks.
+\newblock {\em Working Notes of CLEF\/} (2017), 11--14.
 
 \bibitem{Eunkyung2017}
 {\sc Lee, G.~E.}
@@ -44,22 +75,10 @@
   classification in systematic reviews: Sysreview at clef ehealth 2017.
 \newblock {\em CLEF 2017\/} (2017).
 
-\bibitem{Manheimer2012}
-{\sc Manheimer, E., Cheng, K., Wieland, L.~S., Min, L.~S., Shen, X., and Lao,
-  L.}
-\newblock Acupuncture for treatment of irritable bowel syndrome.
-\newblock {\em John Wiley and Sons, Ltd\/} (2012).
-
 \bibitem{medline}
 {\sc medline}.
 \newblock medline.
 \newblock https://www.nlm.nih.gov/bsd/pmresources.html.
-
-\bibitem{nlm}
-{\sc nlm}.
-\newblock nlm.
-\newblock
-  https://www.nlm.nih.gov/bsd/disted/meshtutorial/principlesofmedlinesubjectindexing/findingterms.
 
 \bibitem{cochranes}
 {\sc Nunn, J.}
@@ -97,5 +116,10 @@
 \newblock leastsqures.
 \newblock
   \url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html#scipy.optimize.least_squares}.
+
+\bibitem{singh2017identifying}
+{\sc Singh, G., Marshall, I., Thomas, J., and Wallace, B.}
+\newblock Identifying diagnostic test accuracy publications using a deep model.
+\newblock {\em Working Notes of CLEF\/} (2017), 11--14.
 
 \end{thebibliography}

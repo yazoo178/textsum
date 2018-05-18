@@ -60,15 +60,15 @@ The data extraction phase involves pulling the relevant information from the fil
 Being able to extract the relevant information from studies presents itself as an information extraction problem. The task to automate the process of extracting relevant information would reduce time and complexities of manually reviewing studies \cite{Siddhartha2015}.
 
 
-\section{Indexing and Querying Medline and Automated Query Generation}
+\section{Indexing and Querying Medline and Automated Query Generation} \label{medlinelit}
 
 Medline is a large collection of medical literature and data from around the world. Typically each entity will contain a title and an abstract containing some information on the study. Whilest Medline as a whole is very easy to access \cite{medline}, the large size and complexity of the data makes it difficult to retrieve the relevant information.
 
-\subsection{Automated Query Generation}
+\subsection{Automated Query Generation} \label{aqglit}
 
 Being able to automate query generation for literature searching would save systematic reviewers a significant amount of time. However, medical literature queries are typically complex and contain multiple levels of logical operators and synonymous term look ups. This makes the task of creating a query manually is a challenging task.
 
-\subsubsection{Rapid Automatic Keyword Extraction Algorithm}
+\subsubsection{Rapid Automatic Keyword Extraction Algorithm} \label{rakelit}
 
 Rapid automatic keyword extraction (RAKE) is a keyword extraction algorithm \cite{rake}. This algorithm is used for taking the key pieces of information from text and is useful the domain of information extraction. This algorithm is of interest as it has potential usage within the field of query generation.
 
@@ -131,7 +131,7 @@ A stopping point is deemed to be acceptable if 70\% of the relevant documents ha
 
 \subsubsection{Target} \label{target}
 
-The target method is an approach that can guarantee a certain a certain level of reliability \ref{evalsstops}. It was first proposed by Cormack and Grossman \cite{Cormack2016}.
+The target method is an approach that can guarantee a certain a certain level of reliability \ref{evalsstops}. It was first proposed by Cormack and Grossman \cite{Cormack2016}. This method randomly samples returned documents until a target number $T$ of relevant document are found.
 
 The target $T$ denotes how many documents we should randomly select from our initial query. A larger value of $T$ will increase the effort required as we are more likely to select a document towards the end of the query set. Documents are looked at until the target point $T$ has been reached.
 
@@ -141,11 +141,11 @@ We first compute a random target set of relevant documents. We then calculate th
 	  \underset{last}{d} = \underset{d \in{T}}{argmax relrank(d)}
 \end{equation}
 
-It must hold that $d$ is in the target set.
+It must hold that $d$ is in the target set. $relrank$ determines whether or not a document is relevant.
 
 \begin{figure}[H]
 \center
-\includegraphics[width=13cm]{figures/target_method.png}
+\includegraphics[width=9cm]{figures/target_method.png}
 \caption{Visualisation of target method last relevant document selection. $C$ is number of documents in collection.}
 \end{figure}
 
@@ -170,6 +170,12 @@ For our method to be deemed reliable we must achieve 70\% recall with a 95\% ave
 Assuming we have a large number of relevant documents $R$ we need to determine cut-off $c$
 
 \begin{equation}
+	  P( \frac{R - relrank(\underset{last}{d})}{R} > c) = 0.05
+\end{equation}
+
+This can be further simplified to:
+
+\begin{equation}
 	  P(R - relrank(\underset{last}{d}) > cR) = 0.05
 \end{equation}
 
@@ -179,7 +185,7 @@ For this to hold, $cR$ documents must be absent from $T$. This occurs with the p
 
 
 \begin{equation}
-	  (1 - \frac{10}{R}) ^cR = 0.05
+	  \left(1 - \frac{10}{R}\right)^{cR} = 0.05
 \end{equation}
 
 Which can become:
@@ -220,8 +226,14 @@ We can see in the above example the method has predicted we look at around 200 o
 
 This method also imposes an additional constraint for rankings of a large volume. 
 
-It was found that the knee method is a better approach for finding a stopping point than the Target method \cite{Cormack2016}. The recall was always found to be better and the reliability was found to be the same or higher for 6 out 8 of the test collections.
+It was found that the knee method is a better approach for finding a stopping point than the Target method \cite{Cormack2016}. The recall was always found to be better and the reliability was found to be the same or higher for 6 out 8 test collections.
 
+\section{Summary} \label{sumlit}
 
+We first examined the steps of a systematic review \ref{stepssr} and looked at potential areas to introduce NLP techniques.
+
+Next we looked at how we can handle large scale databases like Medline \ref{medlinelit}. We also introduced the key-word extraction algorithm RAKE as a candidate for extracting relevant information from medical documents \ref{rakelit}.
+
+We then began to examine stopping criteria \ref{stops}. We looked at the intuition behind looking for stopping points in ranked sets of documents. We looked into two existing approaches, the target method and the knee method
 
 

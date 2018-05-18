@@ -14,19 +14,17 @@ There are many challenges for this research topic. Not all studies are publicly 
 
 \section{Information Extraction From Studies} \label{ie}
 
-In a similar vein to the first topic \ref{dm} we could also look at extracting the relevant information from a study. Often empirical data is identified in studies and extracted to generate a tree diagram:
+Much of the existing work in information extraction for systematic reviews is done using sentance-level information extraction \cite{O’Mara-Eves2015} \cite{Jonnalagadda2015}. Often approached using classification methods to determine if a sentence does or does not contain relevant information \cite{Huang2011}.
 
-\begin{figure}[H]
-\center
-\includegraphics[width=16cm]{figures/tree.png}
-\caption{Tree diagram example, all credit for diagram goes here \cite{Manheimer2012}}
-\end{figure}
+\subsection{PICO Extraction}
 
-These tree diagrams contain summarized information from the relevant studies. Studies that contain more useful (i.e higher number of participants) have smaller confidence margins and vice-versa for smaller studies.
+A method for extracting PICO sentances was proposed \cite{Huang2011}. This approach uses a Naive Bayes classifier against 3 of the 4 PICO elements. Training data was acquired using a bootstrapping technique, looking at structured abstracts that are contain key-word headings. The macro-averaged F-Measure was found to be 84\%.
 
-An interesting area of research would be identifying empirical data in a study to generate these tree diagrams automatically.
+Further work \cite{HUAN2013} by the same author looked at whether the first sentences of in the structured abstracts were enough to train a classifier. This approach looks at 3 of the 4 PICO elements. The averaged macro average F-Measure was found to be 71\%.
 
-The challenge in this task is gathering training data that is sufficiently marked as to where key information occurs within a study. This would would also still involve working with a limited number of studies and pdf documents.
+This existing work assumes extraction of PICO elements at abstract level. No work was found \cite{Jonnalagadda2015} in the extraction of PICO elements from the full texts. One interesting area of research, would be looking at learning a classifier from the abstracts and applying it to the full texts.
+
+
 
 \section{Stopping Methods} \label{sm}
 

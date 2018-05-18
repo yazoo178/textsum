@@ -1,49 +1,121 @@
 \chapter{Novel Work} \label{novelw}
 
-In this section the work completed so far will be presented. Two main areas of the systematic review process has been focused on. Stopping criteria and indexing/querying pubmed.
+In this section the work completed so far will be presented. Two main areas of the systematic review process has been focused on: stopping criteria and indexing/querying PubMed.
+
+
+\subsection{CLEF 2017 Runs}
+
+For the CLEF 2017 Technologically Assisted Reviews in Empirical Medicine \cite{Kanoulas12017}, participants were expected to submit runs for ranking documents. Participants were given complex boolean queries that could be used for extracting relevant information to rank the documents. These runs were later released for public access \footnote{https://github.com/CLEF-TAR/tar/tree/master/2017-TAR/participant-runs}
+
+\begin{table}[!htbp]
+\scalebox{0.75}{
+\centering
+\caption{The 6 runs sampled from the CLEF 2017 task.}
+\label{my-label}
+\begin{tabular}{|l|l|l|}
+\hline
+Run                  & Description                                                                    & Reference                                     \\ \hline
+Sheffield-run-2      & Sheffield-2 used tfidf similarity along with standard pre-processing           & \cite{Alharbi2017}           \\ \hline
+Waterloo A-rank-cost & Waterloo used a baseline model implementation from the TREC Total Recall Track & \cite{cormack2017technology} \\ \hline
+Waterloo B-rank-cost & -                                                                              & \cite{cormack2017technology} \\ \hline
+auth run-1           & AUTH used a learning-to-rank approach and used both batch and active learning  & \cite{Anagnostou2017clef}    \\ \hline
+auth run 2           & -                                                                              & \cite{Anagnostou2017clef}    \\ \hline
+ntu run-1            & Used convolutional neural networks (CNN)                                       & \cite{lee2017clef}           \\ \hline
+ucl full-text        & Used a deep learning model architecture                                        & \cite{singh2017identifying}  \\ \hline
+\end{tabular}
+}
+\end{table}
+
+
+We have taken 6 ranking sets of which are of different quality. The Waterloo and AUTH ranks are the best rankings followed by Sheffield. The UCL and NTU submissions feature poorer quality rankings.
+
+CLEF 2017 runs will follow a format similar to the example below. The most important information being the topic id and the document id.
+
+\begin{tcolorbox}
+CD010775 NF 19307324 1 0.27152011529138564 Test-Data-Sheffield-run-2 
+\end{tcolorbox}
+
+Results can be evaluate using qrel files, supplied as part of the CLEF 2017 data. These files contain relevant documents for each topic, and are formatted as follows:
+
+\begin{tcolorbox}
+CD008803     0  21467181     0  \\
+CD008803     0  20872357     1  \\
+CD008803     0  23837966     0 
+\end{tcolorbox}
+
 
 
 \section{Baseline Approaches to Stopping} \label{baselineapp}
 
 As discussed in \ref{methods} there are many baseline approaches we can take for finding a suitable stopping point. Most approaches are heavily dependant on the initial rankings of the document collection, and assume more relevant documents feature towards the start of the collection.
 
-\subsection{Percentage cut-off}
+\subsection{Oracle Scores}
 
-One approach is we can simply take a cut of the document collection and evaluate how many relevant documents we have retrieved. Assuming we are satisfied with 95\% reliability, this could be a suitable method.
+Looking at the oracle scores for each set of rankings will tell us the best we can possibly for do this task.  We will assume we are satisfied with 70\% recall. Results are taken as averages over all topics.
 
 \begin{table}[H]
 
 \centering
 \begin{tabular}{|c|c|c|c|c|} 
 \hline
- \% of Documents & recall & reliability & effort  \\ 
- 10\% & 0.49 &	0.16	&	0.1 \\ 
- 25\% & 0.74 &	0.66	&	0.25 \\ 
- 50\% & 0.91 &	0.93	&	0.5 \\ 
- 75\% & 0.98 &	1.0	&	0.75 \\ 
- 90\% & 0.99 &	1.0	&	0.9 \\ 
+ Submission & recall & reliability & effort  \\ 
+ Test\_Data\_Sheffield-run-2 & 0.7 &	1.0	&	0.11 \\ 
+ Waterloo A-rank-cost & 0.7 &	1.0	&	0.07 \\ 
+ Waterloo B-rank-cost & 0.7 &	1.0	&	0.06 \\ 
+ auth run-1 & 0.7 &	1.0	&	0.08 \\ 
+ auth run-2 & 0.7 &	1.0	&	0.09 \\ 
+ ntu run-1 & 0.7 &	1.0	&	0.4 \\ 
+ ucl full-text & 0.7 &	1.0	&	0.67 \\ 
  \hline
 \end{tabular}
 
-\caption{Percentage cut-off rates for Test\_Data\_Sheffield-run-2}
+\caption{Lowest effort possible to find 70\% of relevant documents. }
 
 \end{table}
 
-By looking at half of the rankings we achieve a reliability of 0.93. 
+These scores highlight the importance of the ranking methods for finding a stopping point. The best performer, Waterloo B-rank-cost needs just 6\% effort to hit 100\% reliability. The worst performer, ucl full-text requires 67\% effort for the same level of reliability.
 
 
+\subsection{Percentage cut-off method}
 
-\subsection{Similarity score cut-off}
+One approach is we can simply take a cut of the document collection and evaluate how many relevant documents we have retrieved. All scores are averaged over the entire ranking set.
 
-Many document rankings will feature a similarity score between the document and the query. As we descend down the rankings, the score decreases in value as documents become less relevant.
+\begin{table}[!htbp]
+\scalebox{0.75}{
+\centering
+\caption{Comparison of results between rankings when looking at a percentage of the ranked documents.}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\% of Documents      & \multicolumn{3}{l|}{10\%}     & \multicolumn{3}{l|}{25\%} & \multicolumn{3}{l|}{50\%} & \multicolumn{3}{l|}{75\%} & \multicolumn{3}{l|}{90\%} \\ \hline
+Run                  & Recall & Reliability & Effort & -       & -      & -      & -       & -      & -      & -       & -      & -      & -       & -      & -      \\ \hline
+Sheffield-run-2      & 0.49   & 0.16        & 0.10   & 0.74    & 0.66   & 0.25   & 0.91    & 0.93   & 0.50   & 0.98    & 1.00   & 0.75   & 0.99    & 1.00   & 0.90   \\ \hline
+Waterloo A-rank-cost & 0.80   & 0.6         & 0.10   & 0.91    & 0.93   & 0.25   & 0.98    & 1.00   & 0.50   & 0.99    & 1.00   & 0.75   & 0.99    & 1.00   & 0.90   \\ \hline
+Waterloo B-rank-cost & 0.73   & 0.63        & 0.10   & 0.90    & 0.93   & 0.25   & 0.98    & 1.00   & 0.50   & 0.99    & 1.00   & 0.75   & 0.99    & 1.00   & 0.90   \\ \hline
+auth run-1           & 0.72   & 0.63        & 0.10   & 0.90    & 0.93   & 0.25   & 0.97    & 1.00   & 0.50   & 0.99    & 1.00   & 0.75   & 0.99    & 1.00   & 0.90   \\ \hline
+auth run 2           & 0.68   & 0.60        & 0.10   & 0.88    & 0.9    & 0.25   & 0.97    & 1.00   & 0.50   & 0.99    & 1.00   & 0.75   & 0.99    & 1.00   & 0.90   \\ \hline
+ntu run-1            & 0.19   & 0.00        & 0.10   & 0.39    & 0.06   & 0.25   & 0.62    & 0.43   & 0.50   & 0.83    & 0.83   & 0.75   & 0.91    & 0.93   & 0.90   \\ \hline
+ucl full-text        & 0.08   & 0.00        & 0.10   & 0.22    & 0.00   & 0.25   & 0.46    & 0.03   & 0.50   & 0.70    & 0.70   & 0.75   & 0.87    & 0.93   & 0.90   \\ \hline
+\end{tabular}
+}
+\end{table}
 
-We can make use of the similarity score to derive a stopping point. This method works by looking at documents $D_i$ and $D_i+1$ and determining if the difference between the similarity scores has become too large. This method will work on the basis that documents that are no longer relevant will have a sudden drop in score such that we can identify this as our stopping point.
+Sheffield has an average recall of 0.49 by the time 10\% of the documents have been observed. Waterloo has achieved 80\% recall by this point. After looking through 25\% of the rankings Waterloo and AUTH have achieved around 90\% recall of documents.
+
+The limitation of this approach is the effort required looking through documents is still high. We want to lower this effort as much as possible, whilst only having to observe relevant documents.
+
+
+\subsection{Similarity score cut-off method}
+
+The Sheffield document rankings will feature a similarity score between the document and the query. As we descend down the rankings, the score decreases in value as documents become less relevant.
+
+We can make use of the similarity score to derive a stopping point. This method works by looking at documents $D_i$ and $D_{i+1}$ and determining if the difference between the similarity scores has become too large. This method will work on the basis that documents that are no longer relevant will have a sudden drop in score such that we can identify this as our stopping point.
 
 \begin{equation}
-	  Difference(D_i, D_i+1) > C
+	  Difference(D_i, D_{i+1}) > C
 \end{equation}
 
-Where difference returns a score of how close document $D_i$ and $D_i+1$ are together and $C$ is a cut-off constant. We can expand this to an example:
+Where difference returns a score of how close document $D_i$ and $D_{i+1}$ are together and $C$ is a cut-off constant. We can expand this to an example:
 
 \begin{equation}
 	  (1 -(0.73 / 0.75)) * 100 > 0.015
@@ -56,12 +128,12 @@ Here we are saying if the two documents' scores are above 1.5\% then we should s
 \centering
 \begin{tabular}{|c|c|c|c|c|} 
 \hline
- $dif(d_i, d_i+1)$ & recall & reliability & effort  \\ 
- 0.01\% & 0.025 &	0.0023	&	0 \\ 
- 0.05\% & 0.12 &	0.1	&	0.1 \\ 
+ $dif(D_i, D_{i+1})$ & recall & reliability & effort  \\ 
+ 0.01\% & 0.025 &	0.000	&	0.0023 \\ 
+ 0.05\% & 0.120 &	0.100	&	0.100 \\ 
  1\% & 0.359 &	0.333	&	0.333 \\ 
- 2\% & 0.88 &	0.86	&	0.86 \\ 
- 5\% & 1 &	0.99	&	1.0 \\ 
+ 2\% & 0.880 &	0.860	&	0.860 \\ 
+ 5\% & 1.000 &	1.000	&	1.0000 \\ 
  \hline
 \end{tabular}
 
@@ -70,20 +142,44 @@ Here we are saying if the two documents' scores are above 1.5\% then we should s
 
 These results are highly sensitive to the similarity score and show it's difficult to use this score as an affective measure for stopping. We found similarity scores rarely have sudden drops in values, making it difficult to use this method to identify a stopping point.
 
-
-\section{Random Sample Method to Stopping}
-
-As an approach to determining when to stop looking at document abstracts returned by the query we are proposing a new sampling method. This approach assumes we have sensible ranking algorithm for returning documents for a query.
-
-The first step of this method is to generate a sample set. We will use an interval method for generating our set, i.e select every $N$th document 
+As an alternative approach, we can look at just the top document $D_1$, and compare it to the succeeding documents $D_{1+i}$ in the rankings. We can formulate this as follows:
 
 \begin{equation}
-U = \frac{|D|}{S}
+	  Difference(D_1, D_{1 + i}) > C
 \end{equation}
 
-Where $U$ is the computed randomised subset, $D$ is the document collection and $S$ is the sample size.
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+\hline
+ $dif(D_1, D_{1+i})$ & recall & reliability & effort  \\ 
+ 10\% & 0.048 &	0.000	&	0.004 \\ 
+ 20\% & 0.063 &	0.000	&	0.007 \\ 
+ 30\% & 0.113 &	0.000	&	0.152 \\ 
+ 40\% & 0.191 &	0.030	&	0.029 \\ 
+ 50\% & 0.319 &	0.060	&	0.063 \\
+ 60\% & 0.460 &	0.200	&	0.113 \\ 
+ 70\% & 0.638 &	0.433	&	0.210 \\ 
+ 80\% & 0.841 &	0.800	&	0.387 \\ 
+ 90\% & 0.979 &	1.000	&	0.679 \\ 
+ 100\% &1.000 &	1.000	&	1.000 \\  
+ \textbf{85.5\%} & \textbf{0.934} &	\textbf{1.000}	&	\textbf{0.538} \\  
+ \hline
+\end{tabular}
 
-We then use this subset $U$ to create a model / baseline for our topic as a way of predicting how many documents one would need to look at to hit a threshold. The intuition behind this approach is that the rate of which relevant documents occur should be relatively similar when the number of returned documents in the same.
+\caption{Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores. Compares first document to succeeding documents}
+\end{table}
+
+We found results to be much better when using the first document to look for a cut-off point. 85.5\% difference in first and subsequent documents was found to be the point for hitting 1. reliability. This comes at the expense of making just over 50\% effort.
+
+\section{Sample Method to Stopping} \label{samplemethods}
+
+The limitations of the methods presented in \ref{baselineapp} is that they they still require looking through a large volume of documents.
+
+The approaches in this section will use sampling methods. These approaches assumes we have sensible ranking algorithm for returning documents for a query. They work by generating a sample set, which acts as our model for predicting a stopping point.
+
+The first step is to generate a sample set. We used an interval method for generating our set, i.e select every $N$th document. The intuition being that the distribution of relevant document in the sample set, should be similar to that of the real set of relevant documents. This makes it suitable to use as a model. 
+
 
 \iffalse
 A limitation of this sampling method is that for topics with very few documents it is easy for a sample to miss many of them. This creates a subset set bias, where one set contains a larger percentage of relevant documents. Consider a query that returns 10000 candidate documents of which only 10 have been pre-determined to be relevant. Its not too unlikely that a randomly sampled subset would contain 0 relevant documents. We can use the following equation to tell us how much information we can take from a pre-evaluated topic:
@@ -102,7 +198,7 @@ Usefullness = \frac{\sum{I}}{|T|}
 
 \subsection{Curve Fitting}
 
-Our first approach uses a simple curve fit against a sample set along with a non-linear function.
+Our first approach is to fit a non-linear curve against a sample set. We used a sample size of 3.
 
 \begin{equation}
 F(x) = n - a\exp^{-kx}
@@ -137,22 +233,10 @@ We can visualise the curve along with the confidence intervals. The Y axis is th
 
 \fi
 
-The first sample size of 1 is included to show how the effort metric is affected. For us to use sample everything, we would need to look at everything, as such the effort averaged out at 1. In this example we were only concerned in achieving 70\% recall, as such even when sampling everything we would really obtain 100\% recall at the expense of 100\% effort.
 
-Looking at every 3rd document and then producing a prediction curve will reduce our effort. We are still required to look at 1/3 of documents, as such the effort will always be above 0.33. 
+\subsubsection{Curve Predictions}
 
-\subsubsection{Relevance Ranking}
-
-Our results so far have been based on Test\_Data\_Sheffield-run-2 \cite{Alharbi2017} of CLEF 2017 Technology Assisted Reviews in Empirical Medicine \cite{CLEFLINK}. Naturally, the reliability of our curve is heavily based on how good the initial rankings are for each topic. We can compare different ranking methods for generating our stopping curve. By looking at the CLEF 2017 technology assisted review task \cite{Kanoulas12017} we can determine the best candidates to use. All CLEF 2017 submissions follow a standard format that we use to represent the ranks of the documents:
-
-\begin{tcolorbox}
-CD010775 NF 19307324 1 0.27152011529138564 Test-Data-Sheffield-run-2 
-\end{tcolorbox}
-
-
-We also introduce a new column: topics sampled is the number of topics that were evaluated using the curve. This is included as some of the ranking methods do not produce enough relevant documents to generate a suitable curve. 
-
-
+\iffalse
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|} 
@@ -168,22 +252,21 @@ We also introduce a new column: topics sampled is the number of topics that were
  ucl full-text & 0.86 & 0.8	&	0.91 & 30 \\ 
  \hline
 \end{tabular}
-\caption{Comparison of different of sample method using curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. No topic drop-out}
+\caption{Evaluation of curve fitting for different CLEF 2017 runs. Sample size = 3. Results are taken as averages over all topics for search method. No topic cut-off}
 
 \end{table}
+\fi
 
 
-This second set of results will use a mandatory cut-off parameter for topics with less than 0.5\% of relevant documents.  The maximum number of topics for this dataset remains at 30.
+The number of topics was reduced down from 30 to 23 using a cut-off parameter. This reduces some of topics that contain fewer relevant documents and do not generate suitable prediction curves. We used a cut-off parameter of 0.5\%. This can be read as the number of relevant documents in a document collection must be atleast 0.5\%
 
 We also include a confidence interval evaluation for lower bounded range of a $3\sigma$ confidence interval. The key advantages of using a curve as  method of evaluating stopping criteria is being able to make use of this confidence interval in a real systematic review. In the context of a systematic reviewers at the data filtering stage, we could specify that the system is 95\% certain that 70\% of relevant documents have been found. At which point the reviewer can decide if its worth continuing to look at documents.
 
 \begin{figure}[H]
 \center
-\includegraphics[width=13cm]{figures/cf_example.png}
+\includegraphics[width=17cm]{figures/cf_example.png}
 \caption{Visualisation of using a confidence interval for predicting a stopping point.}
 \end{figure}
-
-
 
 \begin{table}[H]
 \scalebox{1}{
@@ -202,7 +285,7 @@ We also include a confidence interval evaluation for lower bounded range of a $3
  \hline
 \end{tabular}
 }
-\caption{Comparison of different of sample method using curve fitting for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}
+\caption{Evaluation of curve fitting for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}
 
 \end{table}
 
@@ -210,32 +293,10 @@ We have deliberately compared two of the better participant rankings (Waterloo a
 
 Some of the ranking methods struggle to produce curves and when combined with a cut-of parameter produce become not worth considering in our evaluation. In this situation we simply returned everything for the given topic, resulting in 100\% recall at the expense of 100\% effort.
 
-Finally we look at the oracle scores for each run. These are the best possible scores we can achieve for the given rankings. We will assume we are satisfied with 70\% recall. Results are taken as averages over all topics.
-
-\begin{table}[H]
-
-\centering
-\begin{tabular}{|c|c|c|c|c|} 
-\hline
- Submission & recall & reliability & effort  \\ 
- Test\_Data\_Sheffield-run-2 & 0.7 &	1.0	&	0.11 \\ 
- Waterloo A-rank-cost & 0.7 &	1.0	&	0.07 \\ 
- Waterloo B-rank-cost & 0.7 &	1.0	&	0.06 \\ 
- auth run-1 & 0.7 &	1.0	&	0.08 \\ 
- auth run-2 & 0.7 &	1.0	&	0.09 \\ 
- ntu run-1 & 0.7 &	1.0	&	0.4 \\ 
- ucl full-text & 0.7 &	1.0	&	0.67 \\ 
- \hline
-\end{tabular}
-
-\caption{Lowest effort possible to find 70\% of relevant documents. }
-
-\end{table}
 
 
 
-
-\subsection{Gaussian Process fitting}
+\subsection{Gaussian Process Fitting}
 
 As an alternate approach to fitting a simple curve, we can apply a Gaussian Process (GP).
 
@@ -340,7 +401,6 @@ Objective: To assess the diagnostic accuracy of RDTs for detecting clinical P. f
 
  
  
- 
 \begin{tcolorbox}
 
 endemic countries objective|ambulatory healthcare facilities|rapid diagnostic tests|falciparum parasitaemia detectable|malaria endemic areas|diagnostic accuracy|falciparum malaria
@@ -378,8 +438,8 @@ Results were generated using the eval script from the CLEF 2017/2018 task \cite{
  Run & recall &  ap & lastrel & wss100 & wss95 & normarea & $N$ \\ 
  Random-baseline & 0.05 &0.02 & 126.7 &0.0 &-0.0 & 0.024 & - \\
  Train-Data-Sheffield-bm25-Run1-objective-only & 0.538 &0.034 & 3039.051 &0.101 &0.108 & 0.431 & 5000 \\
- Train-Data-Sheffield-tfidf-Run1-objective-only & 0.313&0.007& 2633.718&0.021&0.023& 0.247& 5000 \\
- Train-Data-Sheffield-boolean-Run1-objective-only & 0.538 &0.034& 3039.051&0.101 &0.108 & 0.431 & 5000 \\
+ Train-Data-Sheffield-tfidf-Run1-objective-only & 0.354&0.007& 2633.718&0.021&0.023& 0.247& 5000 \\
+ Train-Data-Sheffield-boolean-Run1-objective-only & 0.313 &0.034& 3039.051&0.101 &0.108 & 0.431 & 5000 \\
  Train-Data-Sheffield-bm25-Run1-objective-only & 0.68&0.034& 12310.231&0.169&0.172& 0.592& 25000 \\
  Train-Data-Sheffield-tfidf-Run1-objective-only & 0.601&0.007& 14883.744&0.13&0.136& 0.455& 25000 \\
  Train-Data-Sheffield-boolean-Run1-objective-only & 0.471&0.007& 12974.205&0.03&0.029& 0.381& 25000 \\

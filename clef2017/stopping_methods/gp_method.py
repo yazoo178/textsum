@@ -17,8 +17,9 @@ import sys, getopt
 
 class GP:
     def create(self, x, y):
+        print("Fitting GP to points: x{0}:y{1}".format(str(x), str(y)))
         dy = 0.5 + 1.0 * np.random.random(np.array(y).shape)
-        kernel = C(1.0, (1e-3, 1e3)) * RBF(2, (1e-2, 1e2))
+        kernel =  RBF(1, (1e-2, 1e2))
         #kernel =  C(10, (1e-2, 1e4))
 
         #kernel = ExpSineSquared(1.0, 5.0, periodicity_bounds=(1e-2, 1e1)) \
@@ -120,7 +121,7 @@ def process(file, name, outputPath):
             if val == "\n":
                 continue
         #if float(line) not in scores:
-            tmp.append(float(val) * sampleRate)
+            tmp.append(float(val))
 
         scores.append(np.array(tmp)) # y-axis
         X_samps.append(float(c))     # x-axis
@@ -159,14 +160,30 @@ def process(file, name, outputPath):
 
         
 
-
+        print(scoreSet)
         if method == "gp":
 
             gp = GP()
-            gp.create(np.array([X_samps]).reshape(len(X_samps), 1), np.array(scoreSet))
+
+            x_points = []
+            y_points = []
+            lastPoint = None
+
+            for x, y in zip(X_samps, scoreSet):
+                
+                if lastPoint != y:
+                    lastPoint = y
+                    x_points.append(x)
+                    y_points.append(y)
+
+            
+            
+            gp.create(np.array([x_points]).reshape(len(x_points), 1), np.array(y_points))
+            #X_vals = np.array(x_points)
+
             y2, sigma = gp.predict(X_vals.reshape(len(X_vals), 1))
             #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
-
+            print(len(y2))
             if float(max(y2) / totalDocs) < jump_skip:
                 #print("Skipped topic: " + fileWithOutPath)
                 #return 0
@@ -190,23 +207,29 @@ def process(file, name, outputPath):
                 return 0
 
 
-
             plt.plot(X_vals, y2)
-            # plt.fill(np.concatenate([x_pred, x_pred[::-1]]),
-            #          np.concatenate([y_pred - 1.9600 * sigma,
-            #                         (y_pred + 1.9600 * sigma)[::-1]]),
-            #          alpha=.5, fc='b', ec='None', label='95% confidence interval')
-
+            plt.fill(np.concatenate([X_vals, X_vals[::-1]]),
+         np.concatenate([y2 - 1.1 * sigma,
+                        (y2 + 1.1 * sigma)[::-1]]),
+         alpha=.5, fc='b', ec='None', label='95% confidence interval')
 
             plt.show()
 
         else:
 
+            x_points = []
+            y_points = []
+            lastPoint = None
 
+            for x, y in zip(X_samps, scoreSet):
+                if lastPoint != y:
+                    lastPoint = y
+                    x_points.append(x)
+                    y_points.append(y)
 
-
+            #X_vals = np.array(x_points)
             # Fit curve using sampled data
-            opt, pcov = curve_fit(other_func, X_samps, scoreSet, maxfev=1000)
+            opt, pcov = curve_fit(other_func, x_points, y_points, maxfev=1000)
             a, k, n = opt
             y2 = other_func(X_vals, a, k, n)
 
@@ -235,7 +258,6 @@ def process(file, name, outputPath):
 
             lowerBar = y2 - nSigma*fitError
             upperBar = y2 + nSigma*fitError
-
             
 
             #create curve file
@@ -268,12 +290,15 @@ def process(file, name, outputPath):
     edgecolor = None, label='+= 3σ error bars')
             
 
-            x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
-            index = findIn(x_sam_val, X_vals)
 
-            plt.scatter(np.array([int(x_sam_val)]), np.array([y2[x_sam_val]]), c='black', label='Estimated 70% recall point', s = 25)
-            plt.scatter(np.array([int(x_sam_val)]), np.array([lowerBar[x_sam_val]]), c='black', s = 25)
-            plt.scatter(np.array([int(x_sam_val)]), np.array([upperBar[x_sam_val]]), c='black', s = 25)
+            x_sam_val = find_nearest(y2, max(y2) * (rate / 100))
+            print(y2)
+            index = findIn(x_sam_val, X_vals)
+            print(x_sam_val)
+
+            plt.scatter(np.array([X_vals[int(x_sam_val)]]), np.array([y2[x_sam_val]]), c='black', label='Estimated 70% recall point', s = 25)
+            plt.scatter(np.array([X_vals[int(x_sam_val)]]), np.array([lowerBar[x_sam_val]]), c='black', s = 25)
+            plt.scatter(np.array([X_vals[int(x_sam_val)]]), np.array([upperBar[x_sam_val]]), c='black', s = 25)
 
             plt.plot(X_vals,lowerBar,'--', label='+= 3σ', color="g")
 

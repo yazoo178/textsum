@@ -3,10 +3,9 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Visualisation of target method last relevant document selection. $C$ is number of documents in collection.}}{7}{figure.2.1}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Example of using knee method to find a stopping point. Image inspired from \cite {Satopa11}}}{9}{figure.2.2}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Tree diagram example, all credit for diagram goes here \cite {Manheimer2012}}}{11}{figure.3.1}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point.}}{16}{figure.4.1}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point.}}{17}{figure.4.1}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp. We can see the gp is significantly over fitting to the data.}}{18}{figure.4.2}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Gnatt Chart}}{23}{figure.5.1}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Gnatt Chart}}{24}{figure.5.1}
 \addvspace {10\p@ }
