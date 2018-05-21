@@ -12,6 +12,12 @@
 \newblock A cost-effective hybrid ltr approach for document ranking.
 \newblock {\em Working Notes of CLEF\/} (2017).
 
+\bibitem{Chiandussi:2012:CMO:2133849.2134037}
+{\sc Chiandussi, G., Codegone, M., Ferrero, S., and Varesio, F.~E.}
+\newblock Comparison of multi-objective optimization methodologies for
+  engineering applications.
+\newblock {\em Comput. Math. Appl. 63}, 5 (Mar. 2012), 912--942.
+
 \bibitem{CLEFLINK}
 {\sc CLEF}.
 \newblock Clef.
@@ -79,6 +85,18 @@
 {\sc medline}.
 \newblock medline.
 \newblock https://www.nlm.nih.gov/bsd/pmresources.html.
+
+\bibitem{489161}
+{\sc Murata, T., and Ishibuchi, H.}
+\newblock Moga: multi-objective genetic algorithms.
+\newblock In {\em Proceedings of 1995 IEEE International Conference on
+  Evolutionary Computation\/} (Nov 1995), vol.~1, pp.~289--.
+
+\bibitem{Noghin2015}
+{\sc Noghin, V.~D.}
+\newblock Linear scalarization in multi-criterion optimization.
+\newblock {\em Scientific and Technical Information Processing 42}, 6 (Dec
+  2015), 463--469.
 
 \bibitem{cochranes}
 {\sc Nunn, J.}

@@ -265,7 +265,7 @@ We also include a confidence interval evaluation for lower bounded range of a $3
 \begin{figure}[H]
 \center
 \includegraphics[width=17cm]{figures/cf_example.png}
-\caption{Visualisation of using a confidence interval for predicting a stopping point.}
+\caption{Example of a prediction curve for topic CD008081. Confidence bars are included over $3\sigma$. Estimated point of hitting 70\% denoted by black point.}
 \end{figure}
 
 \begin{table}[H]
@@ -370,12 +370,6 @@ We implemented two methods for predicting stopping points in ranked medical stud
 \end{table}
 
 We can evaluate how well this method does against an existing set of relevance rankings. We will use the Sheffield run data from the CLEF 2017 task \cite{Kanoulas12017}. As the target method allows us to specify our level of reliability, we needed a target $T$ of 9 to hit 95\% reliability. We can see that the reliability of our method does not come close to the Target method. Our curve, however has a much lower effort.
-
-\subsection{Gaussian Process Conclusion}
-
-So far, we found using a GP was not an appropriate choice due to the level of over-fitting. Further work is needed in determining an efficient kernel for our data.
-
-
 
 
 \section{Indexing and Querying Medline with Limited Information}

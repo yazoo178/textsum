@@ -79,16 +79,15 @@ RAKE can be further optimized by specifying minimum term frequency rates to capt
 
 \section{Stopping Criteria} \label{stops}
 
-Stopping criteria is about finding the optimum point to stop reviewing a set of documents. This could be useful in a decision making process. Consider having 100 relevant documents, where each document contains a binary value. If we looked at 1/3 of these documents and saw a trend of positive values, we could use this to infer the reliability of the remaining documents.
-
-Another use of stopping criteria is when filtering through potentially relevant documents. Consider a query that returns 10000 documents, of which only a small sub-set of these are relevant. Reviewers would need to filter through each of these 10000 documents to pull out the relevant ones. Or it could be that the reviewers are happy to hit a 90\% recall of relevant documents, and are happy to miss the remaining 10\% in exchange for time-saved.
+Stopping criteria is about finding the optimum point to stop reviewing a set of documents. This is important in a decision making process for maximizing efficiency. Consider having 100 relevant documents, where each document contains a binary value. If we looked at 1/3 of these documents and saw a trend of positive values, we could use this to infer the reliability of the remaining documents.
 
 Two key methods have been proposed for finding stopping points so far, the target method \cite{Satopa11} and the knee method. \cite{Cormack2016}. Both these methods are discussed below \ref{methods}
 
 
+
 \subsection{Evaluation Metrics for Finding Stopping Points} \label{evalsstops}
 
-In order to evaluate the suitability of our stopping method, we can use two evaluation metrics. The recall, which is simply the number of documents returned for a topic, and effort which is the number of documents we had to be examined
+In order to evaluate the suitability of stopping methods, we will use two evaluation metrics. The recall, which is the number of documents returned for a topic, and effort which is the number of documents that had to be examined.
 
 \begin{equation}
 Recall = \frac{|R|}{|D|}
@@ -126,8 +125,32 @@ reliability is computed over all searches and is read as the probability of the 
 A stopping point is deemed to be acceptable if 70\% of the relevant documents have been found. As such, the reliability is an average over a search method. In Cormack and Grossman \cite{Cormack2016} a target is set of achieving 95\% reliability.
 
 
+\subsection{Formulating Stopping Problem}
+
+In some cases, reviewers might be content in missing a proportion of relevant documents if a certain level of recall could still be guaranteed. This problem can be defined as a multi-objective optimization problem. We want to simultaneously optimize two competing objectives: maximization of recall recall and minimization of effort. 
+
+We can use linear scalarization \cite{Noghin2015} as a simple way of optimizing both of these objectives. We define our problem as follows
+
+\begin{equation}
+\theta_{0} f_0(x) -\theta_{1} f_1(x) \rightarrow max
+\end{equation}
+
+Where $f_0(x)$ is the recall function, $\theta_{0}$ is a weight to associated the importance of the recall and $f_1(x)$ is the effort function, $\theta_{1}$ is a weight to associated the importance of the effort. We use a minus symbol to indicate minimizing the effort function.
+
+Another way of optimizing is to use evolutionary algorithms. Evolutionary algorithms have been show to perform better in multi-objective optimization \cite{Chiandussi:2012:CMO:2133849.2134037} as they are able to simultaneously with a set of possible solutions. Multi-Objective Genetic Algorithm (MOGA) is an evolutionary algorithm that which performs Pareto optimization \cite{489161}.
+
+MOGA works by combining a weighted sum of multiple scalarization functions into a single scalar fitness function. Randomization is used to select different optimization directions.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=11cm]{figures/MOGA.png}
+\caption{MOGA algorithm using various search directions. Image reproduced from \cite{489161}}
+\end{figure}
+
+
 \subsection{Existing Stopping Methods} \label{methods}
 
+As discussed in \ref{stops}, existing methods for finding stopping points in ranked documents have been proposed.
 
 \subsubsection{Target} \label{target}
 

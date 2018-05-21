@@ -21,9 +21,10 @@ class GP:
         dy = 0.5 + 1.0 * np.random.random(np.array(y).shape)
         kernel =  RBF(1, (1e-2, 1e2))
         #kernel =  C(10, (1e-2, 1e4))
+        kernel = Matern() + RBF() + C()
 
         #kernel = ExpSineSquared(1.0, 5.0, periodicity_bounds=(1e-2, 1e1)) \
-       # + C(1.0, (1e-3, 1e3))
+        #+ C(1.0, (1e-3, 1e3))
 
         ##C(1.0, (1e-3, 1e3)) 
         self.gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=9)
@@ -178,10 +179,12 @@ def process(file, name, outputPath):
 
             
             
+            x_points = np.array(x_points)
+
             gp.create(np.array([x_points]).reshape(len(x_points), 1), np.array(y_points))
             #X_vals = np.array(x_points)
 
-            y2, sigma = gp.predict(X_vals.reshape(len(X_vals), 1))
+            y2, sigma = gp.predict(x_points.reshape(len(x_points), 1))
             #_X = np.atleast_2d([x for x in range(0, len(scores))]).T
             print(len(y2))
             if float(max(y2) / totalDocs) < jump_skip:
@@ -207,10 +210,10 @@ def process(file, name, outputPath):
                 return 0
 
 
-            plt.plot(X_vals, y2)
-            plt.fill(np.concatenate([X_vals, X_vals[::-1]]),
-         np.concatenate([y2 - 1.1 * sigma,
-                        (y2 + 1.1 * sigma)[::-1]]),
+            plt.plot(x_points, y2)
+            plt.fill(np.concatenate([x_points, x_points[::-1]]),
+         np.concatenate([y2 - 1.96 * sigma,
+                        (y2 + 1.96 * sigma)[::-1]]),
          alpha=.5, fc='b', ec='None', label='95% confidence interval')
 
             plt.show()

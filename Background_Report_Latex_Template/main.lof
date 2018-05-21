@@ -1,11 +1,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Visualisation of target method last relevant document selection. $C$ is number of documents in collection.}}{7}{figure.2.1}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Example of using knee method to find a stopping point. Image inspired from \cite {Satopa11}}}{9}{figure.2.2}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces MOGA algorithm using various search directions. Image reproduced from \cite {489161}}}{7}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Visualisation of target method last relevant document selection. $C$ is number of documents in collection.}}{8}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Example of using knee method to find a stopping point. Image inspired from \cite {Satopa11}}}{10}{figure.2.3}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point.}}{17}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp. We can see the gp is significantly over fitting to the data.}}{18}{figure.4.2}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of a prediction curve for topic CD008081. Confidence bars are included over $3\sigma $. Estimated point of hitting 70\% denoted by black point.}}{18}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp. We can see the gp is significantly over fitting to the data.}}{19}{figure.4.2}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Gnatt Chart}}{24}{figure.5.1}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Gnatt Chart}}{25}{figure.5.1}
 \addvspace {10\p@ }
