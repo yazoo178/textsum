@@ -38,10 +38,8 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Steps of a Systematic Review}{2}{section.2.1}}
 \newlabel{stepssr}{{2.1}{2}{Steps of a Systematic Review}{section.2.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Question Definition}{2}{subsection.2.1.1}}
-\citation{pubmed}
 \citation{Kanoulas12017}
 \citation{Alharbi2017}
-\citation{Gordon2017}
 \citation{Eunkyung2017}
 \citation{Kanoulas12017}
 \citation{Satopa11}
@@ -71,6 +69,7 @@
 \citation{489161}
 \citation{489161}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Formulating Stopping Problem}{6}{subsection.2.3.2}}
+\newlabel{stoppingProblem}{{2.3.2}{6}{Formulating Stopping Problem}{subsection.2.3.2}{}}
 \citation{Cormack2016}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces MOGA algorithm using various search directions. Image reproduced from \cite  {489161}}}{7}{figure.2.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Existing Stopping Methods}{7}{subsection.2.3.3}}
@@ -101,6 +100,7 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Information Extraction From Studies}{12}{section.3.2}}
 \newlabel{ie}{{3.2}{12}{Information Extraction From Studies}{section.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}PICO Extraction}{12}{subsection.3.2.1}}
+\newlabel{picoExtr}{{3.2.1}{12}{PICO Extraction}{subsection.3.2.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.3}Stopping Methods}{12}{section.3.3}}
 \newlabel{sm}{{3.3}{12}{Stopping Methods}{section.3.3}{}}
 \citation{Kanoulas12017}
@@ -116,16 +116,21 @@
 \@writefile{lot}{\addvspace {10\p@ }}
 \newlabel{novelw}{{4}{13}{Novel Work}{chapter.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.0.1}CLEF 2017 Runs}{13}{subsection.4.0.1}}
+\newlabel{clefRuns}{{4.0.1}{13}{CLEF 2017 Runs}{subsection.4.0.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces The 6 runs sampled from the CLEF 2017 task.}}{13}{table.4.1}}
 \newlabel{my-label}{{4.1}{13}{CLEF 2017 Runs}{table.4.1}{}}
+\newlabel{scoreExample}{{4.0.1}{13}{CLEF 2017 Runs}{table.4.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}Baseline Approaches to Stopping}{14}{section.4.1}}
 \newlabel{baselineapp}{{4.1}{14}{Baseline Approaches to Stopping}{section.4.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Oracle Scores}{14}{subsection.4.1.1}}
+\newlabel{oracleScores}{{4.1.1}{14}{Oracle Scores}{subsection.4.1.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Lowest effort possible to find 70\% of relevant documents. }}{14}{table.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Percentage cut-off method}{14}{subsection.4.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Percentage cut-off method}{15}{subsection.4.1.2}}
+\newlabel{perCutOffMethod}{{4.1.2}{15}{Percentage cut-off method}{subsection.4.1.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Comparison of results between rankings when looking at a percentage of the ranked documents.}}{15}{table.4.3}}
 \newlabel{my-label}{{4.3}{15}{Percentage cut-off method}{table.4.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Similarity score cut-off method}{15}{subsection.4.1.3}}
+\newlabel{simScoreMethod}{{4.1.3}{15}{Similarity score cut-off method}{subsection.4.1.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores.}}{16}{table.4.4}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores. Compares first document to succeeding documents}}{16}{table.4.5}}
 \citation{leastsqures}
@@ -135,23 +140,29 @@
 \@writefile{toc}{\contentsline {subsubsection}{Curve Predictions}{17}{section*.9}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of a prediction curve for topic CD008081. Confidence bars are included over $3\sigma $. Estimated point of hitting 70\% denoted by black point.}}{18}{figure.4.1}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Evaluation of curve fitting for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{18}{table.4.6}}
+\citation{ebden2008gaussian}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Gaussian Process Fitting}{19}{subsection.4.2.2}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.7}{\ignorespaces Comparison of different of sample method using gp for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{19}{table.4.7}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp. We can see the gp is significantly over fitting to the data.}}{19}{figure.4.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp.}}{19}{figure.4.2}}
 \citation{Kanoulas12017}
+\citation{Cormack2016}
 \citation{CLEFLINK}
 \citation{CLEFLINK}
-\citation{rake}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Conclusion on Curve fitting and GP}{20}{subsection.4.2.3}}
-\@writefile{toc}{\contentsline {subsubsection}{Comparing with Target Method}{20}{section*.10}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.8}{\ignorespaces Comparing target method with curve fitting along with confidence interval. Using Sheffield-run-2}}{20}{table.4.8}}
+\newlabel{conclusCurveAndGp}{{4.2.3}{20}{Conclusion on Curve fitting and GP}{subsection.4.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}Comparing Methods}{20}{subsection.4.2.4}}
+\newlabel{compMethods}{{4.2.4}{20}{Comparing Methods}{subsection.4.2.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.8}{\ignorespaces Comparing target method, knee, cut-off and curve fitting along with confidence interval. Using Sheffield-run-2}}{20}{table.4.8}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.3}Indexing and Querying Medline with Limited Information}{20}{section.4.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Acquiring Key Information from A Systematic Review Protocol}{20}{subsection.4.3.1}}
+\citation{rake}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Acquiring Key Information from A Systematic Review Protocol}{21}{subsection.4.3.1}}
+\citation{Robertson96okapiat}
 \citation{Kanoulas12017}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Indexing medline}{21}{subsection.4.3.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Results}{22}{subsection.4.3.3}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.9}{\ignorespaces Results for IR medline system. Comparison for both 5000 and 25000 thresholds}}{22}{table.4.9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Medline automatic query Conclusion}{22}{subsection.4.3.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Indexing Pubmed}{22}{subsection.4.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Runs}{22}{subsection.4.3.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Results}{22}{subsection.4.3.4}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.9}{\ignorespaces Results for IR Pubmed system. Comparison for both 5000 and 25000 thresholds}}{23}{table.4.9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.5}Pubmed automatic query Conclusion}{23}{subsection.4.3.5}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Future Work}{24}{chapter.5}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -170,22 +181,23 @@
 \bibcite{CLEFLINK}{4}
 \bibcite{Cormack2016}{5}
 \bibcite{cormack2017technology}{6}
-\bibcite{Gough2012}{7}
-\bibcite{HUAN2013}{8}
-\bibcite{Huang2011}{9}
-\bibcite{Siddhartha2015}{10}
-\bibcite{Jonnalagadda2015}{11}
-\bibcite{Kanoulas12017}{12}
-\bibcite{lee2017clef}{13}
-\bibcite{Eunkyung2017}{14}
-\bibcite{medline}{15}
-\bibcite{489161}{16}
-\bibcite{Noghin2015}{17}
-\bibcite{cochranes}{18}
-\bibcite{pico}{19}
-\bibcite{O’Mara-Eves2015}{20}
-\bibcite{pubmed}{21}
-\bibcite{rake}{22}
-\bibcite{Satopa11}{23}
-\bibcite{leastsqures}{24}
-\bibcite{singh2017identifying}{25}
+\bibcite{ebden2008gaussian}{7}
+\bibcite{Gough2012}{8}
+\bibcite{HUAN2013}{9}
+\bibcite{Huang2011}{10}
+\bibcite{Siddhartha2015}{11}
+\bibcite{Jonnalagadda2015}{12}
+\bibcite{Kanoulas12017}{13}
+\bibcite{lee2017clef}{14}
+\bibcite{Eunkyung2017}{15}
+\bibcite{medline}{16}
+\bibcite{489161}{17}
+\bibcite{Noghin2015}{18}
+\bibcite{cochranes}{19}
+\bibcite{pico}{20}
+\bibcite{O’Mara-Eves2015}{21}
+\bibcite{Robertson96okapiat}{22}
+\bibcite{rake}{23}
+\bibcite{Satopa11}{24}
+\bibcite{leastsqures}{25}
+\bibcite{singh2017identifying}{26}

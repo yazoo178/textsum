@@ -40,9 +40,9 @@ A potential point of interest would be attempting to generate these questions au
 
 After formulating a question, systematic reviews need to search for the relevant literature that surrounds this question.
 
-Large medical database-such as Pubmed \cite{pubmed} contain relevant studies that can be used to create the review. These databases are typically very large and require concise queries to efficiently retrieve data.
+Large medical database-such as Pubmed \footnote{https://www.ncbi.nlm.nih.gov/pubmed/} contain relevant studies that can be used to create the review. These databases are typically very large and require concise queries to efficiently retrieve data.
 
-Naturally this can be modelled as an information retrieval problem. We have a large number of documents and we wish to retrieve the most relevant ones. One task for the 2017 CLEF conference was to produce a ranking of the most relevant documents for topics \cite{Kanoulas12017}. Many techniques have been proposed for ranking of relevant documents, with varying degrees of performance \cite{Alharbi2017} \cite{Gordon2017} \cite{Eunkyung2017}.
+Naturally this can be modelled as an information retrieval problem. We have a large number of documents and we wish to retrieve the most relevant ones. One task for the 2017 CLEF conference was to produce a ranking of the most relevant documents for topics \cite{Kanoulas12017}. Many techniques have been proposed for ranking of relevant documents, with varying degrees of performance \cite{Alharbi2017} \cite{Eunkyung2017}.
 
 An important aspect of the relevant literature search step is the construction of the query. Query creators often apply filters (also known as hedges) to increase the effectiveness or/and the efficiency of the searching. Two key attributes for the query are the precision and the recall. By including synonymous phrases e.g: quality adjusted life or quality of well-being or disability adjusted life the sensitivity can be increased, but as expense of the precision. The creation of this query is a task that could potentially have some aspects of NLP applied to it.
 
@@ -125,7 +125,7 @@ reliability is computed over all searches and is read as the probability of the 
 A stopping point is deemed to be acceptable if 70\% of the relevant documents have been found. As such, the reliability is an average over a search method. In Cormack and Grossman \cite{Cormack2016} a target is set of achieving 95\% reliability.
 
 
-\subsection{Formulating Stopping Problem}
+\subsection{Formulating Stopping Problem} \label{stoppingProblem}
 
 In some cases, reviewers might be content in missing a proportion of relevant documents if a certain level of recall could still be guaranteed. This problem can be defined as a multi-objective optimization problem. We want to simultaneously optimize two competing objectives: maximization of recall recall and minimization of effort. 
 
@@ -257,6 +257,6 @@ We first examined the steps of a systematic review \ref{stepssr} and looked at p
 
 Next we looked at how we can handle large scale databases like Medline \ref{medlinelit}. We also introduced the key-word extraction algorithm RAKE as a candidate for extracting relevant information from medical documents \ref{rakelit}.
 
-We then began to examine stopping criteria \ref{stops}. We looked at the intuition behind looking for stopping points in ranked sets of documents. We looked into two existing approaches, the target method and the knee method
+We then began to examine stopping criteria \ref{stops}. We looked at the intuition behind looking for stopping points in ranked sets of documents. We defined our stopping problem as a multi-objective optimization problem \ref{stoppingProblem}. We looked into two existing approaches, the target method and the knee method
 
 

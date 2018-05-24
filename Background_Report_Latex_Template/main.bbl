@@ -27,12 +27,20 @@
 \bibitem{Cormack2016}
 {\sc Cormack, G.~V., and Grossman, M.~R.}
 \newblock Engineering quality and reliability in technology-assisted review.
+\newblock In {\em Proceedings of the 39th International ACM SIGIR conference on
+  Research and Development in Information Retrieval\/} (2016), ACM, pp.~75--84.
 
 \bibitem{cormack2017technology}
 {\sc Cormack, G.~V., and Grossman, M.~R.}
 \newblock Technology-assisted review in empirical medicine: Waterloo
   participation in clef ehealth 2017.
 \newblock {\em Working Notes of CLEF\/} (2017), 11--14.
+
+\bibitem{ebden2008gaussian}
+{\sc Ebden, M., et~al.}
+\newblock Gaussian processes for regression: A quick introduction.
+\newblock {\em The Website of Robotics Research Group in Department on
+  Engineering Science, University of Oxford\/} (2008).
 
 \bibitem{Gough2012}
 {\sc Gough, D., Oliver, S., and Thomas, J.}
@@ -54,9 +62,10 @@
 \newblock 279--283.
 
 \bibitem{Siddhartha2015}
-{\sc Jonnalagadd, S.~R., Goyal, P., and Huffman, M.~D.}
+{\sc Jonnalagadda, S.~R., Goyal, P., and Huffman, M.~D.}
 \newblock Automating data extraction in systematic reviews: a systematic
   review.
+\newblock {\em Systematic reviews 4}, 1 (2015), 78.
 
 \bibitem{Jonnalagadda2015}
 {\sc Jonnalagadda, S.~R., Goyal, P., and Huffman, M.~D.}
@@ -115,14 +124,16 @@
   systematic review of current approaches.
 \newblock {\em Systematic Reviews 4}, 1 (Jan 2015), 5.
 
-\bibitem{pubmed}
-{\sc Pubmed}.
-\newblock pubmed.
-\newblock \url{https://www.ncbi.nlm.nih.gov/pubmed/}.
+\bibitem{Robertson96okapiat}
+{\sc Robertson, S., Walker, S., Jones, S., Hancock-Beaulieu, M., and Gatford,
+  M.}
+\newblock Okapi at trec-3.
+\newblock pp.~109--126.
 
 \bibitem{rake}
-{\sc Rose, S., Engel, D., and Cramer, N.}
+{\sc Rose, S., Engel, D., Cramer, N., and Cowley, W.}
 \newblock Automatic keyword extraction from individual documents.
+\newblock {\em Text Mining: Applications and Theory\/} (2010), 1--20.
 
 \bibitem{Satopa11}
 {\sc Satopaa, V., Albrecht, J., Irwin, D., and Raghavan, B.}

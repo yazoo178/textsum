@@ -6,7 +6,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Example of a prediction curve for topic CD008081. Confidence bars are included over $3\sigma $. Estimated point of hitting 70\% denoted by black point.}}{18}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp. We can see the gp is significantly over fitting to the data.}}{19}{figure.4.2}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp.}}{19}{figure.4.2}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {5.1}{\ignorespaces Gnatt Chart}}{25}{figure.5.1}
 \addvspace {10\p@ }
