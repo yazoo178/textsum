@@ -50,7 +50,7 @@ Where the 1 or 0 on the right side indicates if the document is relevant for a s
 
 \section{Baseline Approaches to Stopping} \label{baselineapp}
 
-As discussed in \ref{methods} there are many baseline approaches we can take for finding a suitable stopping point. Most approaches are heavily dependant on the initial rankings of the document collection, and assume more relevant documents feature towards the start of the collection.
+We can now establish some baseline approaches for finding stopping points. Approaches are heavily dependant on the initial rankings of the document collection, and naturally assume more relevant documents feature towards the start of the collection.
 
 \subsection{Oracle Scores} \label{oracleScores}
 
@@ -81,7 +81,7 @@ These scores highlight the importance of the ranking methods for finding a stopp
 
 \subsection{Percentage cut-off method} \label{perCutOffMethod}
 
-One approach is we can simply take a cut of the document collection and evaluate how many relevant documents we have retrieved. This approach is likely to be very dependant on the initial rankings of the document collection. All scores are averaged over the entire ranking set.
+As a first approach we could simply take a cut of the document collection and evaluate how many relevant documents we have retrieved. This likely to be very dependant on the initial rankings of the document collection. 
 
 \begin{table}[!htbp]
 \scalebox{0.75}{
@@ -102,6 +102,8 @@ ucl full-text        & 0.08   & 0.00        & 0.10   & 0.22    & 0.00   & 0.25  
 \end{tabular}
 }
 \end{table}
+
+All scores are averaged over the entire ranking set.
 
 Sheffield has an average recall of 0.49 by the time 10\% of the documents have been observed. Waterloo has achieved 80\% recall by this point. After looking through 25\% of the rankings Waterloo and AUTH have achieved around 90\% recall of documents.
 
@@ -295,8 +297,6 @@ We also include a confidence interval evaluation for lower bounded range of a $3
 We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is. 
 
 Some of the ranking methods struggle to produce curves and when combined with a cut-of parameter produce become not worth considering in our evaluation. In this situation we simply returned everything for the given topic, resulting in 100\% recall at the expense of 100\% effort.
-
-
 
 
 \subsection{Gaussian Process Fitting}
