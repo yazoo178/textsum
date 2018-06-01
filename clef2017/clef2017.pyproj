@@ -5,14 +5,15 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2c02eb12-ef7d-44e0-a0e9-3e712b65fa37}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>stopping_methods\cutoff_method.py</StartupFile>
-    <SearchPath />
+    <StartupFile>stopping_methods\poissonprocess.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
-    <CommandLineArguments>-o C:\Users\william\Documents\TextSum\clef2017\participant-runs\Sheffield\Test_Data_Sheffield-run-2 -q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test -c 0 -m 0.25</CommandLineArguments>
+    <CommandLineArguments>-i C:\Users\william\Documents\TextSum\clef2017\stopping_methods\Test_Data_Sheffield-run-2_int_scores_3 -q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -55,6 +56,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="stopping_methods\plot_gpr_co2.py" />
+    <Compile Include="stopping_methods\poissonprocess.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stopping_methods\prob_method.py" />
     <Compile Include="stopping_methods\runcutofffolder.py">
       <SubType>Code</SubType>
