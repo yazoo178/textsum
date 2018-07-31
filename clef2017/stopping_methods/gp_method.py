@@ -303,12 +303,13 @@ def process(file, name, outputPath):
             plt.scatter(np.array([X_vals[int(x_sam_val)]]), np.array([y2[x_sam_val]]), c='black', label='Estimated 70% recall point', s = 25)
             plt.scatter(np.array([X_vals[int(x_sam_val)]]), np.array([lowerBar[x_sam_val]]), c='black', s = 25)
             plt.scatter(np.array([X_vals[int(x_sam_val)]]), np.array([upperBar[x_sam_val]]), c='black', s = 25)
+            plt.plot(X_samps, scoreSet, label=u'True Sample Distribution')
 
             plt.plot(X_vals,lowerBar,'--', label='+= 3σ', color="g")
 
             plt.plot(X_vals,upperBar,'--', color="g")
 
-            plt.plot(X_vals, y2, label=u'Sample - ' + str(sampleRate))
+            plt.plot(X_vals, y2, label=u'Sample - ' + str(sampleRate), color='black')
 
 
           #  plt.fill(np.concatenate([X_vals, X_vals[::-1]]),

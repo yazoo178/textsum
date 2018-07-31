@@ -17,6 +17,8 @@ import math
 import random
 import pandas as pd
 import string
+#-i C:\Users\william\Documents\TextSum\clef2017\stopping_methods\Test_Data_Sheffield-run-2_int_scores_3$C:\Users\william\Documents\TextSum\clef2017\stopping_methods\B-rank-cost_int_scores_3$C:\Users\william\Documents\TextSum\clef2017\stopping_methods\run-2_int_scores_3$C:\Users\william\Documents\TextSum\clef2017\stopping_methods\run-1_int_scores_3$C:\Users\william\Documents\TextSum\clef2017\stopping_methods\run_fulltext_test_int_scores_3 -q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test
+
 
 def nextTime(rateParameter):
     return -math.log(1.0 - random.random()) / rateParameter
@@ -41,7 +43,7 @@ for opt, arg in opts:
 
 
 sampleRate = 3
-showtimeLine =True
+showtimeLine =False
 
 
 
