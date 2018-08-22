@@ -32,7 +32,7 @@ def stirling(n):
 
 # Define form of function going to try to fit to curve
 def curve_fit(x, a, k):
-    return a * np.exp(-k*x)
+    return  a * np.exp(-k*x)
 
 
 qrel = ""
