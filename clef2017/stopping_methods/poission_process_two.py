@@ -30,6 +30,10 @@ def stirling(n):
     return decimal.Decimal( (decimal.Decimal((math.sqrt(decimal.Decimal(2) * decimal.Decimal(math.pi) * n))) * ((n / decimal.Decimal(math.e)) ** n )))
 
 
+# Define form of function going to try to fit to curve
+def curve_fit(x, a, k):
+    return a * np.exp(-k*x)
+
 
 qrel = ""
 files = []
@@ -47,12 +51,25 @@ for opt, arg in opts:
 
 
 
+stoppingPoints = {}
+
+sumRecalls = []
+sumEfforts = []
+number = 0
+
+for k in range(1, 10):
+    sumEfforts.append(0)
+    sumRecalls.append(0)
+
 #Loop every topic
 for filename in os.listdir(files[0]):
+
 
     #its a folder skip over
     if os.path.isdir(files[0] + "\\" + filename):
         continue
+
+    number = number + 1
 
     for file in files:
         fileContent = open(file + "\\" + filename , "r").readlines()
@@ -71,6 +88,8 @@ for filename in os.listdir(files[0]):
 
 
     
+    pointsToStop = []
+
     for x in range(1, 10):
     
         samplePercentage = 0.1 * x
@@ -90,8 +109,26 @@ for filename in os.listdir(files[0]):
             if sum > 0.95:
                 break
 
-        print( str(n) + ":" + str(sum))
-    break
+        
+        pointsToStop.append(decimal.Decimal(0.7) * (n - decimal.Decimal(scoresSamps[-1])))
+        
+
+
+    for x, interval in enumerate(pointsToStop):
+        point = scores[int(((x + 1) / 10) * len(scores) +  int(interval))]
+        sumRecalls[x] +=  point / scores[-1]
+        sumEfforts[x] += ((int(((x + 1) / 10) * len(scores) +  int(interval))) / len(scores))
+
+        #print("Recall: " + str(point / scores[-1]))
+        #print("Effort: " + str((int(((x + 1) / 10) * len(scores) +  int(interval))) / len(scores)))
+    
+
+
+for x in range(1, 10):
+    print("Recall at:" + str(10 * x) + "%" + "::" + str(sumRecalls[x - 1] / number))
+    print("Effort at:" + str(10 * x) + "%" + "::" + str(sumEfforts[x - 1] / number))
+    print("")
+
 
 
         

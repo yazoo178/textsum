@@ -42,6 +42,9 @@
     <Compile Include="random\shuffle.py" />
     <Compile Include="retrieve_data.py" />
     <Compile Include="service.py" />
+    <Compile Include="stopping_methods\classifier.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stopping_methods\cutoff_method.py">
       <SubType>Code</SubType>
     </Compile>
