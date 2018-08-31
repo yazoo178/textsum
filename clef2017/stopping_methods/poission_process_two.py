@@ -19,6 +19,8 @@ import pandas as pd
 import string
 import decimal
 
+from scipy.optimize import curve_fit
+
 def func(rateParameter, k, n):
     n = decimal.Decimal(n)
     k = decimal.Decimal(k)
@@ -48,6 +50,8 @@ for opt, arg in opts:
         qrel = arg
     elif opt in ("-i"):
         files = arg.split('$')
+
+
 
 
 
