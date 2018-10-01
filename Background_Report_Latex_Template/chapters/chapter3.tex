@@ -3,6 +3,15 @@
 In this section the work completed so far will be presented. Two main areas of the systematic review process has been focused on: stopping criteria and indexing/querying PubMed.
 
 
+
+\subsection{Window Sampling} \label{window_samp}
+
+It is useful for us to estimate the rate in which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter.
+
+
+
+
+
 \subsection{CLEF 2017 Runs} \label{clefRuns}
 
 For the CLEF 2017 Technologically Assisted Reviews in Empirical Medicine \cite{Kanoulas12017}, participants were expected to submit runs for ranking documents. Participants were given complex boolean queries that could be used for extracting relevant information to rank the documents. These runs were later released for public access \footnote{https://github.com/CLEF-TAR/tar/tree/master/2017-TAR/participant-runs}
@@ -351,6 +360,7 @@ We found the GP is not truly representing the distribution of the data.
 
 We implemented two methods for predicting stopping points in ranked medical studies. Our first approach used a general curve to estimate the point in which 70\% recall is likely to have been hit. Our second method used a Gaussian Process in the same way. We used a sampling method to generate our curves to makes predictions about the remaining studies.
 
+
 \subsection{Comparing Methods} \label{compMethods}
 
 \begin{table}[H]
@@ -372,6 +382,72 @@ We implemented two methods for predicting stopping points in ranked medical stud
 We can evaluate how well this method does against an existing set of relevance rankings. We will use the Sheffield run data from the CLEF 2017 task \cite{Kanoulas12017}. As the target method allows us to specify our level of reliability, we needed a target $T$ of 10 to hit 95\% reliability. We can see that the reliability of our method does not come close to the Target method. Our curve, however has a much lower effort. The cut-off method described in \ref{perCutOffMethod} beats both the curve-fitting and the target methods.
 
 Overall we believe that the Knee and Target methods are too sensitive to the ranking algorithm being used. On our Sheffield-run2 rankings we can see the performance for both these methods is significantly lower than that reported in previous work \cite{Cormack2016}
+
+
+
+\subsection{Poisson Process for stopping points} \label{window_samp}
+
+A Poisson Process can be used to model points in time in which events occur. In this situation we wish to observe the rate in which a relevant document occurs in a collection of documents.
+
+We can observe the relevant document distribution for each topic by plotting relevant document occurrences across the whole rankings.
+
+
+\begin{figure}[H]
+\center
+\includegraphics[width=15cm]{figures/distrib.jpg}
+\caption{Relevant document distribution over Sheffield dataset}
+\end{figure}
+
+The quality of the initial rankings will determine how many relevant documents occur towards the start of the distribution. Naturally the number of relevant documents decrease as we proceed down the rankings.
+
+The Poisson distribution is a way for us to model the occurrences of relevant documents in a fixed time-frame, in our situation, the number of documents returned by the query. To estimate the overall rate of which relevant documents occur, we can observe how many relevant documents occur within a threshold.
+
+
+\begin{equation}
+	  \lambda = \frac{r_i}{|D|}
+\end{equation}
+
+Where $r_i$ is the number of relevant documents in a sample set and $|D|$ is the number of documents in the sample set.
+
+Supposing we sample 10\% of the 1000 documents, of which 7 relevant documents occur:
+
+\begin{equation}
+	  \lambda = \frac{7}{100} = 0.07
+\end{equation}
+
+We can use the rate parameter to estimate the probability of there being atleast one relevant documents, after observing $n$ documents:
+
+\begin{equation}
+	  P = 1 - e ^ {-Rn}
+\end{equation}
+
+
+\begin{figure}[H]
+\center
+\includegraphics[width=13cm]{figures/probOneDoc.jpg}
+\caption{Probability of seeing atleast one relevant document by sampling 10\% of documents for topic CD008081}
+\end{figure}
+
+The plot shows as we look at more documents, we are increasingly likely to have seen one relevant document. While this is useful to know, we can not use this as a method for predicting a suitable stopping point.
+
+A homogeneous Poisson Process can be used to model the occurrences of relevant document and then used to predict the probability of there bring $r$ relevant documents after $n$ documents have been observed. 
+
+\begin{equation}
+	  P(n = r) = \frac{(\lambda n)^r}{r!} e ^ {-\lambda n}
+\end{equation}
+
+
+Due to the high likelihood that $r!$ will be exceeding large, we can use a stirling approximation, maintaining a similar value as to what we would have obtained computing the factorial.
+
+\begin{equation}
+	   r \approx \sqrt{2\pi n} \left( \frac{r}{e} \right) ^r
+\end{equation}
+
+By summing over the probability mass from for values of $n$ between 1 and the size of the document collection we can estimate at what point 95\% reliability (stopping point $s$) is reached. 
+
+\begin{equation}
+	   s = \sum_{i \leq 0.95}^{|n|} \frac{(\lambda i)^r}{stirling(r!)} e ^ {-\lambda i}
+\end{equation}
 
 
 \section{Indexing and Querying Medline with Limited Information}

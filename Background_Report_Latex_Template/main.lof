@@ -7,6 +7,8 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Example of a prediction curve for topic CD008081. Confidence bars are included over $3\sigma $. Estimated point of hitting 70\% denoted by black point.}}{18}{figure.4.1}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp.}}{19}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Relevant document distribution over Sheffield dataset}}{21}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Probability of seeing atleast one relevant document by sampling 10\% of documents for topic CD008081}}{22}{figure.4.4}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Gnatt Chart}}{25}{figure.5.1}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Gnatt Chart}}{28}{figure.5.1}
 \addvspace {10\p@ }

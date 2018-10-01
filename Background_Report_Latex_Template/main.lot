@@ -10,6 +10,6 @@
 \contentsline {table}{\numberline {4.6}{\ignorespaces Evaluation of curve fitting for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{18}{table.4.6}
 \contentsline {table}{\numberline {4.7}{\ignorespaces Comparison of different of sample method using gp for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{19}{table.4.7}
 \contentsline {table}{\numberline {4.8}{\ignorespaces Comparing target method, knee, cut-off and curve fitting along with confidence interval. Using Sheffield-run-2}}{20}{table.4.8}
-\contentsline {table}{\numberline {4.9}{\ignorespaces Results for IR Pubmed system. Comparison for both 5000 and 25000 thresholds}}{23}{table.4.9}
+\contentsline {table}{\numberline {4.9}{\ignorespaces Results for IR Pubmed system. Comparison for both 5000 and 25000 thresholds}}{25}{table.4.9}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

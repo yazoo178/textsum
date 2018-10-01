@@ -101,14 +101,24 @@ def calcDistirubtion(window, testFiles, records):
 
 
 #see notes from Mark
-def non_hom_func(a, k, r, n, l):
+
+#a c0
+#k c1
+#r rth document
+
+def non_hom_func(a, k, n, r):
     n = decimal.Decimal(n)
     k = decimal.Decimal(k)
     a = decimal.Decimal(a)
     r = decimal.Decimal(r)
-    l = decimal.Decimal(l)
 
-    return ((((a / k) * math.exp(k * n) - l) ** r) / math.factorial(r)) * math.exp(-(a/k) *(math.exp(k * n) - l))
+
+    partOne = (((a / k) * ((decimal.Decimal(math.e) **(k * n)) - 1))**r) / stirling(r)
+
+    partTwo = decimal.Decimal(math.e) **(-(a/k * ((decimal.Decimal( math.e) **(k * n) - 1))))
+    
+
+    return decimal.Decimal(partOne * partTwo)
 
 
 
@@ -187,6 +197,7 @@ for filename in os.listdir(files[0]):
     X_vals = np.array(range(0, len(scores)))
 
 
+    pointsToStop = []
 
     #loop from 10 to 100%
     for x in range(1, 10):
@@ -217,27 +228,51 @@ for filename in os.listdir(files[0]):
             docElementId = runData[filename.split('.')[0]].docsReturned[int(index)]
             x_distr.append(dist[filename.split('.')[0]][docElementId])
 
-        x_points = x_distr
 
-        print(x_points)
-        print(y_points)
 
+        k = 0.01
+        a = 0.30
+        guess = (a, k)
         #attempt to fit curve
-        opt, pcov = curve_fit(func_fit, x_points, y_points, maxfev=1000)
+
+        opt, pcov = curve_fit(func_fit, x_points, x_distr, guess, maxfev=1000)
         a, k = opt
-        y2 = func_fit(X_vals, a, k)
+
+
+        sum = 0
+        n = 1
+        while(True):
+
+            sum+=non_hom_func(a, k, len(X_vals) , n)
+            n = n + 1
+
+            if sum > 0.95:
+                break
 
 
 
-        plt.plot(X_vals, y2)
-        plt.show()
-
-
-
-
-        break
+        pointsToStop.append(decimal.Decimal(0.7) * (n - decimal.Decimal(scoresSamps[-1])))
+        
     
-    break
+    for x, interval in enumerate(pointsToStop):
+        try:
+            point = scores[int(((x + 1) / 10) * len(scores) +  int(interval))]
+
+        except IndexError:
+            point = len(pointsToStop) - 1
+
+        sumRecalls[x] +=  point / scores[-1]
+        sumEfforts[x] += ((int(((x + 1) / 10) * len(scores) +  int(interval))) / len(scores))
+
+        #print("Recall: " + str(point / scores[-1]))
+        #print("Effort: " + str((int(((x + 1) / 10) * len(scores) +  int(interval))) / len(scores)))
+    
+
+
+for x in range(1, 10):
+    print("Recall at:" + str(10 * x) + "%" + "::" + str(sumRecalls[x - 1] / number))
+    print("Effort at:" + str(10 * x) + "%" + "::" + str(sumEfforts[x - 1] / number))
+    print("")
 
 
 

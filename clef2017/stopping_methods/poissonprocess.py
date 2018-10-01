@@ -43,9 +43,10 @@ for opt, arg in opts:
 
 
 sampleRate = 3
-showtimeLine =False
-
-
+showtimeLine = False
+showAllAtEnd = False
+allPoints = []
+labels =[]
 
 #Loop every topic
 for filename in os.listdir(files[0]):
@@ -60,7 +61,7 @@ for filename in os.listdir(files[0]):
     for percentage in np.linspace(1, 1, 1):
 
         dist = 1
-        plt.title(filename)
+        plt.title("Topic Distributions")
 
         #loop every file in input paremter
         for file in files:
@@ -104,6 +105,12 @@ for filename in os.listdir(files[0]):
             #rate of documents parameter
             rateOfDocument = len(x_points) / len(X_samps)
             print("Estimated Rate of Document: " + str(rateOfDocument))
+            allPoints.append(x_points)
+            labels.append(filename)
+
+
+            if showAllAtEnd:
+                continue
 
             if showtimeLine:
                 plt.ylim([0,10])
@@ -114,12 +121,26 @@ for filename in os.listdir(files[0]):
                 plt.legend()
 
             else:
+                plt.title(filename)
                 x = np.linspace(0, len(fileContent) * sampleRate, len(fileContent) * sampleRate)
                 y = np.array([func(rateOfDocument, X) for X in x])
                 plt.plot(x, y, label=file.split('\\')[-1])
                 plt.legend()
 
-        plt.show()
+        if not showAllAtEnd:
+            plt.show()
+
+
+for count, element in enumerate(allPoints):
+
+    #plt.ylim([0,10])
+    plt.ylabel("Topics")
+    plt.xlabel('Document Ranking')
+    plt.scatter(element, [count for x in element], s=20, label=labels[count])
+    plt.legend()
+
+  
+plt.show()
 
    
 
