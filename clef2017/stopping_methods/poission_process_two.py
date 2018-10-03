@@ -18,6 +18,8 @@ import random
 import pandas as pd
 import string
 import decimal
+from pathlib import Path
+import math
 
 from scipy.optimize import curve_fit
 
@@ -40,6 +42,8 @@ def curve_fit(x, a, k):
 qrel = ""
 files = []
 sampleRate = 1
+desiredRecall = 0.7
+
 
 opts, args = getopt.getopt(sys.argv[1:],"hc:i:q")
 
@@ -59,24 +63,33 @@ stoppingPoints = {}
 
 sumRecalls = []
 sumEfforts = []
+sumRel = []
 number = 0
 
 for k in range(1, 10):
     sumEfforts.append(0)
     sumRecalls.append(0)
+    sumRel.append(0)
+    
 
 #Loop every topic
 for filename in os.listdir(files[0]):
 
-
+    data_folder = Path(files[0])
+    file_to_open = data_folder / filename
+    
     #its a folder skip over
-    if os.path.isdir(files[0] + "\\" + filename):
+    if os.path.isdir(file_to_open):
         continue
 
     number = number + 1
 
     for file in files:
-        fileContent = open(file + "\\" + filename , "r").readlines()
+
+        data_folder = Path(file)
+        file_to_open = data_folder / filename
+        
+        fileContent = open(file_to_open, "r").readlines()
         c = 0
         X = []
         scores = []
@@ -112,25 +125,42 @@ for filename in os.listdir(files[0]):
         
             if sum > 0.95:
                 break
-
+       
+        pointsToStop.append(decimal.Decimal(desiredRecall) * (n - decimal.Decimal(scoresSamps[-1])))
         
-        pointsToStop.append(decimal.Decimal(0.7) * (n - decimal.Decimal(scoresSamps[-1])))
-        
 
-
-    for x, interval in enumerate(pointsToStop):
-        point = scores[int(((x + 1) / 10) * len(scores) +  int(interval))]
-        sumRecalls[x] +=  point / scores[-1]
-        sumEfforts[x] += ((int(((x + 1) / 10) * len(scores) +  int(interval))) / len(scores))
-
-        #print("Recall: " + str(point / scores[-1]))
-        #print("Effort: " + str((int(((x + 1) / 10) * len(scores) +  int(interval))) / len(scores)))
+    sumRel.append(0)
     
+    for x, number_to_find in enumerate(pointsToStop):
+        rank = ((x + 1) * 0.1) * len(scores)
+        # print(x, " ", rank, " ", end="")
 
+        
+        relevant_in_sample = scores[int(rank)]        
+        for r in range(int(rank), len(scores)):
+            # print(r, " ", relevant_in_sample, " ", int(math.ceil((number_to_find))), " ", scores[r])
+            rank = r
+            if scores[r] == relevant_in_sample + int(math.ceil((number_to_find))):
+                # print("BREAK???")
+                break        
+        
+        # rank = scores[int(((x + 1) / 10) * len(scores) +  int(interval))]
+        # print(rank)
 
+        #calculate the recall by dividing the stopping point by the last score value
+        sumRecalls[x] +=  scores[int(rank)] / scores[-1]
+        sumEfforts[x] += rank / len(scores)
+
+        print(((x + 1) * 10), " ", rank, " ", (scores[int(rank)] / scores[-1]))
+
+        if scores[int(rank)] / scores[-1] >= desiredRecall:
+            sumRel[x] = sumRel[x] + 1
+            
+#sample 10 percent, make predection 
 for x in range(1, 10):
     print("Recall at:" + str(10 * x) + "%" + "::" + str(sumRecalls[x - 1] / number))
     print("Effort at:" + str(10 * x) + "%" + "::" + str(sumEfforts[x - 1] / number))
+    print("Reliability at:" + str(10 * x) + "%" + "::" + str(sumRel[x - 1] / number))
     print("")
 
 

@@ -20,7 +20,7 @@ import string
 import decimal
 from scipy.optimize import curve_fit
 import pickle
-
+from pathlib import Path
 
 
 #Class for reprsenting a topic
@@ -163,6 +163,7 @@ stoppingPoints = {}
 sumRecalls = []
 sumEfforts = []
 number = 0
+skip = 0
 
 for k in range(1, 10):
     sumEfforts.append(0)
@@ -171,15 +172,33 @@ for k in range(1, 10):
 #Loop every topic
 for filename in os.listdir(files[0]):
 
+    print(filename)
 
+    #windows/mac/linux general way for loading file    
+    data_folder = Path(files[0])
+    file_to_open = data_folder / filename
+    
     #its a folder skip over
-    if os.path.isdir(files[0] + "\\" + filename):
+    if os.path.isdir(file_to_open):
         continue
 
+    #topic number count
     number = number + 1
 
+
+    #particpants in the clef 2017 task
+    #by default files will contain only sheffield run 2
     for file in files:
-        fileContent = open(file + "\\" + filename , "r").readlines()
+        
+        data_folder = Path(file)
+        file_to_open = data_folder / filename
+        fileContent = open(file_to_open , "r").readlines()
+
+        #Load file into memory. c will is the current file element index
+        #and will be updated based upon the sampling method
+        #X will contain a value of the total number of relavent documents found at a given
+        #index e.g 1,1,1,2,2,3,3,3,3,3,3,3,3,4,4...
+        
         c = 0
         X = []
         scores = []
@@ -195,13 +214,12 @@ for filename in os.listdir(files[0]):
 
     pointsToStop = []
     X_vals = np.array(range(0, len(scores)))
-
-
-    pointsToStop = []
+    
 
     #loop from 10 to 100%
-    for x in range(1, 10):
-    
+    for x in range(3, 10):
+
+        #Take percentage cut
         samplePercentage = 0.1 * x
         scoresSamps = scores[0: int(len(scores) * samplePercentage)]
         X_samps = X[0: int(len(X) * samplePercentage)]
@@ -229,6 +247,7 @@ for filename in os.listdir(files[0]):
             x_distr.append(dist[filename.split('.')[0]][docElementId])
 
 
+    
 
         k = 0.01
         a = 0.30
@@ -238,22 +257,28 @@ for filename in os.listdir(files[0]):
         opt, pcov = curve_fit(func_fit, x_points, x_distr, guess, maxfev=1000)
         a, k = opt
 
-
         sum = 0
         n = 1
+        
         while(True):
 
             sum+=non_hom_func(a, k, len(X_vals) , n)
             n = n + 1
 
             if sum > 0.95:
+                print('Made it')
                 break
 
+            if n >= len(X_vals):
+                
+                break
 
-
-        pointsToStop.append(decimal.Decimal(0.7) * (n - decimal.Decimal(scoresSamps[-1])))
         
-    
+        pointsToStop.append(decimal.Decimal(0.7) * (n - decimal.Decimal(scoresSamps[-1])))
+
+    print(pointsToStop)
+
+
     for x, interval in enumerate(pointsToStop):
         try:
             point = scores[int(((x + 1) / 10) * len(scores) +  int(interval))]
