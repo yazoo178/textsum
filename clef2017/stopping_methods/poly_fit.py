@@ -224,7 +224,7 @@ for filename in os.listdir(files[0]):
     
 
     #loop from 10 to 100%
-    for x in range(2, 10):
+    for x in range(1, 2):
 
         #Take percentage cut
         samplePercentage = 0.1 * x
@@ -253,77 +253,13 @@ for filename in os.listdir(files[0]):
             docElementId = runData[filename.split('.')[0]].docsReturned[int(index)]
             x_distr.append(dist[filename.split('.')[0]][docElementId])
 
-
-    
-
-        k = 0.01
-        a = 0.2
-        guess = (a, k)
-        #attempt to fit curve
-
-        opt, pcov = curve_fit(func_fit, x_points, x_distr, guess, maxfev=1000)
-        #print(x_points)
-        #print(x_distr)
-        print("Percentage: ", x * 10)
-        a, k = opt
-        print(a, " ", k)
-
-        sum = 0
-        n = 1
+        fit = np.polyfit(x_points, x_distr, 4)
+        fit_xn = np.poly1d(fit)
         
-        while(True):
-
-            try:
-                
-                sum+=non_hom_func(a, k, len(X_vals) , n) 
-                n = n + 1
-
-            except:
-                n = len(X_vals)
-                print('Error encounted')
-                break
-
-            if sum > 0.95:
-                print('Made it')
-                break
-
-            if n >= len(X_vals):
-                break
-
+        print(fit_xn)
         
-        pointsToStop.append(decimal.Decimal(0.7) * (n - decimal.Decimal(scoresSamps[-1])))
-
-
-    for x, number_to_find in enumerate(pointsToStop):
-        try:
-            rank = ((x + 1) * 0.1) * len(scores)
+        #plt.plot(x_points, x_distr)
+        #plt.show()
         
-            relevant_in_sample = scores[int(rank)]
         
-            for r in range(int(rank), len(scores)):
-                rank = r
-                if scores[r] == relevant_in_sample + int(math.ceil((number_to_find))):
-                    break 
-        except IndexError:
-            rank = len(pointsToStop) - 1
-
-        sumRecalls[x] +=  scores[int(rank)]  / scores[-1]
-        sumEfforts[x] += rank / len(scores)
-
-        if scores[int(rank)] / scores[-1] >= desiredRecall:
-            sumRel[x] = sumRel[x] + 1
-        
-
-        #print("Recall: " + str(point / scores[-1]))
-        #print("Effort: " + str((int(((x + 1) / 10) * len(scores) +  int(interval))) / len(scores)))
-    
-
-
-for x in range(1, 10):
-    print("Recall at:" + str(10 * x) + "%" + "::" + str(sumRecalls[x - 1] / number))
-    print("Effort at:" + str(10 * x) + "%" + "::" + str(sumEfforts[x - 1] / number))
-    print("Relablity at:" + str(10 * x) + "%" + "::" + str(sumRel[x - 1] / number))
-    print("")
-
-
 

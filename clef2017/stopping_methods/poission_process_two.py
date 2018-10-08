@@ -138,10 +138,8 @@ for filename in os.listdir(files[0]):
         
         relevant_in_sample = scores[int(rank)]        
         for r in range(int(rank), len(scores)):
-            # print(r, " ", relevant_in_sample, " ", int(math.ceil((number_to_find))), " ", scores[r])
             rank = r
             if scores[r] == relevant_in_sample + int(math.ceil((number_to_find))):
-                # print("BREAK???")
                 break        
         
         # rank = scores[int(((x + 1) / 10) * len(scores) +  int(interval))]
@@ -150,8 +148,6 @@ for filename in os.listdir(files[0]):
         #calculate the recall by dividing the stopping point by the last score value
         sumRecalls[x] +=  scores[int(rank)] / scores[-1]
         sumEfforts[x] += rank / len(scores)
-
-        print(((x + 1) * 10), " ", rank, " ", (scores[int(rank)] / scores[-1]))
 
         if scores[int(rank)] / scores[-1] >= desiredRecall:
             sumRel[x] = sumRel[x] + 1
