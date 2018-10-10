@@ -35,11 +35,11 @@
 \contentsline {subsection}{\numberline {4.2.4}Comparing Methods}{20}{subsection.4.2.4}
 \contentsline {subsection}{\numberline {4.2.5}Poisson Process for stopping points}{20}{subsection.4.2.5}
 \contentsline {section}{\numberline {4.3}Indexing and Querying Medline with Limited Information}{23}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Acquiring Key Information from A Systematic Review Protocol}{23}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Indexing Pubmed}{24}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Runs}{24}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.1}Acquiring Key Information from A Systematic Review Protocol}{24}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Indexing Pubmed}{25}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Runs}{25}{subsection.4.3.3}
 \contentsline {subsection}{\numberline {4.3.4}Results}{25}{subsection.4.3.4}
-\contentsline {subsection}{\numberline {4.3.5}Pubmed automatic query Conclusion}{25}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.5}Pubmed automatic query Conclusion}{26}{subsection.4.3.5}
 \contentsline {chapter}{\numberline {5}Future Work}{27}{chapter.5}
 \contentsline {section}{\numberline {5.1}Gnatt Chart}{27}{section.5.1}
 \contentsline {chapter}{\numberline {6}DDP}{29}{chapter.6}

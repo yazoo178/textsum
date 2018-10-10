@@ -4,14 +4,6 @@ In this section the work completed so far will be presented. Two main areas of t
 
 
 
-\subsection{Window Sampling} \label{window_samp}
-
-It is useful for us to estimate the rate in which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter.
-
-
-
-
-
 \subsection{CLEF 2017 Runs} \label{clefRuns}
 
 For the CLEF 2017 Technologically Assisted Reviews in Empirical Medicine \cite{Kanoulas12017}, participants were expected to submit runs for ranking documents. Participants were given complex boolean queries that could be used for extracting relevant information to rank the documents. These runs were later released for public access \footnote{https://github.com/CLEF-TAR/tar/tree/master/2017-TAR/participant-runs}
@@ -424,13 +416,13 @@ We can use the rate parameter to estimate the probability of there being atleast
 
 \begin{figure}[H]
 \center
-\includegraphics[width=13cm]{figures/probOneDoc.jpg}
+\includegraphics[width=10cm]{figures/probOneDoc.jpg}
 \caption{Probability of seeing atleast one relevant document by sampling 10\% of documents for topic CD008081}
 \end{figure}
 
 The plot shows as we look at more documents, we are increasingly likely to have seen one relevant document. While this is useful to know, we can not use this as a method for predicting a suitable stopping point.
 
-A homogeneous Poisson Process can be used to model the occurrences of relevant document and then used to predict the probability of there bring $r$ relevant documents after $n$ documents have been observed. 
+A Homogeneous Poisson Process can be used to model the occurrences of relevant document and then used to predict the probability of there bring $r$ relevant documents after $n$ documents have been observed. 
 
 \begin{equation}
 	  P(n = r) = \frac{(\lambda n)^r}{r!} e ^ {-\lambda n}
@@ -448,6 +440,23 @@ By summing over the probability mass from for values of $n$ between 1 and the si
 \begin{equation}
 	   s = \sum_{i \leq 0.95}^{|n|} \frac{(\lambda i)^r}{stirling(r!)} e ^ {-\lambda i}
 \end{equation}
+
+The limitation of using an Homogeneous Poisson Process is that the rate parameter is constant throughout distribution. This means if we looked at 10\% of the rankings the rate of relevant documents would be assumed to be constant for the remainder of the document collection.
+
+
+\begin{figure}[H]
+\center
+\includegraphics[width=16cm]{figures/overestimate.png}
+\caption{Homogeneous Poisson Process overestimating the rate of documents, resulting a prediction curve that would expect us to look at 1500 of the 2000 documents to reach 70\% recall}
+\end{figure}
+
+\subsubsection{Non-Homogeneous Poisson Process}
+
+As the rate parameter is varies throughout the distribution of documents, we can use a Non-Homogeneous Poisson Process. A Non-Homogeneous Poisson process is similar to an ordinary Poisson process, except that the average rate of arrivals is allowed to vary with time.
+
+\subsection{Window Sampling} \label{window_samp}
+
+It is useful for us to estimate the rate in which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter.
 
 
 \section{Indexing and Querying Medline with Limited Information}
