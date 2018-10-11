@@ -21,8 +21,7 @@
 \contentsline {subsection}{\numberline {3.2.1}PICO Extraction}{12}{subsection.3.2.1}
 \contentsline {section}{\numberline {3.3}Stopping Methods}{12}{section.3.3}
 \contentsline {chapter}{\numberline {4}Novel Work}{13}{chapter.4}
-\contentsline {subsection}{\numberline {4.0.1}Window Sampling}{13}{subsection.4.0.1}
-\contentsline {subsection}{\numberline {4.0.2}CLEF 2017 Runs}{13}{subsection.4.0.2}
+\contentsline {subsection}{\numberline {4.0.1}CLEF 2017 Runs}{13}{subsection.4.0.1}
 \contentsline {section}{\numberline {4.1}Baseline Approaches to Stopping}{14}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Oracle Scores}{14}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}Percentage cut-off method}{15}{subsection.4.1.2}
@@ -34,12 +33,14 @@
 \contentsline {subsection}{\numberline {4.2.3}Conclusion on Curve fitting and GP}{20}{subsection.4.2.3}
 \contentsline {subsection}{\numberline {4.2.4}Comparing Methods}{20}{subsection.4.2.4}
 \contentsline {subsection}{\numberline {4.2.5}Poisson Process for stopping points}{20}{subsection.4.2.5}
-\contentsline {section}{\numberline {4.3}Indexing and Querying Medline with Limited Information}{23}{section.4.3}
+\contentsline {subsubsection}{Non-Homogeneous Poisson Process}{23}{section*.9}
+\contentsline {subsection}{\numberline {4.2.6}Window Sampling}{24}{subsection.4.2.6}
+\contentsline {section}{\numberline {4.3}Indexing and Querying Medline with Limited Information}{24}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Acquiring Key Information from A Systematic Review Protocol}{24}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Indexing Pubmed}{25}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}Runs}{25}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}Results}{25}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.4}Results}{26}{subsection.4.3.4}
 \contentsline {subsection}{\numberline {4.3.5}Pubmed automatic query Conclusion}{26}{subsection.4.3.5}
-\contentsline {chapter}{\numberline {5}Future Work}{27}{chapter.5}
-\contentsline {section}{\numberline {5.1}Gnatt Chart}{27}{section.5.1}
-\contentsline {chapter}{\numberline {6}DDP}{29}{chapter.6}
+\contentsline {chapter}{\numberline {5}Future Work}{28}{chapter.5}
+\contentsline {section}{\numberline {5.1}Gnatt Chart}{29}{section.5.1}
+\contentsline {chapter}{\numberline {6}DDP}{31}{chapter.6}
