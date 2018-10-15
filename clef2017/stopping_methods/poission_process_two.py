@@ -121,6 +121,28 @@ for filename in os.listdir(files[0]):
 
         sum = 0
         n = 1
+
+        x_points = []
+        y_points = []
+        lastPoint = None
+
+        #to avoid a recentangular looking graph, just try the points where the value is different from the last
+        for x2, y in zip(X_samps, scoresSamps):
+                if lastPoint != y:
+                    lastPoint = y
+                    x_points.append(x2)
+                    y_points.append(y)
+
+
+        opt, pcov = curve_fit(curve_fit_test, x_points, y_points)
+        a, k = opt
+        x_pred = curve_fit_test(np.array(X), a, k)
+
+        plt.plot(X, x_pred)
+        plt.show()
+        continue
+
+
         while(True):
 
             sum+=(func(rate, k, n))
@@ -131,7 +153,7 @@ for filename in os.listdir(files[0]):
        
         pointsToStop.append(decimal.Decimal(desiredRecall) * (n - decimal.Decimal(scoresSamps[-1])))
         
-
+    exit()
     sumRel.append(0)
     
     for x, number_to_find in enumerate(pointsToStop):

@@ -24,7 +24,7 @@ def nextTime(rateParameter):
     return -math.log(1.0 - random.random()) / rateParameter
 
 def func(rate, x):
-    return 1- math.exp(-rate * x)
+    return math.exp(-rate * x)
 
 
 qrel = ""
