@@ -522,8 +522,35 @@ So
 	   P(N(0,n) = r) = \frac{(\Lambda(0,n))^r}{r!}e^{-\Lambda(0,n)} = \frac{\left(\frac{a}{k}(e^{kn} -1)\right)^r}{r!} e^{-(\frac{a}{k}(e^{kn} - 1)})
 \end{equation}
 
-Therefore given values for $a$ and $k$ which we can learn from fitting an exponential curve, we can predict the probability of there being $r$ relevant documents within the entire set of $n$ documents
+Therefore given values for $a$ and $k$ which we can learn from fitting an exponential curve, we can predict the probability of there being $r$ relevant documents within the entire set of $n$ documents.
 
+
+\subsubsection{Non-Homogeneous Poisson Process Results} \label{nn_pp_def}
+
+Using the above definition we created a non-homogeneous poission process and generated some results. We use different sample sizes to generate our initial curve. We assumed a minimum of 20\% effort was needed to generate a suitable curve.
+
+\begin{table}[H]
+
+\centering
+\begin{tabular}{|c|c|c|c|} 
+\hline
+ Initial Effort & Effort & Recall & Reliability  \\ 
+ 20\% & 0.78 &		0.93 & 0.91 \\ 
+ 30\% & 0.85 &		0.97 & 1.0 \\ 
+ 40\% & 0.92 &		0.98 & 1.0 \\ 
+ 50\% & 0.94 &		0.98 & 1.0 \\ 
+ 60\% & 0.98 &		0.99 & 1.0 \\ 
+ 70\% & 0.98 &		0.99 & 1.0 \\ 
+ 80\% & 0.98 &		0.99 & 1.0 \\ 
+ 90\% & 0.99 &		0.99 & 1.0 \\  
+
+  
+ \hline
+\end{tabular}
+
+\caption{Non-Homogeneous Poisson Process again Sheffield test set}
+
+\end{table}
 
 \section{Indexing and Querying Medline with Limited Information}
 

@@ -36,9 +36,10 @@
 \contentsline {subsection}{\numberline {4.3.1}Non-Homogeneous Poisson Process}{23}{subsection.4.3.1}
 \contentsline {subsubsection}{Window Sampling}{24}{section*.9}
 \contentsline {subsubsection}{Non-Homogeneous Poisson Defination}{24}{section*.10}
-\contentsline {section}{\numberline {4.4}Indexing and Querying Medline with Limited Information}{25}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Acquiring Key Information from A Systematic Review Protocol}{25}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Indexing Pubmed}{26}{subsection.4.4.2}
+\contentsline {subsubsection}{Non-Homogeneous Poisson Process Results}{25}{section*.11}
+\contentsline {section}{\numberline {4.4}Indexing and Querying Medline with Limited Information}{26}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Acquiring Key Information from A Systematic Review Protocol}{26}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Indexing Pubmed}{27}{subsection.4.4.2}
 \contentsline {subsection}{\numberline {4.4.3}Runs}{27}{subsection.4.4.3}
 \contentsline {subsection}{\numberline {4.4.4}Results}{27}{subsection.4.4.4}
 \contentsline {subsection}{\numberline {4.4.5}Pubmed automatic query Conclusion}{28}{subsection.4.4.5}

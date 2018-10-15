@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  14 OCT 2018 22:24
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  15 OCT 2018 14:37
 entering extended mode
 **./main.tex
 (main.tex
@@ -1823,6 +1823,9 @@ LaTeX Warning: Label `my-label' multiply defined.
 LaTeX Warning: Label `window_samp' multiply defined.
 
 
+LaTeX Warning: Label `nn_pp_def' multiply defined.
+
+
 LaTeX Warning: Label `lit' multiply defined.
 
 )
@@ -2166,52 +2169,52 @@ documents appear is an exponential
  []
 
 [24]
-Overfull \hbox (26.33643pt too wide) in paragraph at lines 528--528
+Overfull \hbox (26.33643pt too wide) in paragraph at lines 555--555
 []\TU/lmr/bx/n/14.4 Indexing and Querying Medline with Limited Information 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 552--553
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 579--580
 []\TU/lmr/m/n/10.95 endemic countries objective|ambulatory healthcare facilitie
 s|rapid diagnostic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 552--553
+Underfull \hbox (badness 10000) in paragraph at lines 579--580
 \TU/lmr/m/n/10.95 tests|falciparum parasitaemia detectable|malaria endemic area
 s|diagnostic
  []
 
-[25]
-Overfull \hbox (9.85452pt too wide) in paragraph at lines 558--559
+
+Overfull \hbox (9.85452pt too wide) in paragraph at lines 585--586
 []\TU/lmr/m/n/10.95 The key-word-query receives some final pre-processing prior
  to being loaded into our information
  []
 
-
-Overfull \hbox (8.11757pt too wide) in paragraph at lines 577--577
+[26]
+Overfull \hbox (8.11757pt too wide) in paragraph at lines 604--604
 [][][]\TU/lmr/m/n/9 https://lucene.apache.org/core/7_-0_-1/core/org/apache/luce
 ne/search/similarities/BooleanSimilarity.html| 
  []
 
-[26]
-Overfull \hbox (4.76057pt too wide) in paragraph at lines 579--579
+
+Overfull \hbox (4.76057pt too wide) in paragraph at lines 606--606
 [][][]\TU/lmr/m/n/9 https://lucene.apache.org/core/7_-0_-1/core/org/apache/luce
 ne/search/similarities/TFIDFSimilarity.html| 
  []
 
 
-Overfull \hbox (18.4838pt too wide) in paragraph at lines 606--608
+Overfull \hbox (18.4838pt too wide) in paragraph at lines 633--635
 [][]
  []
 
-
-Overfull \hbox (12.74413pt too wide) in paragraph at lines 616--617
+[27]
+Overfull \hbox (12.74413pt too wide) in paragraph at lines 643--644
 []\TU/lmr/m/n/10.95 MeSH headings would be useful in expanding the range of the
  query to capture synonymous
  []
 
-[27]) (chapters/Future.tex [28]
+) (chapters/Future.tex [28]
 Chapter 5.
 File: figures/originMethod.png Graphic file (type bmp)
 <figures/originMethod.png>
@@ -2220,6 +2223,11 @@ File: figures/origin2.png Graphic file (type bmp)
 [29
 
 ]
+Overfull \hbox (23.4435pt too wide) in paragraph at lines 30--31
+[]\TU/lmr/m/n/10.95 This method can be tweaked and optimized by standard by app
+lying standard text processing/NLP
+ []
+
 File: figures/gnatt.png Graphic file (type bmp)
 <figures/gnatt.png>
 ) (chapters/DDP.tex [30] [31]
@@ -2255,7 +2263,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  42622 strings out of 427836
  981162 string characters out of 3148132
- 1203696 words of memory out of 3000000
+ 1203701 words of memory out of 3000000
  46026 multiletter control sequences out of 15000+200000
  538097 words of font info for 76 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
