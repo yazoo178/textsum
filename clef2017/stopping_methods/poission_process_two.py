@@ -35,7 +35,7 @@ def stirling(n):
 
 
 # Define form of function going to try to fit to curve
-def curve_fit(x, a, k):
+def curve_fit_test(x, a, k):
     return  a * np.exp(-k*x)
 
 
@@ -115,6 +115,9 @@ for filename in os.listdir(files[0]):
         k = len(scores)
         ns = set(scoresSamps)
         rate = scoresSamps[-1] / len(scoresSamps)
+        
+        opt, pcov = curve_fit(curve_fit_test, X_samps, scoresSamps , maxfev=1000)
+        x_pred = curve_fit_test(opt, X_samps)
 
         sum = 0
         n = 1
@@ -161,6 +164,7 @@ for x in range(1, 10):
 
 
 
+#Sample 10 every 
         
     
 
