@@ -377,7 +377,7 @@ Overall we believe that the Knee and Target methods are too sensitive to the ran
 
 
 
-\subsection{Poisson Process for stopping points} \label{window_samp}
+\section{Poisson Process for stopping points} \label{window_samp}
 
 A Poisson Process can be used to model points in time in which events occur. In this situation we wish to observe the rate in which a relevant document occurs in a collection of documents.
 
@@ -450,13 +450,79 @@ The limitation of using an Homogeneous Poisson Process is that the rate paramete
 \caption{Homogeneous Poisson Process overestimating the rate of documents, resulting a prediction curve that would expect us to look at 1500 of the 2000 documents to reach 70\% recall}
 \end{figure}
 
-\subsubsection{Non-Homogeneous Poisson Process}
+\subsection{Non-Homogeneous Poisson Process}
 
-As the rate parameter is varies throughout the distribution of documents, we can use a Non-Homogeneous Poisson Process. A Non-Homogeneous Poisson process is similar to an ordinary Poisson process, except that the average rate of arrivals is allowed to vary with time.
+As the rate parameter is varies throughout the distribution of documents, we can use a Non-Homogeneous Poisson Process. A Non-Homogeneous Poisson process is similar to an ordinary Poisson process, except that the average rate of arrivals is allowed to vary with time. 
 
-\subsection{Window Sampling} \label{window_samp}
+\subsubsection{Window Sampling} \label{window_samp}
 
-It is useful for us to estimate the rate in which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter.
+It is useful for us to estimate the rate in which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter. 
+
+\begin{table}[H]
+
+\centering
+\begin{tabular}{|c|c|c|} 
+\hline
+ Document Rank & Relevant & RelScore  \\ 
+ 1 & Y &			1/3=0.33 \\ 
+ 2 & Y &			3/4=0.75 \\ 
+ 3 & N &			4/5=0.80 \\ 
+ 4 & Y &			3/5 =0.60 \\ 
+ 5 & Y &			2/5=0.40 \\ 
+ 6 & N &			2/5=0.40 \\ 
+ 7 & N &			1/4=0.25 \\
+ 8 & N &			0/3=0.00 \\
+  
+ \hline
+\end{tabular}
+
+\caption{Using window sampling with a window size of 2 either side.}
+
+\end{table}
+
+By using the number of relevant documents that occur within a given window, we are able to get a declining rate distribution. 
+
+\subsubsection{Non-Homogeneous Poisson Defination} \label{nn_pp_def}
+
+We can use a non-homogenous poission process to estimate the number of relevant documents in a given interval by integrating the rate function $\lambda(x)$ across the interval.
+
+We first define our intervals as $a$ and $b$ and integrate the values between them with respect to $x$
+
+\begin{equation}
+	   \int_a^b \lambda(x) d(x) = \Lambda(a, b)
+\end{equation}
+
+Therefore the probability of there being $r$ relevant documents in the interval $(a, b$)
+
+\begin{equation}
+	   P(N(a, b) = r) = \frac{[\Lambda(a,b)]^r}{r!} e^{-\Lambda(a,b)}
+\end{equation}
+
+We can make the assumption that the rate in which relevant documents appear is an exponential function.
+
+\begin{equation}
+	   \lambda(x) = ae^{kx}
+\end{equation}
+
+Therefore
+
+\begin{equation}
+	   \int_a^b \lambda(x) d(x) = \int_a^b ae^{kx} dx = \frac{a}{k}e^{kx}
+\end{equation}
+
+As we are only interested in knowing the total number of relevant documents, we can assume $a=0$ and $b=n$ where $n$ is the total number of documents.
+
+\begin{equation}
+	   \Lambda(0, n) = \int_0^n ae^{kx}dx = \frac{a}{k}e^{kx} = \frac{a}{k}(e^{kn} - 1)
+\end{equation}
+
+So
+
+\begin{equation}
+	   P(N(0,n) = r) = \frac{(\Lambda(0,n))^r}{r!}e^{-\Lambda(0,n)} = \frac{\left(\frac{a}{k}(e^{kn} -1)\right)^r}{r!} e^{-(\frac{a}{k}(e^{kn} - 1)})
+\end{equation}
+
+Therefore given values for $a$ and $k$ which we can learn from fitting an exponential curve, we can predict the probability of there being $r$ relevant documents within the entire set of $n$ documents
 
 
 \section{Indexing and Querying Medline with Limited Information}

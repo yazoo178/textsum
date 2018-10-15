@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  11 OCT 2018 13:43
+This is XeTeX, Version 3.14159265-2.6-0.99999 (MiKTeX 2.9.6630 64-bit) (preloaded format=xelatex 2018.3.19)  14 OCT 2018 22:24
 entering extended mode
 **./main.tex
 (main.tex
@@ -2160,67 +2160,73 @@ Overfull \hbox (14.39662pt too wide) in paragraph at lines 449--450
  []
 
 [23]
-Overfull \hbox (26.33643pt too wide) in paragraph at lines 462--462
+Overfull \hbox (8.13542pt too wide) in paragraph at lines 501--502
+[]\TU/lmr/m/n/10.95 We can make the assumption that the rate in which relevant 
+documents appear is an exponential
+ []
+
+[24]
+Overfull \hbox (26.33643pt too wide) in paragraph at lines 528--528
 []\TU/lmr/bx/n/14.4 Indexing and Querying Medline with Limited Information 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 486--487
+Underfull \hbox (badness 10000) in paragraph at lines 552--553
 []\TU/lmr/m/n/10.95 endemic countries objective|ambulatory healthcare facilitie
 s|rapid diagnostic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 486--487
+Underfull \hbox (badness 10000) in paragraph at lines 552--553
 \TU/lmr/m/n/10.95 tests|falciparum parasitaemia detectable|malaria endemic area
 s|diagnostic
  []
 
-[24]
-Overfull \hbox (9.85452pt too wide) in paragraph at lines 492--493
+[25]
+Overfull \hbox (9.85452pt too wide) in paragraph at lines 558--559
 []\TU/lmr/m/n/10.95 The key-word-query receives some final pre-processing prior
  to being loaded into our information
  []
 
 
-Overfull \hbox (8.11757pt too wide) in paragraph at lines 511--511
+Overfull \hbox (8.11757pt too wide) in paragraph at lines 577--577
 [][][]\TU/lmr/m/n/9 https://lucene.apache.org/core/7_-0_-1/core/org/apache/luce
 ne/search/similarities/BooleanSimilarity.html| 
  []
 
-
-Overfull \hbox (4.76057pt too wide) in paragraph at lines 513--513
+[26]
+Overfull \hbox (4.76057pt too wide) in paragraph at lines 579--579
 [][][]\TU/lmr/m/n/9 https://lucene.apache.org/core/7_-0_-1/core/org/apache/luce
 ne/search/similarities/TFIDFSimilarity.html| 
  []
 
-[25]
-Overfull \hbox (18.4838pt too wide) in paragraph at lines 540--542
+
+Overfull \hbox (18.4838pt too wide) in paragraph at lines 606--608
 [][]
  []
 
 
-Overfull \hbox (12.74413pt too wide) in paragraph at lines 550--551
+Overfull \hbox (12.74413pt too wide) in paragraph at lines 616--617
 []\TU/lmr/m/n/10.95 MeSH headings would be useful in expanding the range of the
  query to capture synonymous
  []
 
-) (chapters/Future.tex [26] [27]
+[27]) (chapters/Future.tex [28]
 Chapter 5.
 File: figures/originMethod.png Graphic file (type bmp)
 <figures/originMethod.png>
 File: figures/origin2.png Graphic file (type bmp)
 <figures/origin2.png>
-[28
+[29
 
 ]
 File: figures/gnatt.png Graphic file (type bmp)
 <figures/gnatt.png>
-) (chapters/DDP.tex [29] [30]
+) (chapters/DDP.tex [30] [31]
 Chapter 6.
-) (main.bbl [31
+) (main.bbl [32
 
-] [32
+] [33
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 111--115
@@ -2235,7 +2241,7 @@ Underfull \hbox (badness 1629) in paragraph at lines 117--120
 [][][] []
  []
 
-[33]) [34]
+[34]) [35]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 97.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 97.
  (main.aux)
@@ -2247,12 +2253,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 42620 strings out of 427836
- 981138 string characters out of 3148132
- 1203621 words of memory out of 3000000
- 46024 multiletter control sequences out of 15000+200000
+ 42622 strings out of 427836
+ 981162 string characters out of 3148132
+ 1203696 words of memory out of 3000000
+ 46026 multiletter control sequences out of 15000+200000
  538097 words of font info for 76 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  62i,12n,96p,10429b,479s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.pdf (40 pages).
+Output written on main.pdf (41 pages).
