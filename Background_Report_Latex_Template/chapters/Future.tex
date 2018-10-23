@@ -4,7 +4,7 @@ The future work for this PhD will look at different techniques to finding stoppi
 
 
 
-An area that could be further expanded on is the use of using the similarity score in the initial rankings as a basis for comparing documents. In novel work section \ref{simScoreMethod} we examined a technique that uses the top document as the origin point for comparing subsequent documents. To improve the accuracy of the origin point we could try using different points and taking average over a set of points:
+An area that could be further expanded on is the use of using the similarity score in the initial rankings as a basis for comparing documents. In novel work section \ref{simScoreMethod} we examined a technique that uses the top document as the pseudo document for comparing subsequent documents. To improve the accuracy of the pseudo point we could try using different intervals in the rankings and taking average over a set of points:
 
 
 \begin{figure}[H]
@@ -13,19 +13,20 @@ An area that could be further expanded on is the use of using the similarity sco
 \caption{Calculating Origin Average}
 \end{figure}
 
-The \% difference between document $n+1$ and the origin document would still be used to derive the stopping point.
+The \% difference between document $n+1$ and the pseudo document would still be used to derive the stopping point.
 
 This approach has the advantage of taking into consideration variability in the quality of the rankings. It also has the advantage of being entirely unsupervised and does not require us to sample the initial document collection. 
 
-A further development of this method is to create an origin document using the document text content itself:
+A further development of this method is to create an pseudo document using the document abstract text:
 
 \begin{figure}[H]
 \center
 \includegraphics[height=4cm]{figures/origin2.png}
-\caption{Generating Origin vector using document content}
+\caption{Generating Origin vector using document abstract}
 \end{figure}
 
-Here we have a further development in that we are using the top $n$ documents to calculate an average document vector by using the content of the document. We can then use vector similarity comparisons such as euclidean distance and cosine similarity to compare the origin document vector to further documents down the rankings.
+
+We have further developed the method in that we are using the top $n$ documents to calculate an average document vector by using the content of the document. We can then use vector similarity comparisons such as euclidean distance and cosine similarity to compare the origin document vector to further documents down the rankings.
 
 This method can be tweaked and optimized by standard by applying standard text processing/NLP techniques:
 
@@ -36,20 +37,37 @@ This method can be tweaked and optimized by standard by applying standard text p
   
 \end{itemize}
 
-Another method to stopping that could be applied is implementing a classifier. We would still look to use the abstracts as training data for relevant and non-relevant documents. This method would assume we take a sample set of documents as our training data. This training data would then be used to build a classifier to determine if the rest of the documents are relevant or non relevant. We can infer the expected number of relevant documents from the sample and make the assumptions about how many we would need to find to attain a reliability score of 95\%.
-
-
-
-\section{Gnatt Chart}
-
-\begin{sidewaysfigure}
+Finally we can use the work in \ref{automatic_f_t_r} as part of this method by extracting further useful information from the full texts. This information could be used to expand the content of the abstract as-well act as a separate source for further information for finding a stopping point.
 
 
 \begin{figure}[H]
 \center
-\includegraphics[height=7cm]{figures/gnatt.png}
+\includegraphics[height=7cm]{figures/origin3.png}
+\caption{Generating Origin vector using document abstract and text}
+\end{figure}
+
+
+Another method to stopping that could be applied is implementing a classifier. We would still look to use the abstracts as training data for relevant and non-relevant documents. This method would assume we take a sample set of documents as our training data. This training data would then be used to build a classifier to determine if the rest of the documents are relevant or non relevant. We can infer the expected number of relevant documents from the sample and make the assumptions about how many we would need to find to attain a reliability score of 95\%.
+
+
+
+\section{Gnatt Chart} \label{gnatt}
+
+
+\begin{figure}[H]
+\center
+\includegraphics[height=16cm]{figures/gnatt_chart2.jpg}
 \caption{Gnatt Chart}
 \end{figure}
-\end{sidewaysfigure}
+
+Initial work focused on background reading around stopping points as well as exploring other ideas as for applying text processing within systematic reviews.
+
+Was able to re-implement some existing stopping methods and apply them to our own datasets.
+
+Explored some new potential areas for stopping methods and developed some unique approaches.
+
+Submitted a paper to CLEF 2018 and gave a talk at the conference on our methods.
+
+Future work will expand on the similarity-cut off method to stopping \ref{fw} by using more information from the abstracts.
 
 

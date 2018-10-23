@@ -2,16 +2,17 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces The 6 runs sampled from the CLEF 2017 task.}}{13}{table.4.1}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Lowest effort possible to find 70\% of relevant documents. }}{14}{table.4.2}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Comparison of results between rankings when looking at a percentage of the ranked documents.}}{15}{table.4.3}
-\contentsline {table}{\numberline {4.4}{\ignorespaces Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores.}}{16}{table.4.4}
-\contentsline {table}{\numberline {4.5}{\ignorespaces Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores. Compares first document to succeeding documents}}{16}{table.4.5}
-\contentsline {table}{\numberline {4.6}{\ignorespaces Evaluation of curve fitting for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{18}{table.4.6}
-\contentsline {table}{\numberline {4.7}{\ignorespaces Comparison of different of sample method using gp for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{19}{table.4.7}
-\contentsline {table}{\numberline {4.8}{\ignorespaces Comparing target method, knee, cut-off and curve fitting along with confidence interval. Using Sheffield-run-2}}{20}{table.4.8}
+\contentsline {table}{\numberline {4.1}{\ignorespaces The 6 runs sampled from the CLEF 2017 task.}}{12}{table.4.1}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Lowest effort possible to find 70\% of relevant documents. }}{13}{table.4.2}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Comparison of results between rankings when looking at a percentage of the ranked documents.}}{14}{table.4.3}
+\contentsline {table}{\numberline {4.4}{\ignorespaces Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores.}}{15}{table.4.4}
+\contentsline {table}{\numberline {4.5}{\ignorespaces Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores. Compares first document to succeeding documents}}{15}{table.4.5}
+\contentsline {table}{\numberline {4.6}{\ignorespaces Evaluation of curve fitting for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{17}{table.4.6}
+\contentsline {table}{\numberline {4.7}{\ignorespaces Comparison of different of sample method using gp for different CLEF 2017 runs. lower = lower-bound confidence interval. Sample size = 3. Results are taken as averages over all topics for search method. with 0.5\% cut-off}}{18}{table.4.7}
+\contentsline {table}{\numberline {4.8}{\ignorespaces Comparing target method, knee, cut-off and curve fitting along with confidence interval. Using Sheffield-run-2}}{19}{table.4.8}
 \contentsline {table}{\numberline {4.9}{\ignorespaces Using window sampling with a window size of 2 either side.}}{24}{table.4.9}
 \contentsline {table}{\numberline {4.10}{\ignorespaces Non-Homogeneous Poisson Process again Sheffield test set}}{25}{table.4.10}
-\contentsline {table}{\numberline {4.11}{\ignorespaces Results for IR Pubmed system. Comparison for both 5000 and 25000 thresholds}}{28}{table.4.11}
+\contentsline {table}{\numberline {4.11}{\ignorespaces Return rate of PDF studies for 30 systematic reviews using content-level qrel file}}{26}{table.4.11}
+\contentsline {table}{\numberline {4.12}{\ignorespaces Results for IR Pubmed system. Comparison for both 5000 and 25000 thresholds}}{28}{table.4.12}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

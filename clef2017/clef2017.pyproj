@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2c02eb12-ef7d-44e0-a0e9-3e712b65fa37}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>stopping_methods\poission_process_two.py</StartupFile>
+    <StartupFile>stopping_methods\non_hom_poisson_two.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -59,6 +59,9 @@
     <Compile Include="stopping_methods\gp_method.py" />
     <Compile Include="stopping_methods\intergrated_recall_rates.py" />
     <Compile Include="stopping_methods\non_hom_poission.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\non_hom_poisson_two.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="stopping_methods\other_methods.py">

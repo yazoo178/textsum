@@ -1,33 +1,15 @@
 \chapter{Research Questions} \label{rq}
 
-In this chapter we will present some possible research areas for systematic reviews.
+In this chapter we will present research questions for finding stopping points in systematic reviews.
 
-\section{Automated Decision Making of Relevant Studies} \label{dm}
+\textbf{1 - Development of Stopping Methods that have less dependence on finding a weight that is specific to a given set of rankings} \label{sm}
 
-Once relevant studies have been identified by their abstracts, reviewers are required to process the studies and extract useful information for the systematic review. Many of these studies will not be useful and can be discarded, but not without the cost of the reviewer having to look at the content.
+The target and knee methods discussed previously \ref{target} \ref{knee} are assumed to have weights that are sensitive to the ranking set. We want to apply these methods to our own ranking set using the same weight that was established for these methods. 
 
-A useful piece of research would be to determine if a study is relevant to the systematic review question. 
+We then want to look at methods that could be applied to a range of different ranking sets and still perform with the same level of efficiency. 
 
-There are two potential routes that could be taken for the investigating this task. The first approach would be to use existing information from the systematic review (ie the protocol) and determine if the study contains the information. A second approach would be to a semi-supervised learning method, having the reviewer look at a subset of the studies, so we can then build a classifier for the remaining studies. Both of these approaches can be applied to the abstract screening and the data filtering stage of the systematic review. For the abstract screening we would be trying to predict if a study is relevant, by looking at the abstract. For the data filtering stage we would be looking at the actual text of the study (typically a pdf file)
+\textbf{2 - Establishing Unsupervised Approaches to Stopping} \label{sm}
 
-There are many challenges for this research topic. Not all studies are publicly available and are often protected by publishing licences. This makes it difficult to gather data. Another challenge is having to deal with such a broad range of data, as well as the pdf format studies.
+As previous methods have a reliance on a weighting or some type of prior assumptions about the ranking collection they fall under supervised approaches to stopping.
 
-\section{Information Extraction From Studies} \label{ie}
-
-Much of the existing work in information extraction for systematic reviews is done using sentance-level information extraction \cite{O’Mara-Eves2015} \cite{Jonnalagadda2015}. Often approached using classification methods to determine if a sentence does or does not contain relevant information \cite{Huang2011}.
-
-\subsection{PICO Extraction} \label{picoExtr}
-
-A method for extracting PICO sentances was proposed \cite{Huang2011}. This approach uses a Naive Bayes classifier against 3 of the 4 PICO elements. Training data was acquired using a bootstrapping technique, looking at structured abstracts that are contain key-word headings. The macro-averaged F-Measure was found to be 84\%.
-
-Further work \cite{HUAN2013} by the same author looked at whether the first sentences of in the structured abstracts were enough to train a classifier. This approach looks at 3 of the 4 PICO elements. The averaged macro average F-Measure was found to be 71\%.
-
-This existing work assumes extraction of PICO elements at abstract level. No work was found \cite{Jonnalagadda2015} in the extraction of PICO elements from the full texts. One interesting area of research, would be looking at learning a classifier from the abstracts and applying it to the full texts.
-
-
-
-\section{Stopping Methods} \label{sm}
-
-We examined existing working on finding on stopping methods in our literature survey \ref{stops}. We can investigate further methods finding stopping points in systematic review rankings. 
-
-We can look at applying machine learning algorithms for plotting a regression based system of relevant documents. Techniques that could be interesting to experiment with include a generic curve fitting and a Gaussian Process (GP).
+Potentially we can use the ranking set itself to develop stopping method that use the information given to us from the ranking algorithm (e.g cosine similarity score). We can then descend down the rankings using the score to establish a stopping point.

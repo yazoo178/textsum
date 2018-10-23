@@ -377,7 +377,7 @@ Overall we believe that the Knee and Target methods are too sensitive to the ran
 
 
 
-\section{Poisson Process for stopping points} \label{window_samp}
+\section{Poisson Process for Stopping Points} \label{window_samp}
 
 A Poisson Process can be used to model points in time in which events occur. In this situation we wish to observe the rate in which a relevant document occurs in a collection of documents.
 
@@ -410,7 +410,7 @@ Supposing we sample 10\% of the 1000 documents, of which 7 relevant documents oc
 We can use the rate parameter to estimate the probability of there being atleast one relevant documents, after observing $n$ documents:
 
 \begin{equation}
-	  P = 1 - e ^ {-Rn}
+	  P = 1 - e ^ {0.7n}
 \end{equation}
 
 
@@ -438,7 +438,7 @@ Due to the high likelihood that $r!$ will be exceeding large, we can use a stirl
 By summing over the probability mass from for values of $n$ between 1 and the size of the document collection we can estimate at what point 95\% reliability (stopping point $s$) is reached. 
 
 \begin{equation}
-	   s = \sum_{i \leq 0.95}^{|n|} \frac{(\lambda i)^r}{stirling(r!)} e ^ {-\lambda i}
+	   s = \sum_{0, i < 0.95}^{|n|} \frac{(\lambda i)^r}{stirling(r!)} e ^ {-\lambda i}
 \end{equation}
 
 The limitation of using an Homogeneous Poisson Process is that the rate parameter is constant throughout distribution. This means if we looked at 10\% of the rankings the rate of relevant documents would be assumed to be constant for the remainder of the document collection.
@@ -454,35 +454,8 @@ The limitation of using an Homogeneous Poisson Process is that the rate paramete
 
 As the rate parameter is varies throughout the distribution of documents, we can use a Non-Homogeneous Poisson Process. A Non-Homogeneous Poisson process is similar to an ordinary Poisson process, except that the average rate of arrivals is allowed to vary with time. 
 
-\subsubsection{Window Sampling} \label{window_samp}
 
-It is useful for us to estimate the rate in which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter. 
-
-\begin{table}[H]
-
-\centering
-\begin{tabular}{|c|c|c|} 
-\hline
- Document Rank & Relevant & RelScore  \\ 
- 1 & Y &			1/3=0.33 \\ 
- 2 & Y &			3/4=0.75 \\ 
- 3 & N &			4/5=0.80 \\ 
- 4 & Y &			3/5 =0.60 \\ 
- 5 & Y &			2/5=0.40 \\ 
- 6 & N &			2/5=0.40 \\ 
- 7 & N &			1/4=0.25 \\
- 8 & N &			0/3=0.00 \\
-  
- \hline
-\end{tabular}
-
-\caption{Using window sampling with a window size of 2 either side.}
-
-\end{table}
-
-By using the number of relevant documents that occur within a given window, we are able to get a declining rate distribution. 
-
-\subsubsection{Non-Homogeneous Poisson Defination} \label{nn_pp_def}
+\subsubsection{Non-Homogeneous Poisson Definition} \label{nn_pp_def}
 
 We can use a non-homogenous poission process to estimate the number of relevant documents in a given interval by integrating the rate function $\lambda(x)$ across the interval.
 
@@ -525,7 +498,59 @@ So
 Therefore given values for $a$ and $k$ which we can learn from fitting an exponential curve, we can predict the probability of there being $r$ relevant documents within the entire set of $n$ documents.
 
 
-\subsubsection{Non-Homogeneous Poisson Process Results} \label{nn_pp_def}
+\subsubsection{Implementation Non-Homogeneous Poisson Process} \label{imp_non_hom}
+
+\paragraph{Window Sampling} \label{window_samp}
+
+It is useful for us to estimate the rate in which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter. 
+
+\begin{table}[H]
+
+\centering
+\begin{tabular}{|c|c|c|} 
+\hline
+ Document Rank & Relevant & RelScore  \\ 
+ 1 & Y &			1/3=0.33 \\ 
+ 2 & Y &			3/4=0.75 \\ 
+ 3 & N &			4/5=0.80 \\ 
+ 4 & Y &			3/5 =0.60 \\ 
+ 5 & Y &			2/5=0.40 \\ 
+ 6 & N &			2/5=0.40 \\ 
+ 7 & N &			1/4=0.25 \\
+ 8 & N &			0/3=0.00 \\
+  
+ \hline
+\end{tabular}
+
+\caption{Using window sampling with a window size of 2 either side.}
+
+\end{table}
+
+We created a Python-based implementation using scipy for the curve modelling. Our steps can be broken down as follows:
+
+\begin{itemize}
+\item Load a run final into memory. For this task we used the Sheffield run data from CLEF 2017.
+
+\item Create a frequency based distribution of the data for relevant documents, e.g 1, 1, 2, 3, 3, 3, 3, 4
+
+\item Normalize the data for positions in which relevant documents occur e.g x = 1, 2, 3, 4, 5 y = 2, 12, 17, 34, 61
+
+\item Use normalized data to and window sampling\ref{window_samp} to create a probabilistic relevant document frequency in a given window. Window size is by default set to 20 (10 either side)
+
+\item Take a sample percentage from the distribution (start at 1\%). Use this percentage to fit an exponential curve ($ae^{kx}$)
+
+\item Use weights from curve fit and Non-Homogeneous Poisson Process to estimate the number of relevant documents across the entire collection. For values from $r: 0 \mapsto n$ we will get a probability of $r$ relevant documents. Assuming 95\% of documents is acceptable, we can sum over the probability mass until this value is reached.
+
+
+
+
+
+\end{itemize}
+
+
+By using the number of relevant documents that occur within a given window, we are able to get a declining rate distribution. 
+
+\paragraph{Results for Non-Homogeneous Poisson Process} \label{nn_pp_def}
 
 Using the above definition we created a non-homogeneous poission process and generated some results. We use different sample sizes to generate our initial curve. We assumed a minimum of 20\% effort was needed to generate a suitable curve.
 
@@ -552,9 +577,55 @@ Using the above definition we created a non-homogeneous poission process and gen
 
 \end{table}
 
+\section{Automatic Full Text Retrieval} \label{automatic_f_t_r}
+
+A full text of a study will contain much more information then just the abstract. Being able to obtain the full text of a study automatically gives us potentially much more information about the study. This could be useful in both ranking the studies by relevance and finding a stopping point in the ranking set.
+
+We developed an experiment that uses the qrel file from the CLEF 2017 task. The qrel contains a list a studies for each Cochrane systematic review, as-well as a flag indicating whether or not it was used in the finished review. We will first read this qrel file into memory and send a request to the following resources in attempt to retrieve the pdf:
+
+\begin{itemize}
+\item Springer Link
+\item Humana Press
+\item Blackwell Synergy
+\item Wiley
+\item Science Direct
+\item Choose Science Direct
+\item Ingenta Connect
+\item Cell Press
+\item jbc
+\item Nature
+\item Nature Reviews
+\item Pubmed Central
+\item PNAS
+\item Cold Spring Harbour
+
+\end{itemize}
+
+\begin{table}[H]
+
+\centering
+\begin{tabular}{|c|c|c|c|} 
+\hline
+ Type & Total Number in qrel[50 P/R Max] & PDFs retrieved & Rate  \\ 
+ Relevant Documents & 607 &		213 & 0.35 \\ 
+ Non-Relevant Documents & 1500 &		436 & 0.29 \\ 
+ Both & 2107  &		2107 & 0.30 \\ 
+
+ \hline
+\end{tabular}
+
+\caption{Return rate of PDF studies for 30 systematic reviews using content-level qrel file}
+
+\end{table}
+
+As the the number of Non-Relevant studies was exceedingly high (Over 120000 for all reviews), we limited the number for each study to 50. 
+
+We are able to acquire  30\% of the pdfs through automated techniques. Our return rate relevant documents is slightly higher, this is beneficial as the information is much more useful.
+
 \section{Indexing and Querying Medline with Limited Information}
 
 CLEF 2018 \cite{CLEFLINK} presents an appropriate sub-task for using a limited amount of information to retrieve relevant documents. Normally, reviewers are require to construct complex Boolean queries to retrieve data from Medline. The objective of CLEF 2018 Sub-Task 1: No Boolean Search \cite{CLEFLINK} is to search effectively and efficiently bypassing the construction of the Boolean query.
+
 
 \subsection{Acquiring Key Information from A Systematic Review Protocol}
 

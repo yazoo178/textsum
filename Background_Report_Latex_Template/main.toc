@@ -16,33 +16,31 @@
 \contentsline {subsubsection}{Knee Method}{9}{section*.7}
 \contentsline {section}{\numberline {2.4}Summary}{10}{section.2.4}
 \contentsline {chapter}{\numberline {3}Research Questions}{11}{chapter.3}
-\contentsline {section}{\numberline {3.1}Automated Decision Making of Relevant Studies}{11}{section.3.1}
-\contentsline {section}{\numberline {3.2}Information Extraction From Studies}{12}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}PICO Extraction}{12}{subsection.3.2.1}
-\contentsline {section}{\numberline {3.3}Stopping Methods}{12}{section.3.3}
-\contentsline {chapter}{\numberline {4}Novel Work}{13}{chapter.4}
-\contentsline {subsection}{\numberline {4.0.1}CLEF 2017 Runs}{13}{subsection.4.0.1}
-\contentsline {section}{\numberline {4.1}Baseline Approaches to Stopping}{14}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Oracle Scores}{14}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Percentage cut-off method}{15}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Similarity score cut-off method}{15}{subsection.4.1.3}
-\contentsline {section}{\numberline {4.2}Sample Method to Stopping}{17}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Curve Fitting}{17}{subsection.4.2.1}
-\contentsline {subsubsection}{Curve Predictions}{17}{section*.8}
-\contentsline {subsection}{\numberline {4.2.2}Gaussian Process Fitting}{19}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Conclusion on Curve fitting and GP}{20}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}Comparing Methods}{20}{subsection.4.2.4}
-\contentsline {section}{\numberline {4.3}Poisson Process for stopping points}{20}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Non-Homogeneous Poisson Process}{23}{subsection.4.3.1}
-\contentsline {subsubsection}{Window Sampling}{24}{section*.9}
-\contentsline {subsubsection}{Non-Homogeneous Poisson Defination}{24}{section*.10}
-\contentsline {subsubsection}{Non-Homogeneous Poisson Process Results}{25}{section*.11}
-\contentsline {section}{\numberline {4.4}Indexing and Querying Medline with Limited Information}{26}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Acquiring Key Information from A Systematic Review Protocol}{26}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Indexing Pubmed}{27}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Runs}{27}{subsection.4.4.3}
-\contentsline {subsection}{\numberline {4.4.4}Results}{27}{subsection.4.4.4}
-\contentsline {subsection}{\numberline {4.4.5}Pubmed automatic query Conclusion}{28}{subsection.4.4.5}
-\contentsline {chapter}{\numberline {5}Future Work}{29}{chapter.5}
-\contentsline {section}{\numberline {5.1}Gnatt Chart}{30}{section.5.1}
-\contentsline {chapter}{\numberline {6}DDP}{32}{chapter.6}
+\contentsline {chapter}{\numberline {4}Novel Work}{12}{chapter.4}
+\contentsline {subsection}{\numberline {4.0.1}CLEF 2017 Runs}{12}{subsection.4.0.1}
+\contentsline {section}{\numberline {4.1}Baseline Approaches to Stopping}{13}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Oracle Scores}{13}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Percentage cut-off method}{14}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Similarity score cut-off method}{14}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}Sample Method to Stopping}{16}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Curve Fitting}{16}{subsection.4.2.1}
+\contentsline {subsubsection}{Curve Predictions}{16}{section*.8}
+\contentsline {subsection}{\numberline {4.2.2}Gaussian Process Fitting}{18}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Conclusion on Curve fitting and GP}{19}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Comparing Methods}{19}{subsection.4.2.4}
+\contentsline {section}{\numberline {4.3}Poisson Process for Stopping Points}{19}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Non-Homogeneous Poisson Process}{22}{subsection.4.3.1}
+\contentsline {subsubsection}{Non-Homogeneous Poisson Definition}{23}{section*.9}
+\contentsline {subsubsection}{Implementation Non-Homogeneous Poisson Process}{23}{section*.10}
+\contentsline {paragraph}{Window Sampling}{24}{section*.11}
+\contentsline {paragraph}{Results for Non-Homogeneous Poisson Process}{24}{section*.12}
+\contentsline {section}{\numberline {4.4}Automatic Full Text Retrieval}{25}{section.4.4}
+\contentsline {section}{\numberline {4.5}Indexing and Querying Medline with Limited Information}{26}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Acquiring Key Information from A Systematic Review Protocol}{26}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Indexing Pubmed}{27}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}Runs}{28}{subsection.4.5.3}
+\contentsline {subsection}{\numberline {4.5.4}Results}{28}{subsection.4.5.4}
+\contentsline {subsection}{\numberline {4.5.5}Pubmed automatic query Conclusion}{29}{subsection.4.5.5}
+\contentsline {chapter}{\numberline {5}Future Work}{30}{chapter.5}
+\contentsline {section}{\numberline {5.1}Gnatt Chart}{33}{section.5.1}
+\contentsline {chapter}{\numberline {6}DDP}{35}{chapter.6}
