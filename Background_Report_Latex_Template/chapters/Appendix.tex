@@ -1,0 +1,107 @@
+\chapter{}
+
+\section{Indexing and Querying Medline with Limited Information}
+
+CLEF 2018 \cite{CLEFLINK} presents an appropriate sub-task for using a limited amount of information to retrieve relevant documents. Normally, reviewers are require to construct complex Boolean queries to retrieve data from Medline. The objective of CLEF 2018 Sub-Task 1: No Boolean Search \cite{CLEFLINK} is to search effectively and efficiently bypassing the construction of the Boolean query.
+
+
+\subsection{Acquiring Key Information from A Systematic Review Protocol}
+
+A systematic review protocol is created before the systematic review process is started. A systematic review protocol describes the rationale, hypothesis, and planned methods of the review. The Pubmed query is created manually with the help of the protocol. Here we are looking to generate a suitable query/relevant information from the protocol to then automatically query Pubmed.
+
+We used RAKE \cite{rake} to extraction key-words from a protocol. The minimum word occurrence count is set to 1, as the protocols summaries are typically small. We used a Pubmed stop list as the phrase splitting parameter. Example shown below:
+
+\begin{tcolorbox}
+
+Topic: CD008122 
+
+Title: Rapid diagnostic tests for diagnosing uncomplicated P. falciparum malaria in endemic countries 
+
+Objective: To assess the diagnostic accuracy of RDTs for detecting clinical P. falciparum malaria (symptoms suggestive of malaria plus P. falciparum parasitaemia detectable by microscopy) in persons living in malaria endemic areas who present to ambulatory healthcare facilities with symptoms of malaria, and to identify which types and brands of commercial test best detect clinical P. falciparum malaria.
+
+\end{tcolorbox}
+
+ 
+ 
+\begin{tcolorbox}
+
+endemic countries objective|ambulatory healthcare facilities|rapid diagnostic tests|falciparum parasitaemia detectable|malaria endemic areas|diagnostic accuracy|falciparum malaria
+
+\end{tcolorbox}
+
+The | symbol represents a separation between a phrase. The protcols are pre-processed as follows: Reference removal, lowercase, words less than $N$ length removed, pubmed stoplist. We decided to not perform any stemming/additional manipulation at this stage, due to uncertainty of query format.
+
+The key-word-query receives some final pre-processing prior to being loaded into our information retrieval (IR) system. We used a Lancaster stemmer to reduce words down to a base form. The result is as follows:
+
+\begin{tcolorbox}
+
+endem country object amb healthc facil rapid diagnost test falcipar parasitaem detect malar endem area diagnost acc falcipar malar
+
+\end{tcolorbox}
+
+\subsection{Indexing Pubmed}
+
+Pubmed was downloaded from the online resource \footnote{https://www.ncbi.nlm.nih.gov/home/download/}. We processed the xml files and retrieved the information for each study - title, id, abstract. To reduce the size, we store each record into a local database, containing only the relevant information for each study.
+
+We used Apache Lucene \footnote{https://lucene.apache.org/} to generate an index for the Pubmed local database. The abstract and title were concatenated together. Pre-processing was done using the same format as the query: Pubmed stoplist \footnote{https://www.ncbi.nlm.nih.gov/books/NBK3827/table/pubmedhelp.T.stopwords/}, Lancaster stemmer and lower-casing. 
+
+
+\subsection{Runs}
+
+\begin{itemize}
+\item \textbf{sheffield-Boolean}  
+The Sheffield Boolean runs uses words that occur the most in the document and the query as a basis for ranking. Documents that contain more query terms will feature higher in the overall rankings. We used the Apache Lucene Boolean similarity class for our implementation.\footnote{https://lucene.apache.org/core/7\_0\_1/core/org/apache/lucene/search/similarities/BooleanSimilarity.html}
+
+\item \textbf{sheffield-tfidf} The Sheffield tfidf run uses a cosine simularity measure to compare the simularity between the query and the pubmed article. Documents and queries are represented as tfidf vectors. We used the Apache Lucene tfidf similarity class for our implementation.\footnote{https://lucene.apache.org/core/7\_0\_1/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html}
+
+\item \textbf{sheffield-bm25} This run uses the bm25 similarity measure \cite{Robertson96okapiat}. We used the Apache Lucene bm25 similarity class for our implementation.\footnote{https://lucene.apache.org/core/7\_0\_1/core/org/apache/lucene/search/similarities/BM25Similarity.html}
+
+\end{itemize}
+
+\subsection{Results}
+
+Results were generated using the eval script from the CLEF 2017/2018 task \cite{Kanoulas12017}. We calculated the top $N$ results over the CLEF 2017 training set. We include a random baseline  to provide a comparison between results.
+
+
+\begin{table}[H]
+\scalebox{0.8}{
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|} 
+ \hline
+ Run & recall &  ap & lastrel & wss100 & wss95 & normarea & $N$ \\ 
+ Random-baseline & 0.005 &0.002 & 126.7 &0.00 &0.00 & 0.024 & - \\
+ Train-Data-Sheffield-bm25-Run1-objective-only & 0.538 &0.034 & 3039.051 &0.101 &0.108 & 0.431 & 5000 \\
+ Train-Data-Sheffield-tfidf-Run1-objective-only & 0.354&0.007& 2633.718&0.021&0.023& 0.247& 5000 \\
+ Train-Data-Sheffield-boolean-Run1-objective-only & 0.313 &0.034& 3039.051&0.101 &0.108 & 0.431 & 5000 \\
+ Train-Data-Sheffield-bm25-Run1-objective-only & 0.680&0.034& 12310.231&0.169&0.172& 0.592& 25000 \\
+ Train-Data-Sheffield-tfidf-Run1-objective-only & 0.601&0.007& 14883.744&0.13&0.136& 0.455& 25000 \\
+ Train-Data-Sheffield-boolean-Run1-objective-only & 0.471&0.007& 12974.205&0.03&0.029& 0.381& 25000 \\
+ 
+ \hline
+\end{tabular}
+}
+\caption{Results for IR Pubmed system. Comparison for both 5000 and 25000 thresholds}
+\end{table}
+
+
+As we increase the number of documents we return, the recall naturally increases. When we return 25000 documents for each topic, we are able to obtain a total recall rate of over 58\%. However, the precision (ap, average precision) is very low, suggesting a significant amount of the documents are not useful. BM25 was found to be the best ranking method, followed by tfidf and boolean.
+
+Improvements could certainly be made to this system:
+
+\begin{itemize}
+  \item MeSH headings would be useful in expanding the range of the query to capture synonymous terms. 
+  \item Tokenization could be optimized to capture phrases of different sizes.
+  \item Introducing a cost or stopping point to remove the amount of non-relevant documents. We can see for the 25000 documents set of results the last relevant document was around the 20000 point, meaning we could drop the last 5000 from our result set.
+\end{itemize}
+
+
+\subsection{Pubmed automatic query Conclusion}
+
+
+We built an IR system using Apache Lucerne and compared three separate ranking methods. We found bm25 ranking gave the best results overall.
+
+We found we were able to achieve fair results with a little optimization techniques to the index and query data.
+
+We compared the performance of our system across different return thresholds, naturally finding as we increase the returned number of documents we get a higher recall. This comes at the expense of reduced precision.
+
+We suggested further improvement to our system, such as including a phrase model for more robust features for both index and query.

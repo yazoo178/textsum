@@ -99,6 +99,55 @@ def calcDistirubtion(window, testFiles, records):
     return QueiresToDist
 
 
+def calcMovingAverage(window, testFiles, records):
+
+    queryIdToRelvDocs = {}
+    distb = {}
+
+    with open(testFiles, encoding='utf-8') as content:
+        for line in content:
+            tabbed = re.split('\s+', line)
+
+            if tabbed[0] not in queryIdToRelvDocs:
+                queryIdToRelvDocs[tabbed[0]] = []
+
+            if '1' in tabbed[3].rstrip().strip():
+                queryIdToRelvDocs[tabbed[0]].append(tabbed[2].rstrip().strip())
+
+
+
+    for record in records:
+        distb[record] = []
+        
+        for x in range(0, len(records[record].docsReturned)):
+
+            start = x - window
+            end = x + window
+            relCount = 0
+
+            if start < 0:
+                windowSet = records[record].docsReturned[0:end]
+
+            elif end >= len(records[record].docsReturned):
+                windowSet = records[record].docsReturned[start:len(records[record].docsReturned) -1]
+
+            else:
+                windowSet = records[record].docsReturned[start:end]
+
+
+            for element in windowSet:
+                if element in queryIdToRelvDocs[record]:
+                    relCount += 1
+
+        
+            extraMass = 1 / len(windowSet)
+
+            distb[record].append( (relCount / len(windowSet)) + extraMass)
+
+
+    return distb
+
+
 
 #see notes from Mark
 
@@ -154,11 +203,11 @@ for opt, arg in opts:
         runData = loadTestResults(arg)
 
 
-if os.path.isfile('distbute_10.pickle'):
-    dist =  pickle.load( open( "distbute_10.pickle", "rb" ))
+if os.path.isfile('distbute_25.pickle'):
+    dist =  pickle.load( open( "distbute_25.pickle", "rb" ))
 else:
-    dist =  calcDistirubtion(10, qrel, runData)
-    pickle.dump( dist, open( "distbute_10.pickle", "wb" ) )
+    dist =  calcMovingAverage(25, qrel, runData)
+    pickle.dump( dist, open( "distbute_25.pickle", "wb" ) )
 
 
 
@@ -224,7 +273,7 @@ for filename in os.listdir(files[0]):
     
 
     #loop from 10 to 100%
-    for x in range(2, 10):
+    for x in range(10, 100, 10):
 
         #Take percentage cut
         samplePercentage = 0.1 * x
@@ -240,7 +289,7 @@ for filename in os.listdir(files[0]):
         for x2, y in zip(X_samps, scoresSamps):
                 if lastPoint != y:
                     lastPoint = y
-                    x_points.append(x2)
+                    x_points.append(x2 - 1)
                     y_points.append(y)
 
 
@@ -250,11 +299,10 @@ for filename in os.listdir(files[0]):
         #get the distribution for each point
         for index in x_points:
 
-            docElementId = runData[filename.split('.')[0]].docsReturned[int(index)]
-            x_distr.append(dist[filename.split('.')[0]][docElementId])
+
+           x_distr.append(dist[filename.split('.')[0]][int(index)])
 
 
-    
 
         k = 0.01
         a = 0.2
@@ -268,17 +316,17 @@ for filename in os.listdir(files[0]):
         a, k = opt
         print(a, " ", k)
 
+        k = -abs(k)
         sum = 0
         n = 1
         
         while(True):
 
             try:
-                
                 sum+=non_hom_func(a, k, len(X_vals) , n) 
                 n = n + 1
-
             except:
+
                 n = len(X_vals)
                 print('Error encounted')
                 break

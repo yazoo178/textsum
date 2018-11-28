@@ -39,6 +39,9 @@
     <Compile Include="other files\log_likelihood_abstract+MeSH.py" />
     <Compile Include="other files\plot_runs.py" />
     <Compile Include="other files\run_4_LL.py" />
+    <Compile Include="random\curve_testing.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="random\shuffle.py" />
     <Compile Include="retrieve_data.py" />
     <Compile Include="service.py" />
@@ -50,6 +53,9 @@
     </Compile>
     <Compile Include="stopping_methods\date.py" />
     <Compile Include="stopping_methods\eval\evalulate_curve.py" />
+    <Compile Include="stopping_methods\findbestrate.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stopping_methods\fit_curves.py" />
     <Compile Include="stopping_methods\fit_curves_2.py" />
     <Compile Include="stopping_methods\fit_gp_scikitlearn.py" />
@@ -58,6 +64,9 @@
     <Compile Include="stopping_methods\gpTest.py" />
     <Compile Include="stopping_methods\gp_method.py" />
     <Compile Include="stopping_methods\intergrated_recall_rates.py" />
+    <Compile Include="stopping_methods\methods.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stopping_methods\non_hom_poission.py">
       <SubType>Code</SubType>
     </Compile>
@@ -76,6 +85,18 @@
     </Compile>
     <Compile Include="stopping_methods\prob_method.py" />
     <Compile Include="stopping_methods\runcutofffolder.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\sampling\bernoulli.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\sampling\horvitz_thompson.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\sampling\nsampling.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\sampling_methods.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="stopping_methods\target_method.py" />
@@ -1588,6 +1609,7 @@
     <Folder Include="stopping_methods\B-rank-cost_int_scores_3" />
     <Folder Include="stopping_methods\B-rank-cost_int_scores_3\curve_scores" />
     <Folder Include="stopping_methods\eval" />
+    <Folder Include="stopping_methods\sampling\" />
     <Folder Include="stopping_methods\run-5_int_scores_1" />
     <Folder Include="stopping_methods\run-5_int_scores_3" />
     <Folder Include="stopping_methods\Test_Data_Sheffield-run-2_int_scores_1" />

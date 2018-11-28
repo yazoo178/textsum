@@ -1,10 +1,16 @@
 \chapter{Novel Work} \label{novelw}
 
-In this section the work completed so far will be presented. Two main areas of the systematic review process has been focused on: stopping criteria and indexing/querying PubMed.
+In this section the work completed so far will be presented. 
+
+We first look at the CLEF 2017 runs, these are the datasets we will use for applying and evaluating our stopping methods. We establish a baseline result (Oracle); this tells use the best performance we could possibly get for each run. We then move on to evaluate two new methods that we developed to stopping, a percentage cut-off and a similarity score cut-off approach.
+
+Further work looks at a different approach to stopping using partition sampling. We use a portion of the document collection to observe the distribution of the data and then predict the remaining portion. We first apply a curve to our data and then move on to use a Poisson Process.
+
+Finally we look at an idea for building upon the dataset we are using by extracting more information from a study's full text. We present some initial findings as to how possible it is to retrieve these texts through automated techniques.
 
 
 
-\subsection{CLEF 2017 Runs} \label{clefRuns}
+\section{CLEF 2017 Runs} \label{clefRuns}
 
 For the CLEF 2017 Technologically Assisted Reviews in Empirical Medicine \cite{Kanoulas12017}, participants were expected to submit runs for ranking documents. Participants were given complex boolean queries that could be used for extracting relevant information to rank the documents. These runs were later released for public access \footnote{https://github.com/CLEF-TAR/tar/tree/master/2017-TAR/participant-runs}
 
@@ -28,9 +34,9 @@ ucl full-text        & Used a deep learning model architecture                  
 \end{table}
 
 
-We have taken 6 ranking sets of which are of different quality. The Waterloo and AUTH ranks are the best rankings followed by Sheffield. The UCL and NTU submissions feature poorer quality rankings.
+We have taken 6 ranking sets of which are of different quality. The Waterloo and AUTH ranks are the best rankings followed by Sheffield. The UCL and NTU submissions feature poorer quality rankings. We tried to take runs that had a varying level of quality in the rankings.
 
-CLEF 2017 runs will follow a format similar to the example below. The most important information being the topic id and the document id.
+CLEF 2017 runs will follow a format similar to the example below. The most important information being the topic id and the document id. 
 
 
 \begin{tcolorbox} \label{scoreExample}
@@ -45,17 +51,20 @@ CD008803     0  20872357     1  \\
 CD008803     0  23837966     0 
 \end{tcolorbox}
 
-Where the 1 or 0 on the right side indicates if the document is relevant for a study.
-
+Where the 1 or 0 on the right side indicates if the document is relevant for a study. Therefore the quality of the datasets can be observed by looking at how many of the relevant documents feature towards the top of the rankings.
 
 
 \section{Baseline Approaches to Stopping} \label{baselineapp}
 
-We can now establish some baseline approaches for finding stopping points. Approaches are heavily dependant on the initial rankings of the document collection, and naturally assume more relevant documents feature towards the start of the collection.
+We can now establish some baseline approaches for finding stopping points. Approaches are heavily dependent on the initial rankings of the document collection, and naturally assume more relevant documents feature towards the start of the collection. 
 
 \subsection{Oracle Scores} \label{oracleScores}
 
-Looking at the oracle scores for each set of rankings will tell us the best we can possibly for do this task.  We will assume we are satisfied with 70\% recall. These scores are calculated as the minimum amount of effort that could be made to achieve 70\% recall. Results are taken as averages over all topics.
+Looking at the oracle scores for each set of rankings will tell us the best we can possibly for do this task.  We will used the 70\% recall benchmark.
+
+These scores are calculated as the minimum amount of effort that could be made to achieve 70\% recall. We first loop over each topic and update a count each time a relevant document is found. We then examine the recall each time the count is updated and determine if the threshold score has been reached (70\%). If 70\% has been reached we stop iterating over the rankings and calculate the effort made up to this point.
+
+Results are taken as averages over all topics.
 
 \begin{table}[H]
 
@@ -113,7 +122,10 @@ The limitation of this approach is the effort required looking through documents
 
 \subsection{Similarity score cut-off method} \label{simScoreMethod}
 
-A similarity score method will assume each document in the rankings has a score associated with it. Consider the ranking format described in \ref{clefRuns}. The 5th column describes a similarity between the document and the query. Similarity scores gradually decline as we descend down the rankings. For this experiment we only use the Sheffield rankings.
+A similarity score method will assume each document in the rankings has a score associated with it. Consider the ranking format described in \ref{clefRuns}. The 5th column describes a similarity between the document and the query. Similarity scores gradually decline as we descend down the rankings.
+
+
+For the Sheffield set of rankings, the similarity score comes from the cosine similarity between a vectorized query and document. 
 
 The similarity score can be used derive a stopping point. This method works by looking at documents $D_i$ and $D_{i+1}$ and determining if the difference between the similarity scores has become too large. This method will work on the basis that documents that are no longer relevant will have a sudden drop in score such that we can identify this as our stopping point.
 
@@ -146,7 +158,7 @@ Here we are saying if the two documents' scores are above 1.5\% then we should s
 \caption{Similarity cut-off comparison for stopping for Test\_Data\_Sheffield-run-2. Using cosine similarity scores.}
 \end{table}
 
-These results are highly sensitive to the similarity score and show it's difficult to use this score as an affective measure for stopping. We found similarity scores rarely have sudden drops in values, making it difficult to use this method to identify a stopping point.
+These results are highly sensitive to the similarity score and show it is difficult to use this score as an effective measure for stopping. We found similarity scores rarely have sudden drops in values, making it difficult to use this method to identify a stopping point.
 
 As an alternative approach, we can look at just the top document $D_1$, and compare it to the succeeding documents $D_{1+i}$ in the rankings. We can formulate this as follows:
 
@@ -178,13 +190,13 @@ As an alternative approach, we can look at just the top document $D_1$, and comp
 
 We found results to be much better when using the first document to look for a stopping point. 85.5\% difference in first and subsequent documents was found to be the point for hitting 1.0 reliability. This comes at the expense of making just over 50\% effort.
 
-\section{Sample Method to Stopping} \label{samplemethods}
+\section{Sample Methods to Stopping} \label{samplemethods}
 
 The limitations of the methods presented in \ref{baselineapp} is that they they still require looking through a large volume of documents.
 
-The approaches in this section will use sampling methods. These approaches assumes we have sensible ranking algorithm for returning documents for a query. They work by generating a sample set, which acts as our model for predicting a stopping point.
+The approaches in this section will use sampling methods. These approaches assumes we have sensible ranking algorithm for returning documents for a query. They work by generating a sample set, which acts as our model for predicting a stopping point. Therefore the quality of these methods will depend on the sparseness of the document rankings, making it challenging to establish a single stand-out method.
 
-The first step is to generate a sample set. We used an interval method for generating our set, i.e select every $N$th document. The intuition being that the distribution of relevant document in the sample set, should be similar to that of the real set of relevant documents. This makes it suitable to use as a model. 
+The first step for these methods is to generate a sample set. We used an interval method for generating our set, i.e select every $N$th document. The intuition being that the distribution of relevant document in the sample set, should be similar to that of the complete set of relevant documents. This makes it suitable to use as a model. 
 
 
 \iffalse
@@ -204,10 +216,10 @@ Usefullness = \frac{\sum{I}}{|T|}
 
 \subsection{Curve Fitting}
 
-Our first approach is to fit a non-linear curve against a sample set. We used a sample size of 3.
+Our first approach is to fit a non-linear curve against a sample set. We used a sample size of 3. We opted for an exponential curve as the number of relevant documents found will increase as more documents are looked, but eventually level out as relevant documents become less frequent.  
 
 \begin{equation}
-F(x) = n - a\exp^{-kx}
+F(x) = n - ae^{-kx}
 \end{equation}
 
 Where $a$, $k$ and $n$ are learnt weights and $x$ is an associated return rate for a document. We generate the curve using the non-linear least squares algorithm \cite{leastsqures}. 
@@ -264,7 +276,7 @@ We can visualise the curve along with the confidence intervals. The Y axis is th
 \fi
 
 
-The number of topics was reduced down from 30 to 23 using a cut-off parameter. This reduces some of topics that contain fewer relevant documents and do not generate suitable prediction curves. We used a cut-off parameter of 0.5\%. This can be read as the number of relevant documents in a document collection must be atleast 0.5\%
+The number of topics was reduced down from 30 to 23 using a cut-off parameter. This reduces some of topics that contain fewer relevant documents and does not generate suitable prediction curves. We used a cut-off parameter of 0.5\%. This can be read as the proportion of relevant documents in a document collection must be atleast 0.5\%, which was found to be a suitable amount to give us a good volume of topics.
 
 We also include a confidence interval evaluation for lower bounded range of a $3\sigma$ confidence interval. The key advantages of using a curve as  method of evaluating stopping criteria is being able to make use of this confidence interval in a real systematic review. In the context of a systematic reviewers at the data filtering stage, we could specify that the system is 95\% certain that 70\% of relevant documents have been found. At which point the reviewer can decide if its worth continuing to look at documents.
 
@@ -297,9 +309,9 @@ We also include a confidence interval evaluation for lower bounded range of a $3
 
 We have deliberately compared two of the better participant rankings (Waterloo and auth) and two of the lower performers (ntu and ucl). We can see the quality of the initial rankings significantly influences the performance of our stopping criteria. This suggests there is a important relationship between using a curve to predict a stopping point and how good the initial ranking of documents is. 
 
-Some of the ranking methods struggle to produce curves and when combined with a cut-of parameter produce become not worth considering in our evaluation. In this situation we simply returned everything for the given topic, resulting in 100\% recall at the expense of 100\% effort.
+Some of the datasets to produce curves due to the sparsity of relevant documents. In situations where this occurred, we returned everything for the given topic, resulting in 100\% recall at the expense of 100\% effort.
 
-
+\iffalse
 \subsection{Gaussian Process Fitting}
 
 As an alternate approach to fitting a simple curve, we can apply a Gaussian Process (GP) \cite{ebden2008gaussian}. We will apply a constant kernel plus a squared-exponential kernel. GP was implemented using scikit learn classes. \footnote{http://scikit-learn.org/stable/modules/gaussian\_process.html}
@@ -352,28 +364,7 @@ We found the GP is not truly representing the distribution of the data.
 
 We implemented two methods for predicting stopping points in ranked medical studies. Our first approach used a general curve to estimate the point in which 70\% recall is likely to have been hit. Our second method used a Gaussian Process in the same way. We used a sampling method to generate our curves to makes predictions about the remaining studies.
 
-
-\subsection{Comparing Methods} \label{compMethods}
-
-\begin{table}[H]
-
-\centering
-\begin{tabular}{|c|c|c|c|c|} 
- \hline
- Method & Target & recall & reliability & effort  \\ 
- Knee Method & - & 0.888 & 0.866 & 0.640 \\
- Target Method & 10 & 0.952 & 0.960 & 0.652 \\
- Sheffield-run2-curve & - & 0.75 & 0.640 & 0.510 \\
- Sheffield-run2-cutoff(85.5\%) & - & 0.934 & 1.000 & 0.553 \\
- \hline
-\end{tabular}
-\caption{Comparing target method, knee, cut-off and curve fitting along with confidence interval. Using Sheffield-run-2}
-
-\end{table}
-
-We can evaluate how well this method does against an existing set of relevance rankings. We will use the Sheffield run data from the CLEF 2017 task \cite{Kanoulas12017}. As the target method allows us to specify our level of reliability, we needed a target $T$ of 10 to hit 95\% reliability. We can see that the reliability of our method does not come close to the Target method. Our curve, however has a much lower effort. The cut-off method described in \ref{perCutOffMethod} beats both the curve-fitting and the target methods.
-
-Overall we believe that the Knee and Target methods are too sensitive to the ranking algorithm being used. On our Sheffield-run2 rankings we can see the performance for both these methods is significantly lower than that reported in previous work \cite{Cormack2016}
+\fi
 
 
 
@@ -422,17 +413,17 @@ We can use the rate parameter to estimate the probability of there being atleast
 
 The plot shows as we look at more documents, we are increasingly likely to have seen one relevant document. While this is useful to know, we can not use this as a method for predicting a suitable stopping point.
 
-A Homogeneous Poisson Process can be used to model the occurrences of relevant document and then used to predict the probability of there bring $r$ relevant documents after $n$ documents have been observed. 
+A Homogeneous Poisson process can be used to model the occurrences of relevant document and then used to predict the probability of there bring $r$ relevant documents after $n$ documents have been observed. 
 
 \begin{equation}
-	  P(n = r) = \frac{(\lambda n)^r}{r!} e ^ {-\lambda n}
+	  P(r) = \frac{(\lambda n)^r}{r!} e ^ {-\lambda n}
 \end{equation}
 
 
 Due to the high likelihood that $r!$ will be exceeding large, we can use a stirling approximation, maintaining a similar value as to what we would have obtained computing the factorial.
 
 \begin{equation}
-	   r \approx \sqrt{2\pi n} \left( \frac{r}{e} \right) ^r
+	   r \approx \sqrt{2\pi r} \left( \frac{r}{e} \right) ^r
 \end{equation}
 
 By summing over the probability mass from for values of $n$ between 1 and the size of the document collection we can estimate at what point 95\% reliability (stopping point $s$) is reached. 
@@ -441,18 +432,18 @@ By summing over the probability mass from for values of $n$ between 1 and the si
 	   s = \sum_{0, i < 0.95}^{|n|} \frac{(\lambda i)^r}{stirling(r!)} e ^ {-\lambda i}
 \end{equation}
 
-The limitation of using an Homogeneous Poisson Process is that the rate parameter is constant throughout distribution. This means if we looked at 10\% of the rankings the rate of relevant documents would be assumed to be constant for the remainder of the document collection.
+The limitation of using an Homogeneous Poisson process is that the rate parameter is constant throughout distribution. This means if we looked at 10\% of the rankings the rate of relevant documents would be assumed to be constant for the remainder of the document collection. Therefore this method would only be suitable if we had a random relevance rate.
 
 
 \begin{figure}[H]
 \center
 \includegraphics[width=16cm]{figures/overestimate.png}
-\caption{Homogeneous Poisson Process overestimating the rate of documents, resulting a prediction curve that would expect us to look at 1500 of the 2000 documents to reach 70\% recall}
+\caption{Homogeneous Poisson process overestimating the rate of documents, resulting a prediction curve that would expect us to look at 1500 of the 2000 documents to reach 70\% recall}
 \end{figure}
 
 \subsection{Non-Homogeneous Poisson Process}
 
-As the rate parameter is varies throughout the distribution of documents, we can use a Non-Homogeneous Poisson Process. A Non-Homogeneous Poisson process is similar to an ordinary Poisson process, except that the average rate of arrivals is allowed to vary with time. 
+As the rate parameter is varies throughout the distribution of documents, we can use a Non-Homogeneous Poisson process. A Non-Homogeneous Poisson process is similar to an ordinary Poisson process, except that the average rate of arrivals is allowed to vary with time \cite{nonhomp}. 
 
 
 \subsubsection{Non-Homogeneous Poisson Definition} \label{nn_pp_def}
@@ -480,13 +471,13 @@ We can make the assumption that the rate in which relevant documents appear is a
 Therefore
 
 \begin{equation}
-	   \int_a^b \lambda(x) d(x) = \int_a^b ae^{kx} dx = \frac{a}{k}e^{kx}
+	   \int \lambda(x) d(x) = \int ae^{kx} dx = \frac{a}{k}e^{kx}
 \end{equation}
 
-As we are only interested in knowing the total number of relevant documents, we can assume $a=0$ and $b=n$ where $n$ is the total number of documents.
+As we are only interested in knowing the total number of relevant documents, we assume that we are integrating from 0 to the total number of documents.
 
 \begin{equation}
-	   \Lambda(0, n) = \int_0^n ae^{kx}dx = \frac{a}{k}e^{kx} = \frac{a}{k}(e^{kn} - 1)
+	   \Lambda(0, n) = \int_0^n ae^{kx}dx = \left[\frac{a}{k}e^{kx}\right]_0^n = \frac{a}{k}(e^{kn} - 1)
 \end{equation}
 
 So
@@ -502,7 +493,7 @@ Therefore given values for $a$ and $k$ which we can learn from fitting an expone
 
 \paragraph{Window Sampling} \label{window_samp}
 
-It is useful for us to estimate the rate in which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter. 
+It is useful for us to estimate the rate at which relevant documents occur. By iterating over each document in a returned set of documents, and evaluating the relevant documents in a given window, we can estimate this rate parameter. 
 
 \begin{table}[H]
 
@@ -526,60 +517,134 @@ It is useful for us to estimate the rate in which relevant documents occur. By i
 
 \end{table}
 
+The challenge is being able to find an optimum sample size. A sample size that is too small will not provide enough information on the distribution of the surrounding documents. A sample size that is too large is a risk, as the if the documents rankings are sparse the rate estimations would not be as useful.
+
+\paragraph{Poisson Process Steps} \label{pp_steps}
+
 We created a Python-based implementation using scipy for the curve modelling. Our steps can be broken down as follows:
 
-\begin{itemize}
+\begin{enumerate}
 \item Load a run final into memory. For this task we used the Sheffield run data from CLEF 2017.
 
 \item Create a frequency based distribution of the data for relevant documents, e.g 1, 1, 2, 3, 3, 3, 3, 4
 
 \item Normalize the data for positions in which relevant documents occur e.g x = 1, 2, 3, 4, 5 y = 2, 12, 17, 34, 61
 
-\item Use normalized data to and window sampling\ref{window_samp} to create a probabilistic relevant document frequency in a given window. Window size is by default set to 20 (10 either side)
+\item Use normalized data along with window sampling \ref{window_samp} to create a probabilistic relevant document frequency in a given window. 
 
-\item Take a sample percentage from the distribution (start at 1\%). Use this percentage to fit an exponential curve ($ae^{kx}$)
+\item Take a sample percentage from the distribution (start at 1\%). Use this percentage to fit an exponential curve ($ae^{kx}$) using non-linear least squares \footnote{\url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html}}. This provides values for $a$ and $k$ which can then be substituted into equation 4.16 to give the distribution of the total number of relevant documents.
 
-\item Use weights from curve fit and Non-Homogeneous Poisson Process to estimate the number of relevant documents across the entire collection. For values from $r: 0 \mapsto n$ we will get a probability of $r$ relevant documents. Assuming 95\% of documents is acceptable, we can sum over the probability mass until this value is reached.
+\item Use weights from curve fit and Non-Homogeneous Poisson process to estimate the number of relevant documents across the entire collection. For values from $r: 0 \mapsto n$ we will get a probability of $r$ relevant documents. Assuming 95\% of documents is acceptable, we can sum over the probability mass until this value is reached.
 
+\end{enumerate}
 
+\paragraph{Finding an Optimum Window Size} \label{pp_steps}
 
+To find a general window size for sampling we will observe the sum of the mean squared error over all topics for sampled data from 10\% to 40\%. We will consider sample window sizes in the range of 1 to 100.  This will tell us how well our exponential curve is fitting to the data for each window sample size.
 
+\begin{figure}[H]
+\center
+\includegraphics[width=15cm]{figures/sse_avg.png}
+\caption{Comparison of different sample portions against sample window size}
+\end{figure}
 
-\end{itemize}
+We can see a fairly steep drop decline between using a sample window of 1 to 20. As we reach 50, the curve has become almost flat. Therefore, we will use a sample window of 50 for the remainder of this work.
 
-
-By using the number of relevant documents that occur within a given window, we are able to get a declining rate distribution. 
 
 \paragraph{Results for Non-Homogeneous Poisson Process} \label{nn_pp_def}
 
-Using the above definition we created a non-homogeneous poission process and generated some results. We use different sample sizes to generate our initial curve. We assumed a minimum of 20\% effort was needed to generate a suitable curve.
+Using the above definition and sample window we created a non-homogeneous Poisson process and generated some results. We still consider different sample portions for generating our initial curve.
+
+\begin{table}[H]
+\scalebox{0.65}{
+\centering
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\% of Documents      & \multicolumn{3}{l|}{10\%}     & \multicolumn{3}{l|}{20\%} & \multicolumn{3}{l|}{40\%} & \multicolumn{3}{l|}{60\%} & \multicolumn{3}{l|}{80\%}  & \multicolumn{3}{l|}{90\%} \\ \hline
+Run                  & Recall & Reliability & Effort & -       & -      & -      & -       & -      & -      & -       & -      & -      & -       & -      & -   & -       & -      & -      \\ \hline
+
+Sheffield-run-2      & 0.92   & 0.86        & 0.76   & 0.97    & 1.0   & 0.85   & 0.99    & 1.0   & 0.96   & 1.0    & 1.0   & 0.99   & 1.0    & 1.0   & 0.99  & 1.0    & 1.0   & 0.99   \\ \hline
+
+Waterloo A-rank-cost      & 0.89   & 0.86        & 0.72   & 0.96    & 1.0   & 0.86   & 0.99    & 1.0   & 0.92   & 0.99    & 1.0   & 0.96   & 0.99   & 1.0   & 0.97  & 0.99    & 1.0   & 0.98   \\ \hline
+
+Waterloo B-rank-cost      & 0.90   & 0.82        & 0.77   & 0.92    & 1.0   & 0.87   & 0.98    & 1.0   & 0.92   & 0.99    & 1.0   & 0.96   & 0.99   & 1.0   & 0.98  & 0.99    & 1.0   & 0.98   \\ \hline
+
+auth run-1     & 0.93   & 0.91        & 0.78   & 0.97    & 0.95   & 0.93   & 0.99    & 1.0   & 0.95   & 1.0    & 1.0   & 0.99   & 0.99   & 1.0   & 0.99  & 1.0    & 1.0   & 0.99   \\ \hline
+
+auth run-2    & 0.91   & 0.95        & 0.70   & 0.96    & 0.95   & 0.87   & 0.99    & 1.0   & 0.93   & 1.0    & 1.0   & 0.99   & 1.0   & 1.0   & 0.99  & 1.0    & 1.0   & 0.99   \\ \hline
+
+\end{tabular}
+}
+\caption{Comparison of results using a non-homogeneous Poisson process and different sample sizes}
+\end{table}
+
+
+\paragraph{Results for Non-Homogeneous Poisson Process using Dynamic Sample Size} \label{nn_pp_def_dy}
+
+The limitation of using a set sample percentage is that it is not suitable for all topics. In some situations we may reach a desired level of recall sooner by sampling few documents. For this reason we alter our method slightly to increase the sample over an iteration until we estimate that we have reached our desired level of recall. We add two more steps to our process:
+
+\begin{enumerate}
+
+\item[7] Determine if estimated number of relevant documents across the entire collection has reached the desired level of recall. 
+
+\item[8] Repeated steps 5-7 until condition 7 is satisfied.
+
+\end{enumerate}
 
 \begin{table}[H]
 
 \centering
-\begin{tabular}{|c|c|c|c|} 
-\hline
- Initial Effort & Effort & Recall & Reliability  \\ 
- 20\% & 0.78 &		0.93 & 0.91 \\ 
- 30\% & 0.85 &		0.97 & 1.0 \\ 
- 40\% & 0.92 &		0.98 & 1.0 \\ 
- 50\% & 0.94 &		0.98 & 1.0 \\ 
- 60\% & 0.98 &		0.99 & 1.0 \\ 
- 70\% & 0.98 &		0.99 & 1.0 \\ 
- 80\% & 0.98 &		0.99 & 1.0 \\ 
- 90\% & 0.99 &		0.99 & 1.0 \\  
-
-  
+\begin{tabular}{|c|c|c|c|c|} 
+ \hline
+ Run & Recall & Reliability & Effort & Topics Ran  \\ 
+ Sheffield-run-2 & 0.90 & 0.95 & 0.67 & 14/23 \\
+ Waterloo A-rank-cost & 0.90 & 0.95 & 0.64 & 20/23 \\
+ Waterloo B-rank-cost & 0.92 & 1.0 & 0.69 & 19/23 \\
+ auth run-1 & 0.92 & 0.95 & 0.59 & 21/23 \\
+ auth run-2 & 0.91 & 0.95 & 0.60 & 20/23 \\
  \hline
 \end{tabular}
-
-\caption{Non-Homogeneous Poisson Process again Sheffield test set}
+\caption{Using an iterative approach to a non homogeneous Poisson process. Scores are macro averages over all topics}
 
 \end{table}
 
+This imposes a further challenge in that a non-fitting curve may result in an estimation never reaching a deserved level of recall. After applying some data manipulation to the sampled data we were able to get the majority of the topics running using a non homogeneous Poisson process. The maximum possible topics that could be ran is 23. In situations where the topic could not generate a curve/the Poisson process was not able to predict a stopping point we applied an effort score to the topic (1.0). 
+
+Overall, we still found this approach to be highly dependant on the quality of the ranking collection. This stemmed from the rate function not complying with an exponential curve when using sampled data that is not sufficiently ordered. This can be observed by considering a situation where the probabilistic sampled data fluctuates as we descend down the rankings. We would always expect succeeding values to be less than or equal too the previous value.
+
+\section{Comparing Methods} \label{compMethods}
+
+Comparing our new methods to existing methods we can evaluate how well our methods are doing. We will use the Sheffield run data from the CLEF 2017 task \cite{Kanoulas12017}.
+
+\begin{table}[H]
+
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+ \hline
+ Method & Target & Recall & Reliability & Effort  \\ 
+ Knee Method & - & 0.88 & 0.86 & 0.64 \\
+ Target Method & 10 & 0.95 & 0.96 & 0.65 \\
+ Sheffield-run2-curve & - & 0.75 & 0.64 & 0.51 \\
+ Sheffield-run2-cutoff(85.5\%) & - & 0.93 & 1.0 & 0.53 \\
+ Sheffield-run2-poisson & - & 0.90 & 1.0 & 0.67 \\
+ Sheffield-run2-poisson + cutoff(85.5\%) & - & 0.89 & 0.95 & 0.54 \\
+ \hline
+\end{tabular}
+\caption{Comparing target method, knee, cut-off and curve fitting along with confidence interval. Using Sheffield-run-2}
+
+\end{table}
+
+As the target method allows us to specify our level of reliability, we needed a target $T$ of 10 to hit 95\% reliability. We can see the cut off method alone does quite well, however the limitation of this approach is that we had to learn the best cut-off point (85.5\%). The Poisson process does well, however the effort is still high, due to the number of topics that could not be ran.
+
+Finally, we include an ensemble solution of both the Poisson process and the cut-off method. For topics that failed during the Poisson process stage we apply the cut-off method. For the Sheffield rankings this meant 14 topics went through the Poisson process and the remaining 9 went through the cut-off method. 
+
+Overall we believe that the Knee and Target methods are too sensitive to the ranking algorithm being used. On our Sheffield-run2 rankings we can see the performance for both these methods is significantly lower than that reported in previous work \cite{Cormack2016}. The cut-off method, whilst very simple does well in comparison to the other methods, but is limited by having to find the optimum cut-off rate. The Poisson process shows promise, but needs very tweaking and optimization to be further improved. 
+
 \section{Automatic Full Text Retrieval} \label{automatic_f_t_r}
 
-A full text of a study will contain much more information then just the abstract. Being able to obtain the full text of a study automatically gives us potentially much more information about the study. This could be useful in both ranking the studies by relevance and finding a stopping point in the ranking set.
+
+A common theme throughout all of the methods presented above is that we actually using very little information to find a stopping point. What would be useful is to use the abstracts and full texts to as a way of determining relevant and non-relevant documents. Abstracts call easily be retrieved by mapping the study ids in the rankings to a PubMed query. Full texts are much more challenging to retrieve due to restrictions in licences and general availability. This final section provides some initial work on retrieving full texts automatically and evaluating the retrieval rate.
 
 We developed an experiment that uses the qrel file from the CLEF 2017 task. The qrel contains a list a studies for each Cochrane systematic review, as-well as a flag indicating whether or not it was used in the finished review. We will first read this qrel file into memory and send a request to the following resources in attempt to retrieve the pdf:
 
@@ -622,111 +687,7 @@ As the the number of Non-Relevant studies was exceedingly high (Over 120000 for 
 
 We are able to acquire  30\% of the pdfs through automated techniques. Our return rate relevant documents is slightly higher, this is beneficial as the information is much more useful.
 
-\section{Indexing and Querying Medline with Limited Information}
 
-CLEF 2018 \cite{CLEFLINK} presents an appropriate sub-task for using a limited amount of information to retrieve relevant documents. Normally, reviewers are require to construct complex Boolean queries to retrieve data from Medline. The objective of CLEF 2018 Sub-Task 1: No Boolean Search \cite{CLEFLINK} is to search effectively and efficiently bypassing the construction of the Boolean query.
+\section{Chapter Summary}
 
-
-\subsection{Acquiring Key Information from A Systematic Review Protocol}
-
-A systematic review protocol is created before the systematic review process is started. A systematic review protocol describes the rationale, hypothesis, and planned methods of the review. The Pubmed query is created manually with the help of the protocol. Here we are looking to generate a suitable query/relevant information from the protocol to then automatically query Pubmed.
-
-We used RAKE \cite{rake} to extraction key-words from a protocol. The minimum word occurrence count is set to 1, as the protocols are typically small. We used a Pubmed stop list as the phrase splitting parameter. Example shown below:
-
-\begin{tcolorbox}
-
-Topic: CD008122 
-
-Title: Rapid diagnostic tests for diagnosing uncomplicated P. falciparum malaria in endemic countries 
-
-Objective: To assess the diagnostic accuracy of RDTs for detecting clinical P. falciparum malaria (symptoms suggestive of malaria plus P. falciparum parasitaemia detectable by microscopy) in persons living in malaria endemic areas who present to ambulatory healthcare facilities with symptoms of malaria, and to identify which types and brands of commercial test best detect clinical P. falciparum malaria.
-
-\end{tcolorbox}
-
- 
- 
-\begin{tcolorbox}
-
-endemic countries objective|ambulatory healthcare facilities|rapid diagnostic tests|falciparum parasitaemia detectable|malaria endemic areas|diagnostic accuracy|falciparum malaria
-
-\end{tcolorbox}
-
-The | symbol represents a separation between a phrase. The protcols are pre-processed as follows: Reference removal, lowercase, words less than $N$ length removed, pubmed stoplist. We decided to not perform any stemming/additional manipulation at this stage, due to uncertainty of query format.
-
-The key-word-query receives some final pre-processing prior to being loaded into our information retrieval (IR) system. We used a Lancaster stemmer to reduce words down to a base form. The result is as follows:
-
-\begin{tcolorbox}
-
-endem country object amb healthc facil rapid diagnost test falcipar parasitaem detect malar endem area diagnost acc falcipar malar
-
-\end{tcolorbox}
-
-\subsection{Indexing Pubmed}
-
-Pubmed was downloaded from the online resource \footnote{https://www.ncbi.nlm.nih.gov/home/download/}. We processed the xml files and retrieved the information for each study - title, id, abstract. To reduce the size, we store each record into a local database, containing only the relevant information for each study.
-
-We used Apache Lucene \footnote{https://lucene.apache.org/} to generate an index for the Pubmed local database. The abstract and title were concatenated together. Pre-processing was done using the same format as the query: Pubmed stoplist \footnote{https://www.ncbi.nlm.nih.gov/books/NBK3827/table/pubmedhelp.T.stopwords/}, Lancaster stemmer and lower-casing. 
-
-
-\subsection{Runs}
-
-\begin{itemize}
-\item \textbf{sheffield-Boolean}  
-The Sheffield Boolean runs uses words that occur the most in the document and the query as a basis for ranking. Documents that contain more query terms will feature higher in the overall rankings. We used the Apache Lucene Boolean similarity class for our implementation.\footnote{https://lucene.apache.org/core/7\_0\_1/core/org/apache/lucene/search/similarities/BooleanSimilarity.html}
-
-\item \textbf{sheffield-tfidf} The Sheffield tfidf run uses a cosine simularity measure to compare the simularity between the query and the pubmed article. Documents and queries are represented as tfidf vectors. We used the Apache Lucene tfidf similarity class for our implementation.\footnote{https://lucene.apache.org/core/7\_0\_1/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html}
-
-\item \textbf{sheffield-bm25} This run uses the bm25 similarity measure \cite{Robertson96okapiat}. We used the Apache Lucene bm25 similarity class for our implementation.\footnote{https://lucene.apache.org/core/7\_0\_1/core/org/apache/lucene/search/similarities/BM25Similarity.html}
-
-\end{itemize}
-
-\subsection{Results}
-
-Results were generated using the eval script from the CLEF 2017/2018 task \cite{Kanoulas12017}. We calculated the top $N$ results over the CLEF 2017 training set. We include a random baseline  to provide a comparison between results.
-
-
-\begin{table}[H]
-\scalebox{0.8}{
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|} 
- \hline
- Run & recall &  ap & lastrel & wss100 & wss95 & normarea & $N$ \\ 
- Random-baseline & 0.005 &0.002 & 126.7 &0.00 &0.00 & 0.024 & - \\
- Train-Data-Sheffield-bm25-Run1-objective-only & 0.538 &0.034 & 3039.051 &0.101 &0.108 & 0.431 & 5000 \\
- Train-Data-Sheffield-tfidf-Run1-objective-only & 0.354&0.007& 2633.718&0.021&0.023& 0.247& 5000 \\
- Train-Data-Sheffield-boolean-Run1-objective-only & 0.313 &0.034& 3039.051&0.101 &0.108 & 0.431 & 5000 \\
- Train-Data-Sheffield-bm25-Run1-objective-only & 0.680&0.034& 12310.231&0.169&0.172& 0.592& 25000 \\
- Train-Data-Sheffield-tfidf-Run1-objective-only & 0.601&0.007& 14883.744&0.13&0.136& 0.455& 25000 \\
- Train-Data-Sheffield-boolean-Run1-objective-only & 0.471&0.007& 12974.205&0.03&0.029& 0.381& 25000 \\
- 
- \hline
-\end{tabular}
-}
-\caption{Results for IR Pubmed system. Comparison for both 5000 and 25000 thresholds}
-\end{table}
-
-
-As we increase the number of documents we return, the recall naturally increases. When we return 25000 documents for each topic, we are able to obtain a total recall rate of over 58\%. However, the precision (ap, average precision) is very low, suggesting a significant amount of the documents are not useful. BM25 was found to be the best ranking method, followed by tfidf and boolean.
-
-Improvements could certainly be made to this system:
-
-\begin{itemize}
-  \item MeSH headings would be useful in expanding the range of the query to capture synonymous terms. 
-  \item Tokenization could be optimized to capture phrases of different sizes.
-  \item Introducing a cost or stopping point to remove the amount of non-relevant documents. We can see for the 25000 documents set of results the last relevant document was around the 20000 point, meaning we could drop the last 5000 from our result set.
-\end{itemize}
-
-
-\subsection{Pubmed automatic query Conclusion}
-
-
-We built an IR system using Apache Lucerne and compared three separate ranking methods. We found bm25 ranking gave the best results overall.
-
-We found we were able to achieve fair results with a little optimization techniques to the index and query data.
-
-We compared the performance of our system across different return thresholds, naturally finding as we increase the returned number of documents we get a higher recall. This comes at the expense of reduced precision.
-
-We suggested further improvement to our system, such as including a phrase model for more robust features for both index and query.
-
-
-
+This section presented some new approaches to finding stopping points for the data filtering stage of the systematic review process. We found approaches that use sampling to have strong potential, but challenging to develop due to having to find an optimum sample size and varying quality in data rankings. We found two methods that only need to transverse down the document ranking set and do not require sampling to actually provide good results. We also looked at how we can acquire new information from the rankings by obtaining full texts and/or abstracts.

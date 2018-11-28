@@ -143,8 +143,6 @@ def run():
     recall_stats = {}
     effort_stats = {}
 
-
-
     cutoffs = {}
 
 
@@ -153,9 +151,6 @@ def run():
 
         #min docus to look at for this topic
         minDocs = int(float(len(rankedDocsDoL[topic])) * min)
-
-        
-
 
         for x, study in enumerate(rankedDocsDoL[topic]):
             score = study['score']
@@ -218,10 +213,11 @@ def run():
     return score
 
 
-results = open('output_cutoff_sim.txt', "w")
+#results = open('output_cutoff_sim.txt', "w")
 scores = run()
 print(scores)
 exit()
+
 for x in range(1, int(cutoff * 10000) + 1):
     cutoff = (x / 10000)
     scores = run()

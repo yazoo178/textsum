@@ -86,7 +86,6 @@ totalEffort = 0
 
 for key in content:
 
-
 	rel = len([x for x in content[key] if x[1] == '1'])
 	total = len(content[key])
 	keyPoint = int((rel / 100) * thre)

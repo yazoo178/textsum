@@ -21,6 +21,8 @@ import decimal
 from scipy.optimize import curve_fit
 import pickle
 from pathlib import Path
+from methods import *
+from sampling_methods import *
 
 
 #Class for reprsenting a topic
@@ -137,9 +139,10 @@ def func_fit(x, a, k):
 qrel = ""
 files = []
 sampleRate = 1
-runData = None
-desiredRecall = 0.7
-
+desiredRecall = 0.6
+failedTopics = []
+useCutOffOnFail = True
+minNumberOfDocuments = 100
 
 opts, args = getopt.getopt(sys.argv[1:],"hc:i:q:r:")
 
@@ -152,13 +155,17 @@ for opt, arg in opts:
         files = arg.split('$')
     elif opt in ("-r"):
         runData = loadTestResults(arg)
+        loadrun(arg, qrel)
 
 
-if os.path.isfile('distbute_10.pickle'):
-    dist =  pickle.load( open( "distbute_10.pickle", "rb" ))
+
+
+if os.path.isfile('distbute_50.pickle'):
+    #dist =  DistanceBetween(qrel, runData)
+    dist =  pickle.load( open( "distbute_50.pickle", "rb" ))
 else:
-    dist =  calcDistirubtion(10, qrel, runData)
-    pickle.dump( dist, open( "distbute_10.pickle", "wb" ) )
+    dist =  MovingAverage(50, qrel, runData)
+    pickle.dump( dist, open( "distbute_50.pickle", "wb" ) )
 
 
 
@@ -171,8 +178,10 @@ sumRel = 0
 number = 0
 skip = 0
 
+print(len(os.listdir(files[0])))
+
 #Loop every topic
-for x, filename in enumerate(os.listdir(files[0])[0:3]):
+for x, filename in enumerate(os.listdir(files[0])):
 
     print(filename)
 
@@ -183,9 +192,6 @@ for x, filename in enumerate(os.listdir(files[0])[0:3]):
     #its a folder skip over
     if os.path.isdir(file_to_open):
         continue
-
-    #topic number count
-    number = number + 1
 
 
     #particpants in the clef 2017 task
@@ -216,10 +222,18 @@ for x, filename in enumerate(os.listdir(files[0])[0:3]):
 
     pointsToStop = []
     X_vals = np.array(range(0, len(scores)))
+
+    if(len(X_vals) <=minNumberOfDocuments):
+        print("Skipping topic, too few documents")
+        sumRecalls +=  1.0
+        sumEfforts +=  1.0
+        sumRel = sumRel + 1
+        number +=1
+        continue
     
 
     #loop from 10 to 100%
-    for x in range(1, 100):
+    for x in range(10, 100, 10):
 
         #Take percentage cut
         samplePercentage = 0.01 * x
@@ -235,9 +249,14 @@ for x, filename in enumerate(os.listdir(files[0])[0:3]):
         for x2, y in zip(X_samps, scoresSamps):
                 if lastPoint != y:
                     lastPoint = y
-                    x_points.append(x2)
+                    x_points.append(x2 - 1)
                     y_points.append(y)
 
+
+
+        #Make sure we have atleast two rel document
+        if len(x_points) < 2:
+            continue
 
         #rate distirubtion array
         x_distr = []
@@ -245,23 +264,21 @@ for x, filename in enumerate(os.listdir(files[0])[0:3]):
         #get the distribution for each point
         for index in x_points:
 
-            docElementId = runData[filename.split('.')[0]].docsReturned[int(index)]
-            x_distr.append(dist[filename.split('.')[0]][docElementId])
+            #docElementId = runData[filename.split('.')[0]].docsReturned[int(index)]
+            x_distr.append(dist[filename.split('.')[0]][int(index)])
 
 
-    
+        
 
-        k = 0.01
+        k = -0.01
         a = 0.2
         guess = (a, k)
         #attempt to fit curve
 
         opt, pcov = curve_fit(func_fit, x_points, x_distr, guess, maxfev=1000)
-        #print(x_points)
-        #print(x_distr)
-        print("Percentage: ", x * 10)
         a, k = opt
-        print(a, " ", k)
+        k = - abs(k)
+
 
         sum = 0
         n = 1
@@ -269,28 +286,50 @@ for x, filename in enumerate(os.listdir(files[0])[0:3]):
         while(True):
 
             try:
-                
                 sum+=non_hom_func(a, k, len(X_vals) , n) 
                 n = n + 1
 
             except:
                 n = len(X_vals)
-                print('Error encounted')
                 break
 
             if sum > 0.95:
-                print('Made it')
                 break
 
             if n >= len(X_vals):
                 break
 
-        #Check if the estimated number of documents is greater than the documents we have actually found
-        if n - len(x_points) <= 0:
+        #Check if the estimated number of documents is greater than the documents we have actually found FUCK THIS
+        if n * desiredRecall <= len(x_points):
             pointsToStop.append(decimal.Decimal(0.7) * (n - decimal.Decimal(scoresSamps[-1])))
             break
 
+        if x == 90:
+
+            if useCutOffOnFail:
+                cut_point = run_on_topic(filename.split('.')[0], 0.855)
+
+                sumRecalls +=  scores[int(cut_point)]  / scores[-1]
+                sumEfforts += cut_point / len(scores)
+
+                if scores[int(cut_point)] / scores[-1] >= desiredRecall:
+                    sumRel = sumRel + 1
+
+                number += 1
+
+            else:
+                sumRecalls +=  1.0
+                sumEfforts +=  1.0
+                sumRel = sumRel + 1
+                number +=1
+                failedTopics.append(file_to_open)
+
+
     for x, number_to_find in enumerate(pointsToStop):
+
+        #topic number count
+        number = number + 1
+
         try:
             rank = ((x + 1) * 0.1) * len(scores)
         
@@ -314,11 +353,15 @@ for x, filename in enumerate(os.listdir(files[0])[0:3]):
         #print("Effort: " + str((int(((x + 1) / 10) * len(scores) +  int(interval))) / len(scores)))
     
 
+
+
+print("Number of topics: ",  str(number))
 print("Recall at" + "::" + str(sumRecalls / number))
 print("Effort at" + "::" + str(sumEfforts / number))
-print("Relablity"  + "::" + str(sumRel / number))
+print("Reliability "  + "::" + str(sumRel / number))
 print("")
 
+print("Failed Topics: ", failedTopics)
 
 
 

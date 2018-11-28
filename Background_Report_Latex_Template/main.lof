@@ -5,14 +5,16 @@
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Example of using knee method to find a stopping point. Image inspired from \cite {Satopa11}}}{10}{figure.2.3}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of a prediction curve for topic CD008081. Confidence bars are included over $3\sigma $. Estimated point of hitting 70\% denoted by black point.}}{17}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Visualisation of using a confidence interval for predicting a stopping point using a gp.}}{18}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Relevant document distribution over Sheffield dataset}}{20}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Probability of seeing atleast one relevant document by sampling 10\% of documents for topic CD008081}}{21}{figure.4.4}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Homogeneous Poisson Process overestimating the rate of documents, resulting a prediction curve that would expect us to look at 1500 of the 2000 documents to reach 70\% recall}}{22}{figure.4.5}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of a prediction curve for topic CD008081. Confidence bars are included over $3\sigma $. Estimated point of hitting 70\% denoted by black point.}}{18}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Relevant document distribution over Sheffield dataset}}{19}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Probability of seeing atleast one relevant document by sampling 10\% of documents for topic CD008081}}{20}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Homogeneous Poisson process overestimating the rate of documents, resulting a prediction curve that would expect us to look at 1500 of the 2000 documents to reach 70\% recall}}{22}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Comparison of different sample portions against sample window size}}{25}{figure.4.5}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {5.1}{\ignorespaces Calculating Origin Average}}{30}{figure.5.1}
 \contentsline {figure}{\numberline {5.2}{\ignorespaces Generating Origin vector using document abstract}}{31}{figure.5.2}
 \contentsline {figure}{\numberline {5.3}{\ignorespaces Generating Origin vector using document abstract and text}}{32}{figure.5.3}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Gnatt Chart}}{33}{figure.5.4}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Example Forest plot}}{33}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Gnatt Chart}}{34}{figure.5.5}
+\addvspace {10\p@ }
 \addvspace {10\p@ }

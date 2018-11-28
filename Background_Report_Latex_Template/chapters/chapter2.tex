@@ -36,22 +36,22 @@ Example: (credit goes to \cite{pico})
 
 A potential point of interest would be attempting to generate these questions automatically given some literature context.
 
-\subsection{Relevant literature search}
+\subsection{Relevant Literature Search}
 
 After formulating a question, systematic reviews need to search for the relevant literature that surrounds this question.
 
-Large medical database-such as Pubmed \footnote{https://www.ncbi.nlm.nih.gov/pubmed/} contain relevant studies that can be used to create the review. These databases are typically very large and require concise queries to efficiently retrieve data.
+Large medical database-such as Pubmed \footnote{https://www.ncbi.nlm.nih.gov/pubmed/} contain relevant studies that can be selected for inclusion in a review. These databases are typically very large and require queries to retrieve data. These queries are structured, but not considered precise, as there is a strong emphasis on maximizing recall at the expense of precision. 
 
-Naturally this can be modelled as an information retrieval problem. We have a large number of documents and we wish to retrieve the most relevant ones. One task for the 2017 CLEF conference was to produce a ranking of the most relevant documents for topics \cite{Kanoulas12017}. Many techniques have been proposed for ranking of relevant documents, with varying degrees of performance \cite{Alharbi2017} \cite{Eunkyung2017}.
+Naturally this can be modelled as an information retrieval problem. We have a large number of documents and we wish to retrieve all of the relevant ones. Reviewers will aim to retrieve all of the relavent studies, this is because there is a emphasis achieving a binary result set of relevant studies, as opposed to rankings studies by relevance.  
 
-An important aspect of the relevant literature search step is the construction of the query. Query creators often apply filters (also known as hedges) to increase the effectiveness or/and the efficiency of the searching. Two key attributes for the query are the precision and the recall. By including synonymous phrases e.g: quality adjusted life or quality of well-being or disability adjusted life the sensitivity can be increased, but as expense of the precision. The creation of this query is a task that could potentially have some aspects of NLP applied to it.
+An important aspect of the relevant literature search step is the construction of the query. Query creators often apply filters (also known as hedges) \footnote{\url{https://hiru.mcmaster.ca/hiru/HIRU_Hedges_home.aspx}} to increase the effectiveness or/and the efficiency of the searching. Two key attributes for the query are the precision and the recall. By including synonymous phrases e.g: quality adjusted life or quality of well-being or disability adjusted life the recall can be increased, but at expense of the precision. The creation of this query is a task that could potentially have some aspects of NLP applied to it.
 
 
 \subsection{Data Filtering}
 
-The data filter stage involves reducing the amount of documents returned by the initial query down to a smaller subset of relevant document. This is can also be referred to as the abstract screening phrase \cite{Kanoulas12017}.
+The data filter stage involves reducing the amount of documents returned by the initial query down to a smaller subset of relevant document. This is done by idenfiying which retrieved studies match the inclusion criteria as defined by the PICO question.  This is can also be referred to as the abstract screening phrase \cite{Kanoulas12017}.
 
-The length of this stage is highly dependant on how many documents were returned by the initial query, often in the excess of 5000 studies for a single query. In response to this, stopping criteria methods have been proposed that aim to optimize two key parameters; the effort and the recall. That is to say we want to get as many relevant documents as possible, whilst looking at the fewest. Examples of approaches include the knee method \cite{Satopa11} and the target method \cite{Cormack2016}. Other techniques could be applied and evaluated such as curve fitting, which is later examined in \ref{stops}
+The length of this stage is highly dependent on how many documents were returned by the initial query, often in the excess of 5000 studies for a single query. In response to this, stopping criteria methods have been proposed that aim to optimize two key parameters; the effort and the recall. That is to say we want to get as many relevant documents as possible, whilst looking at the fewest. Examples of approaches include the knee method \cite{Satopa11} and the target method \cite{Cormack2016}. Other techniques could be applied and evaluated such as curve fitting, which is later examined in \ref{stops}
 
 \subsection{Data Extraction}
 
@@ -60,13 +60,17 @@ The data extraction phase involves pulling the relevant information from the fil
 Being able to extract the relevant information from studies presents itself as an information extraction problem. The task to automate the process of extracting relevant information would reduce time and complexities of manually reviewing studies \cite{Siddhartha2015}.
 
 
+
+\iffalse
 \section{Indexing and Querying Medline and Automated Query Generation} \label{medlinelit}
 
-Medline is a large collection of medical literature and data from around the world. Typically each entity will contain a title and an abstract containing some information on the study. Whilest Medline as a whole is very easy to access \cite{medline}, the large size and complexity of the data makes it difficult to retrieve the relevant information.
+Medline is a bibliographic database of published medical literature. Typically each entity will contain a title and an abstract containing some information on the study. Whilest Medline as a whole is very easy to access \cite{medline}, the large size and complexity of the data makes it difficult to retrieve the relevant information.
 
 \subsection{Automated Query Generation} \label{aqglit}
 
 Being able to automate query generation for literature searching would save systematic reviewers a significant amount of time. However, medical literature queries are typically complex and contain multiple levels of logical operators and synonymous term look ups. This makes the task of creating a query manually is a challenging task.
+
+
 
 \subsubsection{Rapid Automatic Keyword Extraction Algorithm} \label{rakelit}
 
@@ -76,10 +80,11 @@ RAKE heavily relies on stop-words and punctuation separators as an indicator for
 
 RAKE can be further optimized by specifying minimum term frequency rates to capture more prominent terms.
 
+\fi
 
 \section{Stopping Criteria} \label{stops}
 
-Stopping criteria is about finding the optimum point to stop reviewing a set of documents. This is important in a decision making process for maximizing efficiency. Consider having 100 relevant documents, where each document contains a binary value. If we looked at 1/3 of these documents and saw a trend of positive values, we could use this to infer the reliability of the remaining documents.
+Stopping criteria is about finding the optimum point to stop reviewing a set of documents. This is important in a decision making process for maximizing efficiency. Consider having 100 relevant documents, where each document contains a binary indicator of being relevant or non-relevant. If we looked at 1/3 of these documents and saw a trend of positive values, we could use this to infer the reliability of the remaining documents.
 
 Two key methods have been proposed for finding stopping points so far, the target method \cite{Satopa11} and the knee method. \cite{Cormack2016}. Both these methods are discussed below \ref{methods}
 
@@ -87,7 +92,7 @@ Two key methods have been proposed for finding stopping points so far, the targe
 
 \subsection{Evaluation Metrics for Finding Stopping Points} \label{evalsstops}
 
-In order to evaluate the suitability of stopping methods, we will use two evaluation metrics. The recall, which is the number of documents returned for a topic, and effort which is the number of documents that had to be examined.
+In order to evaluate the suitability of stopping methods, we will use two evaluation metrics. The recall, which is the number of documents returned for a topic, and effort which is the number of documents that had to be examined. The challenge of finding a stopping point is optimizing both of these parameters. We could look at everything in our rankings to obtain a perfect recall score, but at the consequence of making 100\% effort.
 
 \begin{equation}
 Recall = \frac{|R|}{|D|}
@@ -122,7 +127,7 @@ reliability is computed over all searches and is read as the probability of the 
   \end{cases}
 \end{equation}
 
-A stopping point is deemed to be acceptable if 70\% of the relevant documents have been found. As such, the reliability is an average over a search method. In Cormack and Grossman \cite{Cormack2016} a target is set of achieving 95\% reliability.
+A stopping point is deemed to be acceptabl*e if 70\% of the relevant documents have been found \cite{Cormack2016}. As such, the reliability is an average over a search method. In Cormack and Grossman \cite{Cormack2016} a target is set of achieving 95\% reliability. Setting a acceptability score above 70\% will increase the amount of effort needed to reach the reliability threshold. In practise 70\% recall is not considered a sufficient amount of documents to retrieve, but as existing work in this area uses this figure, it is easier for us to compare results.
 
 
 \subsection{Formulating Stopping Problem} \label{stoppingProblem}
@@ -137,7 +142,7 @@ We can use linear scalarization \cite{Noghin2015} as a simple way of optimizing 
 
 Where $f_0(x)$ is the recall function, $\theta_{0}$ is a weight to associated the importance of the recall and $f_1(x)$ is the effort function, $\theta_{1}$ is a weight to associated the importance of the effort. We use a minus symbol to indicate minimizing the effort function.
 
-Another way of optimizing is to use evolutionary algorithms. Evolutionary algorithms have been show to perform better in multi-objective optimization \cite{Chiandussi:2012:CMO:2133849.2134037} as they are able to simultaneously with a set of possible solutions. Multi-Objective Genetic Algorithm (MOGA) is an evolutionary algorithm that which performs Pareto optimization \cite{489161}.
+Another way of optimizing is to use evolutionary algorithms. Evolutionary algorithms have been show to perform better in multi-objective optimization \cite{Chiandussi:2012:CMO:2133849.2134037} as they are able to simultaneously update parameters with a set of possible solutions. Multi-Objective Genetic Algorithm (MOGA) is an evolutionary algorithm that which performs Pareto optimization \cite{489161}.
 
 MOGA works by combining a weighted sum of multiple scalarization functions into a single scalar fitness function. Randomization is used to select different optimization directions.
 
@@ -231,7 +236,9 @@ Finally we have:
 	 R \leq 10 \cup P(\frac{relrank(\underset{last}{d})}{R} \geq 0.7) 	\geq 0.95
 \end{equation}
 
-Overall, while the target method is shown to acquire 95\% reliability, the effort needed is often significantly highly, often requiring us to look at huge volume of documents.
+Overall, while the target method is shown to acquire 95\% reliability, the effort needed is often significantly high, often requiring us to look at huge volume of documents.
+
+
 
 \subsubsection{Knee Method} \label{knee}
 
@@ -251,12 +258,12 @@ This method also imposes an additional constraint for rankings of a large volume
 
 It was found that the knee method is a better approach for finding a stopping point than the Target method \cite{Cormack2016}. The recall was always found to be better and the reliability was found to be the same or higher for 6 out 8 test collections.
 
+
+
 \section{Summary} \label{sumlit}
 
-We first examined the steps of a systematic review \ref{stepssr} and looked at potential areas to introduce NLP techniques.
+We first examined the steps of a systematic review \ref{stepssr} and looked at potential areas to introduce NLP techniques. We broke down the stages of a systematic review such that we can examine what techniques we could apply at each stage. 
 
-Next we looked at how we can handle large scale databases like Medline \ref{medlinelit}. We also introduced the key-word extraction algorithm RAKE as a candidate for extracting relevant information from medical documents \ref{rakelit}.
-
-We then began to examine stopping criteria \ref{stops}. We looked at the intuition behind looking for stopping points in ranked sets of documents. We defined our stopping problem as a multi-objective optimization problem \ref{stoppingProblem}. We looked into two existing approaches, the target method and the knee method
+We then began to examine stopping criteria \ref{stops}. We looked at the intuition behind looking for stopping points in ranked sets of documents. We defined our stopping problem as a multi-objective optimization problem \ref{stoppingProblem}. We looked into two existing approaches, the target method and the knee method.
 
 

@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{nonhomp}
+{6. Non-homogeneous Poisson Processes}, howpublished =
+  {\url{http://www.randomservices.org/random/poisson/nonhomogeneous.html}},
+  note = {Accessed: 2018-11-01}.
+
 \bibitem{Alharbi2017}
 {\sc Alharbi, A., and Stevenson, M.}
 \newblock Ranking abstracts to identify relevant evidence for systematic
@@ -11,6 +16,12 @@
 {\sc Anagnostou, A., Lagopoulos, A., Tsoumakas, G., and Vlahavas, I.}
 \newblock A cost-effective hybrid ltr approach for document ranking.
 \newblock {\em Working Notes of CLEF\/} (2017).
+
+\bibitem{forestplots}
+{\sc Cantley, N.}
+\newblock {Tutorial: How to read a forest plot}, howpublished =
+  {\url{https://www.students4bestevidence.net/tutorial-read-forest-plot/}},
+  note = {Accessed: 2018-11-01}.
 
 \bibitem{Chiandussi:2012:CMO:2133849.2134037}
 {\sc Chiandussi, G., Codegone, M., Ferrero, S., and Varesio, F.~E.}
@@ -36,42 +47,16 @@
   participation in clef ehealth 2017.
 \newblock {\em Working Notes of CLEF\/} (2017), 11--14.
 
-\bibitem{ebden2008gaussian}
-{\sc Ebden, M., et~al.}
-\newblock Gaussian processes for regression: A quick introduction.
-\newblock {\em The Website of Robotics Research Group in Department on
-  Engineering Science, University of Oxford\/} (2008).
-
 \bibitem{Gough2012}
 {\sc Gough, D., Oliver, S., and Thomas, J.}
 \newblock {\em An Introduction to Systematic Reviews}.
 \newblock Sage, London, 2012.
-
-\bibitem{HUAN2013}
-{\sc Huang, K.-C., Chiang, I.-J., Xiao, F., Liao, C.-C., Liu, C. C.-H., and
-  Wong, J.-M.}
-\newblock Pico element detection in medical text without metadata: Are first
-  sentences enough?
-\newblock {\em Journal of Biomedical Informatics 46}, 5 (2013), 940 -- 946.
-
-\bibitem{Huang2011}
-{\sc Huang, K.-C., Liu, C., Yang, S.-S., Xiao, F., Wong, J.-M., Liao, C.-C.,
-  and Chiang, I.-J.}
-\newblock Classification of pico elements by text features systematically
-  extracted from pubmed abstracts.
-\newblock 279--283.
 
 \bibitem{Siddhartha2015}
 {\sc Jonnalagadda, S.~R., Goyal, P., and Huffman, M.~D.}
 \newblock Automating data extraction in systematic reviews: a systematic
   review.
 \newblock {\em Systematic reviews 4}, 1 (2015), 78.
-
-\bibitem{Jonnalagadda2015}
-{\sc Jonnalagadda, S.~R., Goyal, P., and Huffman, M.~D.}
-\newblock Automating data extraction in systematic reviews: a systematic
-  review.
-\newblock {\em Systematic Reviews 4}, 1 (Jun 2015), 78.
 
 \bibitem{Kanoulas12017}
 {\sc Kanoulas, E., Li1, D., Azzopardi, L., and Spijker, R.}
@@ -83,17 +68,6 @@
 \newblock Medical document classification for systematic reviews using
   convolutional neural networks.
 \newblock {\em Working Notes of CLEF\/} (2017), 11--14.
-
-\bibitem{Eunkyung2017}
-{\sc Lee, G.~E.}
-\newblock A study of convolutional neural networks for clinical document
-  classification in systematic reviews: Sysreview at clef ehealth 2017.
-\newblock {\em CLEF 2017\/} (2017).
-
-\bibitem{medline}
-{\sc medline}.
-\newblock medline.
-\newblock https://www.nlm.nih.gov/bsd/pmresources.html.
 
 \bibitem{489161}
 {\sc Murata, T., and Ishibuchi, H.}
