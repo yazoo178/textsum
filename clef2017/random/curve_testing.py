@@ -21,8 +21,12 @@ import decimal
 from scipy.optimize import curve_fit
 import pickle
 from pathlib import Path
+import matplotlib.backends.backend_pdf
+from numpy import polyfit, poly1d
+import numpy.polynomial.polynomial as poly
 
-
+out_pdf = 'C:\\Users\\william\\Documents\\graphs.pdf'
+pdf = matplotlib.backends.backend_pdf.PdfPages(out_pdf)
 
 #Class for reprsenting a topic
 class record:
@@ -193,6 +197,7 @@ sampleRate = 1
 desiredRecall = 0.6
 failedTopics = []
 useCutOffOnFail = True
+degree = 5
 
 opts, args = getopt.getopt(sys.argv[1:],"hc:i:q:r:")
 
@@ -217,11 +222,13 @@ else:
 
 
 
-#Loop every topic
-for x, filename in enumerate((os.listdir(files[0]))[0:10]):
 
+#Loop every topic
+for x, filename in enumerate((os.listdir(files[0]))):
+
+    fig = plt.figure(figsize=(10, 10)) # inches
     print(filename)
-    filename = 'CD009519.txt'
+    #filename = 'CD009519.txt'
 
     #windows/mac/linux general way for loading file    
     data_folder = Path(files[0])
@@ -259,7 +266,7 @@ for x, filename in enumerate((os.listdir(files[0]))[0:10]):
                     X.append(float(c))     # x-axis
 
     pointsToStop = []
-    X_vals = np.array(range(0, len(scores)))
+    X_vals = np.array(range(1, len(scores)))
     
 
     #loop from 10 to 100%
@@ -275,7 +282,7 @@ for x, filename in enumerate((os.listdir(files[0]))[0:10]):
         y_points = []
         lastPoint = None
 
-        #to avoid a recentangular looking graph, just try the points where the value is different from the last
+        #get the true rel docs
         for x2, y in zip(X_samps, scoresSamps):
                 if lastPoint != y:
                     lastPoint = y
@@ -283,10 +290,6 @@ for x, filename in enumerate((os.listdir(files[0]))[0:10]):
                     y_points.append(y)
 
 
-
-        #Make sure we have atleast two rel document
-        if len(x_points) < 2:
-            continue
 
         #rate distirubtion array
         x_distr = []
@@ -298,22 +301,32 @@ for x, filename in enumerate((os.listdir(files[0]))[0:10]):
 
 
         k = 0.01
-        a = 0.5
+        a = 0.2
+
         guess = (a, k)
-        #opt, pcov = curve_fit(func_fit, x_points, x_distr, guess, maxfev=10000)
 
-        opt, pcov = curve_fit(func_fit, X_vals[:-1], dist[filename.split('.')[0]], guess, maxfev=10000)
+        opt, pcov = curve_fit(func_fit, x_points, x_distr, guess, maxfev=10000)
+
+        z5 = polyfit(X_vals, dist[filename.split('.')[0]], degree)
+        p5 = poly1d(z5)
+        x_poly = p5(X_vals)
+
+        #opt, pcov = curve_fit(func_fit, X_vals, dist[filename.split('.')[0]], guess, maxfev=10000)
         opt[1] = - abs(opt[1])
-
         pred = func_fit(X_vals, opt[0], opt[1])
 
-        plt.scatter(X_vals[:-1], dist[filename.split('.')[0]])
+        plt.scatter(X_vals, dist[filename.split('.')[0]])
         plt.scatter(x_points, x_distr, color='red')
-        #plt.plot(X_vals, pred )
+        plt.plot(X_vals, pred, color='green' )
+        plt.plot(X_vals, x_poly, color='black' )
+        plt.title(filename.split('.')[0])
+        plt.legend(['Curve Fit', 'Poly Fit ' +str(degree) + " Degree", 'Documents' ,'Relavant Documents'])
 
         #plt.scatter(x_distr, x_points)
-        plt.show()
+        #plt.show()
+        pdf.savefig(fig)
 
+pdf.close()
     
 
    

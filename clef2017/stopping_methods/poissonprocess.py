@@ -43,8 +43,8 @@ for opt, arg in opts:
 
 
 sampleRate = 3
-showtimeLine = False
-showAllAtEnd = False
+showtimeLine = True
+showAllAtEnd = True
 allPoints = []
 labels =[]
 
@@ -115,7 +115,7 @@ for filename in os.listdir(files[0]):
             if showtimeLine:
                 plt.ylim([0,10])
                 plt.ylabel("Runs")
-                plt.xlabel('Number of Documents in Sample')
+                plt.xlabel('Number of Documents in Rankings')
                 plt.scatter(x_points, [dist for x in x_points], s=40, label=file.split('\\')[-1])
                 dist = dist + 1
                 plt.legend()

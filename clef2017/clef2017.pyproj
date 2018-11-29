@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2c02eb12-ef7d-44e0-a0e9-3e712b65fa37}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>stopping_methods\non_hom_poisson_two.py</StartupFile>
+    <StartupFile>random\curve_testing.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
