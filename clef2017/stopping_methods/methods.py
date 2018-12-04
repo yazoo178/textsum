@@ -1,3 +1,6 @@
+import re
+
+
 rankedDocsDoL = {}
 ranked_docs = {}
 rel_count = {}
@@ -129,3 +132,92 @@ def run_on_topic(topic, cutoff, starPoint = 1, min = 0):
         
         
     return cutPoint
+
+
+#Class for reprsenting a topic
+class record:
+    def __init__(self, qId):
+        self.queryId = qId
+        self.docsReturned = []
+
+    def addDoc(self, doc):
+        self.docsReturned.append(doc)
+
+
+
+#load test tests from run file
+def loadRunFile(file):
+    records = {}
+    with open(file) as content:
+        lastId = "Start"
+
+        for line in content:
+            tabbed = re.split("\s", line)
+
+            if lastId == tabbed[0]:
+                records[lastId].addDoc(tabbed[2])
+
+            else:
+                lastId = tabbed[0]
+                records[lastId] = record(lastId)
+                records[lastId].addDoc(tabbed[2])
+
+    return records
+
+
+def calcMovingAverage(window, testFiles, records):
+
+    queryIdToRelvDocs = {}
+    distb = {}
+    relIndexs = {}
+
+
+    ##Load Qrel
+    with open(testFiles, encoding='utf-8') as content:
+        for i, line in enumerate(content):
+            tabbed = re.split('\s+', line)
+
+            if tabbed[0] not in queryIdToRelvDocs:
+                queryIdToRelvDocs[tabbed[0]] = []
+                
+
+            if '1' in tabbed[3].rstrip().strip():
+                queryIdToRelvDocs[tabbed[0]].append(tabbed[2].rstrip().strip())
+
+
+    #Loop topics
+    for record in records:
+        distb[record] = []
+        relIndexs[record] = []
+
+        for x in range(0, len(records[record].docsReturned)):
+
+            if records[record].docsReturned[x] in queryIdToRelvDocs[record]:
+                relIndexs[record].append(x)
+
+            start = x - window
+            end = x + window
+            relCount = 0
+
+            if start < 0:
+                windowSet = records[record].docsReturned[0:end]
+
+            elif end >= len(records[record].docsReturned):
+                windowSet = records[record].docsReturned[start:len(records[record].docsReturned) -1]
+
+            else:
+                windowSet = records[record].docsReturned[start:end]
+
+
+            for element in windowSet:
+                if element in queryIdToRelvDocs[record]:
+                    relCount += 1
+
+        
+            #extraMass = 1 / len(windowSet)
+            extraMass = 1
+
+            distb[record].append( (relCount / len(windowSet)) * extraMass)
+
+
+    return distb, relIndexs

@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2c02eb12-ef7d-44e0-a0e9-3e712b65fa37}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>random\curve_testing.py</StartupFile>
+    <StartupFile>stopping_methods\non_hom_poisson_3.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -13,7 +13,7 @@
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
-    <CommandLineArguments>-i C:\Users\william\Documents\TextSum\clef2017\stopping_methods\Test_Data_Sheffield-run-2_int_scores_1 -q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test -r C:\Users\william\Documents\TextSum\clef2017\participant-runs\Sheffield\Test_Data_Sheffield-run-2</CommandLineArguments>
+    <CommandLineArguments>-q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test -r C:\Users\william\Documents\TextSum\clef2017\participant-runs\Sheffield\Test_Data_Sheffield-run-2</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -39,7 +39,10 @@
     <Compile Include="other files\log_likelihood_abstract+MeSH.py" />
     <Compile Include="other files\plot_runs.py" />
     <Compile Include="other files\run_4_LL.py" />
-    <Compile Include="random\curve_testing.py">
+    <Compile Include="stopping_methods\BaseRules.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\curve_testing.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="random\shuffle.py" />
@@ -70,6 +73,9 @@
     <Compile Include="stopping_methods\non_hom_poission.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="stopping_methods\non_hom_poisson_3.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stopping_methods\non_hom_poisson_two.py">
       <SubType>Code</SubType>
     </Compile>
@@ -78,6 +84,9 @@
     </Compile>
     <Compile Include="stopping_methods\plot_gpr_co2.py" />
     <Compile Include="stopping_methods\poission_process_two.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\PoissonEstimateMethod.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="stopping_methods\poissonprocess.py">

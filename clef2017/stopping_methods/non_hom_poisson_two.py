@@ -299,7 +299,7 @@ for x, filename in enumerate(os.listdir(files[0])):
             if n >= len(X_vals):
                 break
 
-        #Check if the estimated number of documents is greater than the documents we have actually found FUCK THIS
+        #Check if the estimated number of documents is greater than the documents we have actually found
         if n * desiredRecall <= len(x_points):
             pointsToStop.append(decimal.Decimal(0.7) * (n - decimal.Decimal(scoresSamps[-1])))
             break
