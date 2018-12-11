@@ -6,6 +6,8 @@ import sys, getopt
 import random
 import os
 import re
+from stopping_methods.BaseRules import *
+
 #-k 10 -o Output/Test_Data_Sheffield-run-2 -q qrel/qrel_abs_test
 
 
@@ -39,30 +41,27 @@ def readQrel(qrel):
 
 	return ids
 
-def loadTestResults(file):
-	records = {}
-	with open(file) as content:
-		lastId = "Start"
+#load test tests from run file
+def loadRunFile(file):
+    records = {}
+    with open(file) as content:
+        lastId = "Start"
 
-		
-		for line in content:
-			tabbed = re.split("\s", line)
-			if lastId == tabbed[0]:
-				records[lastId].addDoc(tabbed[2])
-				
-				
-			else:
-				lastId = tabbed[0]
-				records[lastId] = record(lastId)
-				records[lastId].addDoc(tabbed[2])
-				
-			
+        for line in content:
+            tabbed = re.split("\s", line)
 
-	return records
+            if lastId == tabbed[0]:
+                records[lastId].addDoc(tabbed[2])
+
+            else:
+                lastId = tabbed[0]
+                records[lastId] = record(lastId)
+                records[lastId].addDoc(tabbed[2])
+
+    return records
 
 
-
-opts, args = getopt.getopt(sys.argv[1:],"hc:q:r:")
+opts, args = getopt.getopt(sys.argv[1:],"hc:q:r:i:")
 qrel = None
 rankingFile = None
 
@@ -73,41 +72,52 @@ for opt, arg in opts:
 		qrel = arg
 	elif opt in ('-r'):
 		rankingFile = arg
+	elif opt in ("-i"):
+		thre = int(arg)
+
         
-
 content = readQrel(qrel)
-records = loadTestResults(rankingFile)
+records = loadRunFile(rankingFile)
 
-thre = 70
-
-
-totalEffort = 0
-
+totalDocuments = 0
+effortSumWeighted = 0
+effortSum = 0
+topicsUsed = 0
 
 for key in content:
+    relDocs = [x[0] for x in content[key] if x[1] == '1']
 
-	rel = len([x for x in content[key] if x[1] == '1'])
-	total = len(content[key])
-	keyPoint = int((rel / 100) * thre)
-	topic = records[key]
-	
-	count = 0
-	indexPoint = 0
-	for id in content[key]:
-		if id[0] in topic.docsReturned and id[1] == '1':
-			count = count + 1
-			index = findIn(id[0], topic.docsReturned)
-			if count == keyPoint:
-				indexPoint = index
-				
-	
-	effort = indexPoint / total
-	totalEffort+=effort
-	print("Effort:{0}\tRecall:{1}\tReliability{2}".format(effort, 0.7, 1.0))
-	
+    if not HasMoreThanNDocuments(content[key]):
+        print("Skipping")
+        continue
+    
+    topicsUsed +=1
+    rel = len([x for x in content[key] if x[1] == '1'])
+    numberNeededForRecall = int(rel * (thre / 100))
+    lookedAt = 0
+    found = 0
 
-print("")
-print("Effort:{0}\tRecall:{1}\tReliability{2}".format(totalEffort / len(content), 0.7, 1.0))
+    
+
+    for document in records[key].docsReturned:
+        lookedAt+=1
+        if document in relDocs:
+            found+= 1
+            if found == numberNeededForRecall:
+                break
+
+    print("Effort: ", lookedAt / len(content[key]), "Documents: ", len(records[key].docsReturned))
+
+    effortSumWeighted += (lookedAt / len(content[key])) * len(records[key].docsReturned)
+    effortSum += (lookedAt / len(content[key])) 
+
+    totalDocuments += len(records[key].docsReturned)
+
+
+print("Topics Used: ", topicsUsed)
+print("Weighted Average Effort: ", effortSumWeighted / totalDocuments)
+print("Average Effort: " ,effortSum / topicsUsed)
+
 	
 	
 	

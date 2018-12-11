@@ -35,6 +35,7 @@ run_file = ''
 target = ''
 cutoff = ''
 approach = "undefined"
+total_docs_all_topics = 0
 opts, args = getopt.getopt(sys.argv[1:],"hk:c:o:q:m:")
 for opt, arg in opts:
     if opt == '-h':
@@ -166,10 +167,11 @@ for topic in sorted(rankedDocsDoL):
     for i in range(0, last_ranked+1): 
         if rankedDocsDoL[topic][i] in judgements[topic]:
             rel_ret += 1
-    recall = rel_ret / total_rel
-    recall_stats[topic] = recall
+    
+    
 
     total_docs = len(rankedDocsDoL[topic])
+    total_docs_all_topics +=total_docs
 
     # Compute effort (== total number of documents that had to be examined)
     # Calculate as everything up to last ranked plus all sampled documents 
@@ -179,8 +181,11 @@ for topic in sorted(rankedDocsDoL):
         if(i > last_ranked):
             total_docs_examined += 1
 
-    effort = total_docs_examined / total_docs
+    effort = (total_docs_examined / total_docs) * total_docs
+    recall = (rel_ret / total_rel) * total_docs
+
     effort_stats[topic] = effort
+    recall_stats[topic] = recall
 
     # Compute some stats about topic for information
     percent_rel = ( total_rel * 100 ) / total_docs
@@ -189,7 +194,8 @@ for topic in sorted(rankedDocsDoL):
 
 aboveN = [x for x in recall_stats.values() if float(x) > 0.7]
 print("Reliability:" + str(len(aboveN)/ len(recall_stats)))
-recall_avg = sum(recall_stats.values()) / len(recall_stats)
-effort_avg = sum(effort_stats.values()) / len(effort_stats)
+recall_avg = sum(recall_stats.values()) / total_docs_all_topics
+effort_avg = sum(effort_stats.values()) / total_docs_all_topics
 print("Averages:\tRecall {r:2.3f}  Effort {e:2.3f}\n".format(r = recall_avg, e = effort_avg))
+
 

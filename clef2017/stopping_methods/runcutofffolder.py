@@ -26,7 +26,7 @@ for filename in os.listdir(folder):
     print(run_file)
 
     
-
+    
     if "Sheffield" in filename:
         table = [np.array(["dif(d_1, d_{1+i})", "recall", "reliability", "effort"])]
         for i in [0.8, 0.81, 0.82, 0.83, 0.84, 0.85,0.855, 0.86, 0.87, 0.88, 0.89]:

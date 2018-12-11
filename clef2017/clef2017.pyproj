@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2c02eb12-ef7d-44e0-a0e9-3e712b65fa37}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>stopping_methods\non_hom_poisson_3.py</StartupFile>
+    <StartupFile>stopping_methods\PoissonEstimateMethod.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
-    <CommandLineArguments>-q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test -r C:\Users\william\Documents\TextSum\clef2017\participant-runs\Sheffield\Test_Data_Sheffield-run-2</CommandLineArguments>
-    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <CommandLineArguments>-q C:\Users\william\Documents\TextSum\clef2017\qrel\qrel_abs_test_2018 -r C:\Users\william\Documents\TextSum\clef2017\paricpant-runs-test\SHEF\sheffield-feedback.task2 -i 100</CommandLineArguments>
+    <EnableNativeCodeDebugging>True</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="stopping_methods\date.py" />
     <Compile Include="stopping_methods\eval\evalulate_curve.py" />
+    <Compile Include="stopping_methods\eval\oracle.py" />
     <Compile Include="stopping_methods\findbestrate.py">
       <SubType>Code</SubType>
     </Compile>
@@ -94,6 +95,9 @@
     </Compile>
     <Compile Include="stopping_methods\prob_method.py" />
     <Compile Include="stopping_methods\runcutofffolder.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stopping_methods\runP.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="stopping_methods\sampling\bernoulli.py">

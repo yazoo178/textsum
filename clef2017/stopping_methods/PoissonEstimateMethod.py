@@ -39,6 +39,16 @@ def process(rate, k):
 def stirling(n):
     return decimal.Decimal( (decimal.Decimal((math.sqrt(decimal.Decimal(2) * decimal.Decimal(math.pi) * n))) * ((n / decimal.Decimal(math.e)) ** n )))
 
+def hom_func(rate, D, r):
+    rate = decimal.Decimal(rate)
+    D = decimal.Decimal(D)
+    r = decimal.Decimal(r)
+
+    if r == 0:
+        return (((rate*D)**r) / math.factorial(r)) * decimal.Decimal(math.e)**(-rate*D) 
+
+    return (((rate*D)**r) / stirling(r)) * decimal.Decimal(math.e)**(-rate*D) 
+
 qrel = ""
 files = []
 
@@ -51,7 +61,7 @@ pointsToStop = []
 
 DOCUMENTS_NEEDED = 0.95
 
-opts, args = getopt.getopt(sys.argv[1:],"hc:q:r:")
+opts, args = getopt.getopt(sys.argv[1:],"hc:q:r:i:")
 
 for opt, arg in opts:
     if opt == '-h':
@@ -60,6 +70,9 @@ for opt, arg in opts:
         qrel = arg
     elif opt in ("-r"):
         runData = loadRunFile(arg)
+    elif opt in ("-i"):
+        DOCUMENTS_NEEDED = float(arg) / 100
+
 
 
 #Create a window disribution file and a relevence index file.
@@ -67,21 +80,25 @@ for opt, arg in opts:
 #e.g 'CD004224 : [1, 15, 22, 37]'
 #dist contains a rate value between 1/WINDOW_SIZE * 2 and 1.
 #eg 'CD004224 : [0.31, 0.30, 0.29, 0.28]
-if os.path.isfile('distbute_50.pickle') and os.path.isfile('rel_index.pickle') :
-    dist =  pickle.load( open( "distbute_50.pickle", "rb" ))
-    relIndexs = pickle.load( open( "rel_index.pickle", "rb" ))
+if os.path.isfile('test_distbute_50.pickle') and os.path.isfile('test_rel_index.pickle') :
+    dist =  pickle.load( open( "test_distbute_50.pickle", "rb" ))
+    relIndexs = pickle.load( open( "test_rel_index.pickle", "rb" ))
 
 else:
     dist, relIndexs =  calcMovingAverage(WINDOW_SIZE, qrel, runData)
-    pickle.dump( dist, open( "distbute_50.pickle", "wb" ) )
-    pickle.dump( relIndexs, open( "rel_index.pickle", "wb" ) )
+    pickle.dump( dist, open( "test_distbute_50.pickle", "wb" ) )
+    pickle.dump( relIndexs, open( "test_rel_index.pickle", "wb" ) )
 
+
+effortSumWeighted = 0 #total weighted effort
+totalDocuments = 0 #total documents in all topics
+recallSumWeighted = 0
 
 #Loop every topic
 for x, filename in enumerate(relIndexs):
 
 
-    if not HasMoreThanNDocuments(dist[filename]) or not HasMoreThanNRelDocuments(relIndexs[filename]):
+    if not HasMoreThanNDocuments(dist[filename]):
         print("Skipping: ", filename)
         continue
 
@@ -98,7 +115,7 @@ for x, filename in enumerate(relIndexs):
         if i in relIndexs[filename]:
             numberFound +=1
 
-    numberEstimate = int(len(X_vals) * (numberFound / len(splits[1])))
+    numberEstimate = numberFound / len(splits[1])
 
     #print(filename + ": Rate of Rel Document: 1 Every "  + str(numberEstimate) + " Documents in Document Collection size of " + str(len(X_vals)))
 
@@ -108,7 +125,7 @@ for x, filename in enumerate(relIndexs):
     prob = 0
     numberNeededForRecall = 0
     for x in range(0, len(X_vals)):
-        prob += process(numberEstimate, x)
+        prob += hom_func(numberEstimate, len(X_vals), x)
 
         if prob >= DOCUMENTS_NEEDED:
             numberNeededForRecall = x
@@ -118,7 +135,6 @@ for x, filename in enumerate(relIndexs):
     lookedAt = 0
     effort = SAMPLE_SIZE
     recall = numberFound / len(relIndexs[filename])
-
     #loop ranking set
     for x, i in enumerate(runData[filename].docsReturned):
 
@@ -139,7 +155,10 @@ for x, filename in enumerate(relIndexs):
             break
 
     print("effort: ", effort, "recall: ", recall)
+    effortSumWeighted += effort * len(X_vals)
+    recallSumWeighted += recall * len(X_vals)
+    totalDocuments += len(X_vals)
 
-
-
-
+print("")
+print("Effort: ", effortSumWeighted / totalDocuments)
+print("Recall: ", recallSumWeighted / totalDocuments)
