@@ -4,6 +4,7 @@ import math
 import numpy as np
 import sys, getopt
 import random
+from BaseRules import *
 
 # Script to implement Cormack and Grossman (2016) method for determining
 # when to stop examining documents for systematic reviews 
@@ -120,6 +121,8 @@ recall_stats = {}
 effort_stats = {}
 
 for topic in sorted(rankedDocsDoL):
+    
+    
     # Create randomised list of ranks (simplifies sampling without replacement)
     total_docs = len(rankedDocsDoL[topic])
     ranks = list(range(0, len(rankedDocsDoL[topic])))
@@ -181,8 +184,8 @@ for topic in sorted(rankedDocsDoL):
         if(i > last_ranked):
             total_docs_examined += 1
 
-    effort = (total_docs_examined / total_docs) * total_docs
-    recall = (rel_ret / total_rel) * total_docs
+    effort = (total_docs_examined / total_docs)
+    recall = (rel_ret / total_rel)
 
     effort_stats[topic] = effort
     recall_stats[topic] = recall
@@ -192,10 +195,11 @@ for topic in sorted(rankedDocsDoL):
     # print("Topic {t} total_rel {o} total_docs {d} (percent: {p:3.2f}%)".format(t=topic, o=total_rel, d=total_docs, p = percent_rel))
     print("Topic {t}\tRecall {r:2.3f}  Effort {e:2.3f}\t({o} / {d} = {p:3.2f}%)".format(t=topic, r=recall, e=effort,  o=total_rel, d=total_docs, p = percent_rel))
 
+
 aboveN = [x for x in recall_stats.values() if float(x) > 0.7]
 print("Reliability:" + str(len(aboveN)/ len(recall_stats)))
-recall_avg = sum(recall_stats.values()) / total_docs_all_topics
-effort_avg = sum(effort_stats.values()) / total_docs_all_topics
+recall_avg = sum(recall_stats.values()) / len(recall_stats)
+effort_avg = sum(effort_stats.values()) / len(recall_stats)
 print("Averages:\tRecall {r:2.3f}  Effort {e:2.3f}\n".format(r = recall_avg, e = effort_avg))
 
 

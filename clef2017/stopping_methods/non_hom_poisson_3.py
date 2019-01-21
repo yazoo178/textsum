@@ -73,6 +73,7 @@ for opt, arg in opts:
     elif opt in ("-q"):
         qrel = arg
     elif opt in ("-r"):
+        print(opt)
         runData = loadRunFile(arg)
 
 
@@ -95,10 +96,11 @@ else:
 for x, filename in enumerate(relIndexs):
 
     #filename = 'CD012019'
+    print(filename)
 
     #print(filename)
 
-    if not HasMoreThanNDocuments(dist[filename]) or not HasMoreThanNRelDocuments(relIndexs[filename]):
+    if not HasMoreThanNDocuments(dist[filename]):
         print("Skipping: ", filename)
         continue
 
@@ -161,7 +163,7 @@ for x, filename in enumerate(relIndexs):
             pointsToStop.append(decimal.Decimal(DES_RECALL) * (n - x_points[-1]))
             break
 
-
+        print(pointsToStop)
 
 
 
